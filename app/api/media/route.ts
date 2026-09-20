@@ -1,0 +1,4 @@
+import {wrap,guard,db,bucket,json,bounded,quota,HttpError} from '@/lib/server';
+import {imageType,remoteImage,MAX_IMAGE} from '@/lib/media-security';
+export const POST=wrap(async req=>{const u=await guard(req);await quota(u.userId,'images',100);let bytes:Uint8Array;if(req.headers.get('content-type')?.includes('application/json')){const d=await json(req);if(typeof d.url!=='string'||d.url.length>4000)throw new HttpError(400,'이미지 주소를 확인해 주세요.');bytes=await remoteImage(d.url)}else{bytes=await bounded(req.body,MAX_IMAGE)}const type=imageType(bytes);const id=crypto.randomUUID();await bucket().put(id,bytes,{httpMetadata:{contentType:type}});try{await db().prepare('INSERT INTO media(id,owner,type,size,created_at) VALUES(?,?,?,?,?)').bind(id,u.userId,type,bytes.length,Date.now()).run()}catch(e){await bucket().delete(id);throw e}return Response.json({id,url:'/api/media/'+id,size:bytes.length},{status:201})});
+

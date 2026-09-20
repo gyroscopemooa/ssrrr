@@ -1,0 +1,4 @@
+import {wrap,bucket,HttpError,db} from '@/lib/server';
+import {getChatGPTUser} from '@/app/chatgpt-auth';
+export const GET=wrap(async req=>{const id=new URL(req.url).pathname.split('/').pop()!;if(!/^[a-f0-9-]{36}$/.test(id))throw new HttpError(404,'이미지가 없습니다.');const m=await db().prepare('SELECT owner FROM media WHERE id=?').bind(id).first();if(!m)throw new HttpError(404,'이미지가 없습니다.');const user=await getChatGPTUser();if(m.owner!==user?.userId){const visible=await db().prepare("SELECT id FROM posts WHERE hidden=0 AND body LIKE ? LIMIT 1").bind('%"id":"'+id+'"%').first();if(!visible)throw new HttpError(404,'이미지가 없습니다.')}const obj=await bucket().get(id);if(!obj)throw new HttpError(404,'이미지가 없습니다.');const h=new Headers();obj.writeHttpMetadata(h);h.set('X-Content-Type-Options','nosniff');h.set('Cache-Control','private, max-age=300');h.set('Content-Security-Policy',"default-src 'none'");return new Response(obj.body,{headers:h})});
+

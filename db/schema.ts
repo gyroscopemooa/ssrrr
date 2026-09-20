@@ -1,0 +1,8 @@
+import {sqliteTable,text,integer,index,primaryKey} from 'drizzle-orm/sqlite-core';
+export const posts=sqliteTable('posts',{id:text('id').primaryKey(),owner:text('owner').notNull(),nickname:text('nickname').notNull(),title:text('title').notNull(),category:text('category').notNull(),body:text('body').notNull(),source:text('source').notNull().default(''),thumbnail:text('thumbnail').notNull().default(''),createdAt:integer('created_at').notNull(),hidden:integer('hidden').notNull().default(0)},t=>[index('posts_feed').on(t.hidden,t.createdAt),index('posts_category').on(t.category,t.hidden,t.createdAt)]);
+export const media=sqliteTable('media',{id:text('id').primaryKey(),owner:text('owner').notNull(),type:text('type').notNull(),size:integer('size').notNull(),createdAt:integer('created_at').notNull()});
+export const comments=sqliteTable('comments',{id:text('id').primaryKey(),postId:text('post_id').notNull().references(()=>posts.id),owner:text('owner').notNull(),nickname:text('nickname').notNull(),body:text('body').notNull(),createdAt:integer('created_at').notNull()},t=>[index('comments_post').on(t.postId,t.createdAt)]);
+export const likes=sqliteTable('likes',{postId:text('post_id').notNull().references(()=>posts.id),owner:text('owner').notNull()},t=>[primaryKey({columns:[t.postId,t.owner]})]);
+export const reports=sqliteTable('reports',{id:text('id').primaryKey(),postId:text('post_id').notNull().references(()=>posts.id),owner:text('owner').notNull(),reason:text('reason').notNull(),createdAt:integer('created_at').notNull()},t=>[index('reports_post').on(t.postId)]);
+export const quotas=sqliteTable('quotas',{id:text('id').primaryKey(),count:integer('count').notNull()});
+
