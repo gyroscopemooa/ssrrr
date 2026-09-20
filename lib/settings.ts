@@ -1,0 +1,11 @@
+import {env} from 'cloudflare:workers';
+import {getChatGPTUser,type ChatGPTUser} from '@/app/chatgpt-auth';
+import {db,HttpError,guard} from './server';
+import {defaultSettings,type Settings} from './models';
+export async function settings(){const row=await db().prepare("SELECT value,revision FROM settings WHERE id='community'").first<{value:string;revision:number}>();return {settings:{...defaultSettings,...(row?JSON.parse(row.value):{})} as Settings,revision:row?.revision||0}}
+export function isAdmin(user:ChatGPTUser|null){return !!user&&!!env.ADMIN_EMAIL&&user.email.toLowerCase()===env.ADMIN_EMAIL.toLowerCase()}
+export async function admin(req?:Request){const u=req?await guard(req):await getChatGPTUser();if(!isAdmin(u))throw new HttpError(403,'관리자만 이용할 수 있습니다.');return u!}
+export function validateSettings(value:unknown):Settings{if(!value||typeof value!=='object')throw new HttpError(400,'설정을 확인해 주세요.');const d=value as Record<string,unknown>;const result={...defaultSettings};for(const key of ['autoplay','copyProtection'] as const){if(typeof d[key]!=='boolean')throw new HttpError(400,'설정값이 올바르지 않습니다.');result[key]=d[key]}if(d.popularMode!=='all'&&d.popularMode!=='any')throw new HttpError(400,'인기글 조건 방식을 선택해 주세요.');result.popularMode=d.popularMode;for(const key of ['popularComments','popularLikes','popularViews','popularDays','popularLimit','imageCost','videoCost','textCost','signupPoints'] as const){const v=d[key];const max=key==='popularDays'?3650:key==='popularLimit'?100:100000;const min=['imageCost','videoCost','textCost','popularLimit'].includes(key)?1:0;if(typeof v!=='number'||!Number.isSafeInteger(v)||v<min||v>max)throw new HttpError(400,key+' 설정 범위를 확인해 주세요.');result[key]=v}return result}
+export type Member={owner:string;nickname:string;points:number;created_at:number};
+export async function member(owner:string){return db().prepare('SELECT * FROM members WHERE owner=?').bind(owner).first<Member>()}
+

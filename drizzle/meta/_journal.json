@@ -8,6 +8,13 @@
       "when": 1789903870884,
       "tag": "0000_mushy_thing",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789904850593,
+      "tag": "0001_spotty_the_twelve",
+      "breakpoints": true
     }
   ]
 }

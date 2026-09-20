@@ -4,3 +4,4 @@ declare namespace Cloudflare {
     BUCKET?: R2Bucket;
   }
 }
+declare namespace Cloudflare { interface Env { ADMIN_EMAIL?: string; METRICS_SALT?: string; } }
