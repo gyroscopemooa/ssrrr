@@ -1,0 +1,2 @@
+import type {Block} from './models';
+export function feedPreview(body:string){let blocks:Block[]=[];try{const value=JSON.parse(body);if(Array.isArray(value))blocks=value}catch{}const ids=[...new Set(blocks.filter((b):b is Extract<Block,{type:'image'}>=>b?.type==='image'&&typeof b.id==='string').map(b=>b.id))];return {excerpt:blocks.filter((b):b is Extract<Block,{type:'text'}>=>b?.type==='text'&&typeof b.text==='string').map(b=>b.text).join(' ').replace(/\s+/g,' ').trim().slice(0,400),images:ids.slice(0,6).map(id=>'/api/media/'+id),imageCount:ids.length}}
