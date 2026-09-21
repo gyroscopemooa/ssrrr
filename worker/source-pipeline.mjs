@@ -5,7 +5,7 @@ import {sourceIdentity} from '../lib/automation/validation.mjs';
 import {requiredFields,chooseMode,stagesFor,fieldsFor,missingFields} from '../lib/automation/modes.mjs';
 const blocked=e=>/BLOCKED|HTTP (401|403|406|429|430)/.test(String(e));
 export async function collectSource(source,{test=false,fetcher:fetchImpl=fetchPage,onProgress=async()=>{}}={}){
- const required=requiredFields(source),requests=[],warnings=[],issues=[],items=[],deniedHosts=new Set();
+ const required=requiredFields(source),requests=[],warnings=[],issues=[],items=[],deniedUrls=new Map(),rateLimitedHosts=new Set();
  const fetcher=async(url,options)=>{try{const r=await fetchImpl(url,options);requests.push({url,method:options?.method||'GET',status:200,type:r.type,bytes:r.bytes.length});return r}catch(e){requests.push({url,method:options?.method||'GET',error:e.message});throw e}};
  const v={version:3,identity:sourceIdentity(source),mode:source.collectionMode||'AUTO',listPage:1,fullPage:false,listCount:0,details:0,comments:0,media:0,eligibleCount:0,passed:false,requiredFields:required,availableFields:[],missingFields:required,stages:{list:{status:'pending'},detail:{status:'unused'},comments:{status:'unused'},media:{status:'unused'}},checkedAt:new Date().toISOString(),samples:[],requests,errors:[],warnings,alternatives:[]};
  const adapter=source.adapter==='dcinside'?new DcinsideAdapter(fetcher):new GenericHtmlAdapter(fetcher);
@@ -37,11 +37,12 @@ export async function collectSource(source,{test=false,fetcher:fetchImpl=fetchPa
  if(test&&(mediaAttempts>=3||verifiedBlocks.some(x=>(kind==='image'?x.type==='image':['video','youtube'].includes(x.type))&&x.verified)))continue;
  mediaAttempts++;
  try{if(b.type==='youtube'){verifiedBlocks.push({...b,verified:true});v.media++;continue}
- const host=new URL(b.url).hostname;if(deniedHosts.has(host))throw Error('BLOCKED: earlier media denial for '+host);
+ const host=new URL(b.url).hostname;if(rateLimitedHosts.has(host))throw Error('BLOCKED: HTTP 429; media host rate limited');
+ if(deniedUrls.has(b.url))throw Error(deniedUrls.get(b.url));
  const r=await fetcher(b.url,{hosts:[new URL(source.url).hostname,...source.mediaHosts],max:b.type==='video'?100*1024*1024:30*1024*1024,referer:item.url});const type=mediaType(r.bytes,r.type);
  if(type==='image/gif'&&!source.gifs)continue;if(b.type==='image'&&!type.startsWith('image/')||b.type==='video'&&!type.startsWith('video/'))throw Error('MEDIA_INVALID_CONTENT_TYPE: '+type);
  verifiedBlocks.push({...b,verified:true});v.media++;
- }catch(e){sampleErrors.push(e.message);warnings.push(e.message);if(blocked(e)&&b.url)deniedHosts.add(new URL(b.url).hostname)}
+ }catch(e){sampleErrors.push(e.message);warnings.push(e.message);if(blocked(e)&&b.url)deniedUrls.set(b.url,e.message);if(/HTTP 429/.test(e.message)&&b.url)rateLimitedHosts.add(new URL(b.url).hostname)}
  }
  item.blocks=verifiedBlocks;item.bodyPresent=stages.detail&&item.blocks.some(b=>b.type==='text'&&b.text.trim()||['image','video'].includes(b.type));
  if(stages.media)v.stages.media={status:verifiedBlocks.some(b=>b.verified)?'passed':'empty',needed:true,count:v.media,origin:stages.detail?'detail':'list'};

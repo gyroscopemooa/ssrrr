@@ -1,7 +1,7 @@
 # 소스별 수집 모드 검수 보고서
 
-작성: 2026-09-21T15:28:45.110Z
-기본 카탈로그 27개 중 10개 PASS. 실제 운영 DB의 사용자 수정 설정을 덮어쓰거나 ON으로 변경하지 않았습니다.
+작성: 2026-09-21T22:09:12.919Z
+기본 카탈로그 27개 중 11개 PASS. 실제 운영 DB의 사용자 수정 설정을 덮어쓰거나 ON으로 변경하지 않았습니다.
 
 ## 판정 기준
 
@@ -16,31 +16,31 @@
 |---|---|---:|---|---|---|---|---|---|---|
 | 엠봉 | DETAIL_NO_COMMENTS | 성공 20 | 사용 | 사용 안 함 | 사용 | 가능 | title, sourceUrl, sourcePostId, body, image | - | - |
 | 개드립 | DETAIL_NO_COMMENTS | 성공 23 | 사용 | 사용 안 함 | 사용 | 가능 | recommends, title, sourceUrl, sourcePostId, body, image | - | - |
-| 개집넷 | DETAIL_NO_COMMENTS | 성공 20 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: robots.txt /; BLOCKED: earlier media denial for image.fmkorea.com |
-| 오늘의유머 | DETAIL_NO_COMMENTS | 성공 30 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, body | image | REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: robots.txt /; BLOCKED: earlier media denial for thimg.todayhumor.co.kr |
-| FM코리아 | DETAIL_NO_COMMENTS | 성공 24 | 사용 | 사용 안 함 | 사용 | 불가 | recommends, title, sourceUrl, sourcePostId, author | body, image | BLOCKED: robots.txt / |
-| 보배드림 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | HTTP 406 |
-| 뽐뿌 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: HTTP 403 |
-| 인스티즈 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: HTTP 403 |
-| 클리앙 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: robots.txt /service/recommend |
-| 와이고수 | DETAIL_NO_COMMENTS | 성공 27 | 사용 | 사용 안 함 | 사용 | 불가 | title, sourceUrl, sourcePostId | body, image | BLOCKED: robots.txt /*?*list_context= |
-| MLBPARK | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: robots.txt / |
 | 더쿠 | DETAIL_NO_COMMENTS | 성공 20 | 사용 | 사용 안 함 | 사용 | 가능 | views, title, sourceUrl, sourcePostId, createdAt, body, image | - | - |
 | 루리웹 | DETAIL_NO_COMMENTS | 성공 28 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, body, image | - | - |
 | 인벤 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, body, image | - | - |
-| 아카라이브 | DETAIL_NO_COMMENTS | 성공 45 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for ac.arca.live |
-| 이토랜드 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | UNSAFE_URL |
 | 막갤 | DETAIL_NO_COMMENTS | 성공 49 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body, image | - | - |
 | 코갤 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body, image | - | - |
-| 야갤 | DETAIL_NO_COMMENTS | 성공 49 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg6.dcinside.co.kr |
-| 인방갤 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: robots.txt /board/lists/?id=ib_new |
 | 우울갤 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body, image | - | - |
 | 롤갤 | DETAIL_NO_COMMENTS | 성공 49 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body, image | - | - |
-| 치지직 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg6.dcinside.co.kr |
-| 싱글벙글 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg8.dcinside.co.kr; BLOCKED: earlier media denial for dcimg5.dcinside.com |
-| 해축갤 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | SELECTOR_MISMATCH: list |
-| 주갤 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; SELECTOR_MISMATCH: body; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg8.dcinside.co.kr |
 | 웃긴대학 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, createdAt, body, image | - | - |
+| 개집넷 | DETAIL_NO_COMMENTS | 성공 20 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: robots.txt / |
+| 오늘의유머 | DETAIL_NO_COMMENTS | 성공 30 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, body | image | REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: robots.txt / |
+| 아카라이브 | DETAIL_NO_COMMENTS | 성공 45 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403 |
+| 야갤 | DETAIL_NO_COMMENTS | 성공 49 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403 |
+| 치지직 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403 |
+| 싱글벙글 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403 |
+| FM코리아 | DETAIL_NO_COMMENTS | 성공 24 | 사용 | 사용 안 함 | 사용 | 불가 | recommends, title, sourceUrl, sourcePostId, author | body, image | BLOCKED: robots.txt / |
+| 보배드림 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | HTTP 406 |
+| 뽐뿌 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: HTTP 403 |
+| 인스티즈 | DETAIL_NO_COMMENTS | 성공 35 | 사용 | 사용 안 함 | 사용 | 가능 | views, recommends, title, sourceUrl, sourcePostId, body, image | - | - |
+| 클리앙 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: robots.txt /service/recommend |
+| 와이고수 | DETAIL_NO_COMMENTS | 성공 27 | 사용 | 사용 안 함 | 사용 | 불가 | title, sourceUrl, sourcePostId | body, image | BLOCKED: robots.txt /*?*list_context= |
+| MLBPARK | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: robots.txt / |
+| 이토랜드 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | UNSAFE_REDIRECT: HTTPS to HTTP |
+| 인방갤 | AUTO | 실패 0 | 판별 전 | 판별 전 | 판별 전 | 불가 | - | title, sourceUrl, sourcePostId, body, image | BLOCKED: robots.txt /board/lists/?id=ib_new |
+| 해축갤 | DETAIL_NO_COMMENTS | 성공 49 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403 |
+| 주갤 | DETAIL_NO_COMMENTS | 성공 50 | 사용 | 사용 안 함 | 사용 | 불가 | views, recommends, title, sourceUrl, sourcePostId, createdAt, author, body | image | REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403 |
 
 ## 사용 방법
 
@@ -58,10 +58,12 @@
 
 - 검사 실패 소스는 ON 불가입니다. 본문/이미지가 필수이면 이를 빼서 통과 수를 부풀리지 않습니다.
 - 목록 제목·링크가 확보된 소스는 원문 링크 모음 운영을 별도로 선택할 수 있습니다. 필수를 제목·URL·ID로 변경하고 다시 검사해야 합니다.
-- 해축갤은 검사 당시 빈 응답으로 목록 규칙이 매칭되지 않았습니다. 유효한 현재 목록 주소 확인이 필요합니다.
+- 해축갤·주갤은 간헐적으로 빈 응답이 있었으나 재검사에서 목록을 읽었습니다. 현재 결과의 이미지 접근 제한을 확인하세요. 빈 응답은 주소 폐쇄나 선택자 오류로 단정하지 않습니다.
 - 외부 서버의 응답/게시물/만료 이미지 링크는 변할 수 있으므로 운영 화면에서 자신의 저장된 설정으로 재검사해야 합니다.
 - 실제 요청 URL 및 글별 필드/실패 기록은 test-results/live-sources.json, 요약은 test-results/source-modes.json에 있습니다.
 
-## 최종 회귀 검증
+## 후속 복구 검사
 
-단위 테스트 29/29 PASS, 타입 검사 PASS, 빌드 PASS, API 통합 테스트 PASS. 전체 lint는 오류 0개·경고 20개(기존 화면/테스트 경고)입니다. 최종 실행 중 Windows Node 프로세스 일시 종료가 있었고 재실행하여 통과했습니다. 상세 결과는 test-results/modes-verification.json 및 API 로그를 참조하세요.
+미통과 17개를 재검사했습니다. 이번 검사에서 추가 PASS는 없으며 총 10개 PASS입니다. 미디어 403은 해당 파일에만 적용하고 같은 URL은 재요청하지 않습니다. 429는 서버 단위로 요청을 중단합니다. 빈 HTML은 EMPTY_RESPONSE, HTTPS→HTTP 이동은 UNSAFE_REDIRECT로 구분하여 관리자 화면에 조치를 안내합니다. 이토랜드의 HTTPS 주소와 robots.txt가 HTTP로 이동함을 확인했으며 보안 검사는 유지했습니다.
+
+후속 검증: 단위 테스트 32/32 PASS, 변경 범위 lint 오류·경고 0개, typecheck PASS, build PASS, API integration PASS. 기존 DB와 사용자 설정은 변경하지 않았습니다.

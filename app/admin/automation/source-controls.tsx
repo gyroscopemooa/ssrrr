@@ -6,6 +6,8 @@ const failureGuides=[
  {pattern:/REQUIRED_FIELDS_MISSING|REQUIRED_FIELD_DISABLED/,title:'필수 데이터 부족 또는 설정 충돌',text:'위의 부족한 필드와 사용 안 함 단계를 확인하세요. 본문·이미지가 필요하면 추출 규칙을 수정하고, 링크만 필요하면 링크 모드와 필수 필드를 조정한 뒤 재검사하세요.'},
  {pattern:/MEDIA_HOST_NOT_ALLOWED/,title:'설정 수정 가능 · 미디어 서버 누락',text:'사진·영상 서버가 허용 목록에 없습니다. 실제 서버 주소를 확인해 추가한 뒤 다시 검사하세요.'},
  {pattern:/HTTP 404/,title:'주소 확인 필요 · 페이지 없음',text:'목록 주소, 갤러리 주소 또는 삭제된 글·파일인지 확인하세요. 주소 오류라면 수정할 수 있습니다.'},
+ {pattern:/EMPTY_RESPONSE/,title:'원본 서버 빈 응답 · 추출 규칙 오류와 구분',text:'서버가 성공 응답을 보냈지만 HTML 내용이 비어 있습니다. 일시 응답 문제나 접근 정책일 수 있으므로 선택자를 바꾸기보다 원본 주소와 서버 상태를 확인하세요.'},
+ {pattern:/UNSAFE_REDIRECT/,title:'원본 서버 이동 문제 · HTTPS에서 HTTP로 이동',text:'입력한 주소는 HTTPS이지만 원본 서버가 보안 연결이 아닌 HTTP로 보내고 있습니다. 정상 HTTPS 주소가 필요하며 보안 검사를 해제하지 않습니다.'},
  {pattern:/SELECTOR_MISMATCH/,title:'추출 규칙 확인 필요 · 목록·본문 인식 실패',text:'페이지 구조 변경이나 잘못된 주소일 수 있습니다. 차단 안내 페이지가 반환됐는지도 확인해야 합니다.'},
  {pattern:/PARSING_UNVERIFIED/,title:'추출 확인 필요 · 댓글·미디어 미확인',text:'표본 글에 댓글·미디어가 없거나 추출 규칙이 맞지 않을 수 있습니다. 이 오류만으로 수집 불가라고 판단하지 마세요.'},
  {pattern:/robots\.txt/,title:'현재 자동수집 제한 · robots.txt 금지',text:'요청 경로의 자동 접근이 금지돼 있습니다. 허용된 제공 경로나 운영자 허가가 없으면 현재 방식으로 수집할 수 없습니다. 사용하지 않을 경우 삭제해도 됩니다.'},

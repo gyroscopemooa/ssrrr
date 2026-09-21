@@ -8,6 +8,8 @@ export function SourceNote({row,onSaved}:{row:Row;onSaved:()=>Promise<void>}){
  let config:Row={};try{config=JSON.parse(String(row.config||'{}'))}catch{}
  const suggestions:string[]=[];
  if(!passed){
+ if(/EMPTY_RESPONSE/.test(reason))suggestions.push('원본 서버가 빈 페이지를 반환했습니다. 주소·일시적인 서버 상태 확인이 먼저이며, 선택자 수정만으로 해결된다고 볼 수 없습니다.');
+ if(/UNSAFE_REDIRECT/.test(reason))suggestions.push('원본이 HTTPS에서 HTTP로 이동시키고 있습니다. 정상 HTTPS 제공 주소를 확인하세요.');
  if(/REQUIRED_FIELDS_MISSING|REQUIRED_FIELD_DISABLED/.test(reason))suggestions.push('반드시 필요한 데이터와 현재 수집 방식을 확인하세요. 본문·이미지가 필요한데 없으면 통과할 수 없습니다. 링크 모음으로 운영할 때만 필수를 제목·URL·ID로 바꾸고 다시 검사하세요.');
  if(/SELECTOR_MISMATCH/.test(reason))suggestions.push('주소가 실제 목록 페이지인지 먼저 확인 → 기본 규칙 적용 또는 사이트별 추출 선택자 수정 → 다시 검사. 보통 수정 여지가 있습니다.');
  if(/DC public comment|COMMENT|PARSING_UNVERIFIED:.*comments/.test(reason)&&config.commentLimit!==0)suggestions.push('댓글이 필요 없으면 가져올 댓글 수를 0으로 저장 → 다시 검사. 본문·미디어도 통과해야 켤 수 있습니다.');

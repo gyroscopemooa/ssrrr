@@ -113,427 +113,6 @@
     ]
   },
   {
-    "id": "source-2",
-    "name": "개집넷",
-    "url": "https://gezip.net/bbs/board.php?bo_table=best",
-    "checkedAt": "2026-09-21T15:26:36.796Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 20,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 20
-      },
-      "detail": {
-        "status": "passed",
-        "needed": true,
-        "count": 5
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "empty",
-        "needed": true,
-        "count": 0,
-        "origin": "detail"
-      }
-    },
-    "availableFields": [
-      "views",
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "createdAt",
-      "body"
-    ],
-    "missingFields": [
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: robots.txt /; BLOCKED: earlier media denial for image.fmkorea.com",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 20,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "source-3",
-    "name": "오늘의유머",
-    "url": "https://www.todayhumor.co.kr/board/list.php?table=bestofbest",
-    "checkedAt": "2026-09-21T15:26:40.534Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 30,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 30
-      },
-      "detail": {
-        "status": "passed",
-        "needed": true,
-        "count": 5
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "empty",
-        "needed": true,
-        "count": 0,
-        "origin": "detail"
-      }
-    },
-    "availableFields": [
-      "views",
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body"
-    ],
-    "missingFields": [
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: robots.txt /; BLOCKED: earlier media denial for thimg.todayhumor.co.kr",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 30,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "source-4",
-    "name": "FM코리아",
-    "url": "https://www.fmkorea.com/best",
-    "checkedAt": "2026-09-21T15:26:44.204Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 24,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 24
-      },
-      "detail": {
-        "status": "failed",
-        "needed": true,
-        "error": "BLOCKED: robots.txt /"
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "pending",
-        "needed": true
-      }
-    },
-    "availableFields": [
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "author"
-    ],
-    "missingFields": [
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "BLOCKED: robots.txt /",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 24,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "source-5",
-    "name": "보배드림",
-    "url": "https://www.bobaedream.co.kr/list?code=best",
-    "checkedAt": "2026-09-21T15:26:44.346Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "HTTP 406"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "HTTP 406",
-    "alternatives": []
-  },
-  {
-    "id": "source-6",
-    "name": "뽐뿌",
-    "url": "https://www.ppomppu.co.kr/zboard/zboard.php?id=humor",
-    "checkedAt": "2026-09-21T15:26:44.400Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "BLOCKED: HTTP 403"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "BLOCKED: HTTP 403",
-    "alternatives": []
-  },
-  {
-    "id": "source-7",
-    "name": "인스티즈",
-    "url": "https://www.instiz.net/pt",
-    "checkedAt": "2026-09-21T15:26:44.463Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "BLOCKED: HTTP 403"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "BLOCKED: HTTP 403",
-    "alternatives": []
-  },
-  {
-    "id": "source-8",
-    "name": "클리앙",
-    "url": "https://www.clien.net/service/recommend",
-    "checkedAt": "2026-09-21T15:26:44.509Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "BLOCKED: robots.txt /service/recommend"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "BLOCKED: robots.txt /service/recommend",
-    "alternatives": []
-  },
-  {
-    "id": "source-9",
-    "name": "와이고수",
-    "url": "https://ygosu.com/community/real_article",
-    "checkedAt": "2026-09-21T15:26:44.564Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 27,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 27
-      },
-      "detail": {
-        "status": "failed",
-        "needed": true,
-        "error": "BLOCKED: robots.txt /*?*list_context="
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "pending",
-        "needed": true
-      }
-    },
-    "availableFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId"
-    ],
-    "missingFields": [
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "BLOCKED: robots.txt /*?*list_context=",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 27,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "source-10",
-    "name": "MLBPARK",
-    "url": "https://mlbpark.donga.com/mp/b.php?b=bullpen",
-    "checkedAt": "2026-09-21T15:26:45.010Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "BLOCKED: robots.txt /"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "BLOCKED: robots.txt /",
-    "alternatives": []
-  },
-  {
     "id": "source-11",
     "name": "더쿠",
     "url": "https://theqoo.net/hot",
@@ -708,104 +287,6 @@
     ]
   },
   {
-    "id": "source-14",
-    "name": "아카라이브",
-    "url": "https://arca.live/b/singbung",
-    "checkedAt": "2026-09-21T15:26:48.788Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 45,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 45
-      },
-      "detail": {
-        "status": "passed",
-        "needed": true,
-        "count": 5
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "empty",
-        "needed": true,
-        "count": 0,
-        "origin": "detail"
-      }
-    },
-    "availableFields": [
-      "views",
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "createdAt",
-      "body"
-    ],
-    "missingFields": [
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for ac.arca.live",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 45,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "source-15",
-    "name": "이토랜드",
-    "url": "https://www.etoland.co.kr/bbs/board.php?bo_table=etohumor",
-    "checkedAt": "2026-09-21T15:26:52.562Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "UNSAFE_URL"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "UNSAFE_URL",
-    "alternatives": []
-  },
-  {
     "id": "dc-makjang",
     "name": "막갤",
     "url": "https://gall.dcinside.com/board/lists/?id=accident_new&exception_mode=recommend",
@@ -924,105 +405,6 @@
         "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
       }
     ]
-  },
-  {
-    "id": "dc-baseball_new11",
-    "name": "야갤",
-    "url": "https://gall.dcinside.com/board/lists/?id=baseball_new13&exception_mode=recommend",
-    "checkedAt": "2026-09-21T15:27:01.049Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 49,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 49
-      },
-      "detail": {
-        "status": "passed",
-        "needed": true,
-        "count": 5
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "empty",
-        "needed": true,
-        "count": 0,
-        "origin": "detail"
-      }
-    },
-    "availableFields": [
-      "views",
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "createdAt",
-      "author",
-      "body"
-    ],
-    "missingFields": [
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg6.dcinside.co.kr",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 49,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "dc-ib_new2",
-    "name": "인방갤",
-    "url": "https://gall.dcinside.com/board/lists/?id=ib_new2&exception_mode=recommend",
-    "checkedAt": "2026-09-21T15:27:04.816Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "BLOCKED: robots.txt /board/lists/?id=ib_new"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "BLOCKED: robots.txt /board/lists/?id=ib_new",
-    "alternatives": []
   },
   {
     "id": "dc-depression",
@@ -1145,227 +527,6 @@
     ]
   },
   {
-    "id": "dc-chzzk",
-    "name": "치지직",
-    "url": "https://gall.dcinside.com/mgallery/board/lists/?id=chzzk&exception_mode=recommend",
-    "checkedAt": "2026-09-21T15:27:12.919Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 50,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 50
-      },
-      "detail": {
-        "status": "passed",
-        "needed": true,
-        "count": 5
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "empty",
-        "needed": true,
-        "count": 0,
-        "origin": "detail"
-      }
-    },
-    "availableFields": [
-      "views",
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "createdAt",
-      "author",
-      "body"
-    ],
-    "missingFields": [
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg6.dcinside.co.kr",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 50,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "dc-singlebungle1472",
-    "name": "싱글벙글",
-    "url": "https://gall.dcinside.com/mgallery/board/lists/?id=singlebungle1472&exception_mode=recommend",
-    "checkedAt": "2026-09-21T15:27:16.885Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 50,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 50
-      },
-      "detail": {
-        "status": "passed",
-        "needed": true,
-        "count": 5
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "empty",
-        "needed": true,
-        "count": 0,
-        "origin": "detail"
-      }
-    },
-    "availableFields": [
-      "views",
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "createdAt",
-      "author",
-      "body"
-    ],
-    "missingFields": [
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg8.dcinside.co.kr; BLOCKED: earlier media denial for dcimg5.dcinside.com",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 50,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
-    "id": "dc-football_new9",
-    "name": "해축갤",
-    "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
-    "checkedAt": "2026-09-21T15:27:21.628Z",
-    "mode": "AUTO",
-    "listSuccess": false,
-    "listCount": 0,
-    "detailRequired": null,
-    "commentsRequired": null,
-    "mediaRequired": null,
-    "stages": {
-      "list": {
-        "status": "failed",
-        "error": "SELECTOR_MISMATCH: list"
-      },
-      "detail": {
-        "status": "unused"
-      },
-      "comments": {
-        "status": "unused"
-      },
-      "media": {
-        "status": "unused"
-      }
-    },
-    "availableFields": [],
-    "missingFields": [
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "body",
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "SELECTOR_MISMATCH: list",
-    "alternatives": []
-  },
-  {
-    "id": "dc-neostock",
-    "name": "주갤",
-    "url": "https://gall.dcinside.com/board/lists/?id=neostock&exception_mode=recommend",
-    "checkedAt": "2026-09-21T15:27:21.675Z",
-    "mode": "DETAIL_NO_COMMENTS",
-    "listSuccess": true,
-    "listCount": 50,
-    "detailRequired": true,
-    "commentsRequired": false,
-    "mediaRequired": true,
-    "stages": {
-      "list": {
-        "status": "passed",
-        "count": 50
-      },
-      "detail": {
-        "status": "failed",
-        "needed": true,
-        "error": "SELECTOR_MISMATCH: body"
-      },
-      "comments": {
-        "status": "unused",
-        "needed": false
-      },
-      "media": {
-        "status": "empty",
-        "needed": true,
-        "count": 0,
-        "origin": "detail"
-      }
-    },
-    "availableFields": [
-      "views",
-      "recommends",
-      "title",
-      "sourceUrl",
-      "sourcePostId",
-      "createdAt",
-      "author",
-      "body"
-    ],
-    "missingFields": [
-      "image"
-    ],
-    "canEnable": false,
-    "reason": "REQUIRED_FIELDS_MISSING: image; SELECTOR_MISMATCH: body; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg8.dcinside.co.kr",
-    "alternatives": [
-      {
-        "mode": "LINK_AGGREGATION",
-        "available": true,
-        "listCount": 50,
-        "availableFields": [
-          "title",
-          "sourceUrl",
-          "sourcePostId"
-        ],
-        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-      }
-    ]
-  },
-  {
     "id": "source-16",
     "name": "웃긴대학",
     "url": "https://web.humoruniv.com/board/humor/board_best.html",
@@ -1410,6 +571,888 @@
     "missingFields": [],
     "canEnable": true,
     "reason": "",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 50,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "source-2",
+    "name": "개집넷",
+    "url": "https://gezip.net/bbs/board.php?bo_table=best",
+    "checkedAt": "2026-09-21T22:07:42.956Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 20,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 20
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "createdAt",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: robots.txt /",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 20,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "source-3",
+    "name": "오늘의유머",
+    "url": "https://www.todayhumor.co.kr/board/list.php?table=bestofbest",
+    "checkedAt": "2026-09-21T22:07:46.690Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 30,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 30
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: robots.txt /",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 30,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "source-14",
+    "name": "아카라이브",
+    "url": "https://arca.live/b/singbung",
+    "checkedAt": "2026-09-21T22:07:50.365Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 45,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 45
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "createdAt",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 45,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "dc-baseball_new11",
+    "name": "야갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=baseball_new13&exception_mode=recommend",
+    "checkedAt": "2026-09-21T22:07:54.230Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 49,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 49
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "createdAt",
+      "author",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 49,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "dc-chzzk",
+    "name": "치지직",
+    "url": "https://gall.dcinside.com/mgallery/board/lists/?id=chzzk&exception_mode=recommend",
+    "checkedAt": "2026-09-21T22:07:58.132Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 50,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 50
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "createdAt",
+      "author",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 50,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "dc-singlebungle1472",
+    "name": "싱글벙글",
+    "url": "https://gall.dcinside.com/mgallery/board/lists/?id=singlebungle1472&exception_mode=recommend",
+    "checkedAt": "2026-09-21T22:08:02.323Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 50,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 50
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "createdAt",
+      "author",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 50,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "source-4",
+    "name": "FM코리아",
+    "url": "https://www.fmkorea.com/best",
+    "checkedAt": "2026-09-21T22:09:02.854Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 24,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 24
+      },
+      "detail": {
+        "status": "failed",
+        "needed": true,
+        "error": "BLOCKED: robots.txt /"
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "pending",
+        "needed": true
+      }
+    },
+    "availableFields": [
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "author"
+    ],
+    "missingFields": [
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "BLOCKED: robots.txt /",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 24,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "source-5",
+    "name": "보배드림",
+    "url": "https://www.bobaedream.co.kr/list?code=best",
+    "checkedAt": "2026-09-21T22:09:03.005Z",
+    "mode": "AUTO",
+    "listSuccess": false,
+    "listCount": 0,
+    "detailRequired": null,
+    "commentsRequired": null,
+    "mediaRequired": null,
+    "stages": {
+      "list": {
+        "status": "failed",
+        "error": "HTTP 406"
+      },
+      "detail": {
+        "status": "unused"
+      },
+      "comments": {
+        "status": "unused"
+      },
+      "media": {
+        "status": "unused"
+      }
+    },
+    "availableFields": [],
+    "missingFields": [
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "HTTP 406",
+    "alternatives": []
+  },
+  {
+    "id": "source-6",
+    "name": "뽐뿌",
+    "url": "https://www.ppomppu.co.kr/zboard/zboard.php?id=humor",
+    "checkedAt": "2026-09-21T22:09:03.065Z",
+    "mode": "AUTO",
+    "listSuccess": false,
+    "listCount": 0,
+    "detailRequired": null,
+    "commentsRequired": null,
+    "mediaRequired": null,
+    "stages": {
+      "list": {
+        "status": "failed",
+        "error": "BLOCKED: HTTP 403"
+      },
+      "detail": {
+        "status": "unused"
+      },
+      "comments": {
+        "status": "unused"
+      },
+      "media": {
+        "status": "unused"
+      }
+    },
+    "availableFields": [],
+    "missingFields": [
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "BLOCKED: HTTP 403",
+    "alternatives": []
+  },
+  {
+    "id": "source-7",
+    "name": "인스티즈",
+    "url": "https://www.instiz.net/pt",
+    "checkedAt": "2026-09-21T22:09:03.122Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 35,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 35
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 1
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "passed",
+        "needed": true,
+        "count": 1,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body",
+      "image"
+    ],
+    "missingFields": [],
+    "canEnable": true,
+    "reason": "",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 35,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "source-8",
+    "name": "클리앙",
+    "url": "https://www.clien.net/service/recommend",
+    "checkedAt": "2026-09-21T22:09:04.204Z",
+    "mode": "AUTO",
+    "listSuccess": false,
+    "listCount": 0,
+    "detailRequired": null,
+    "commentsRequired": null,
+    "mediaRequired": null,
+    "stages": {
+      "list": {
+        "status": "failed",
+        "error": "BLOCKED: robots.txt /service/recommend"
+      },
+      "detail": {
+        "status": "unused"
+      },
+      "comments": {
+        "status": "unused"
+      },
+      "media": {
+        "status": "unused"
+      }
+    },
+    "availableFields": [],
+    "missingFields": [
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "BLOCKED: robots.txt /service/recommend",
+    "alternatives": []
+  },
+  {
+    "id": "source-9",
+    "name": "와이고수",
+    "url": "https://ygosu.com/community/real_article",
+    "checkedAt": "2026-09-21T22:09:04.266Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 27,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 27
+      },
+      "detail": {
+        "status": "failed",
+        "needed": true,
+        "error": "BLOCKED: robots.txt /*?*list_context="
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "pending",
+        "needed": true
+      }
+    },
+    "availableFields": [
+      "title",
+      "sourceUrl",
+      "sourcePostId"
+    ],
+    "missingFields": [
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "BLOCKED: robots.txt /*?*list_context=",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 27,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "source-10",
+    "name": "MLBPARK",
+    "url": "https://mlbpark.donga.com/mp/b.php?b=bullpen",
+    "checkedAt": "2026-09-21T22:09:04.671Z",
+    "mode": "AUTO",
+    "listSuccess": false,
+    "listCount": 0,
+    "detailRequired": null,
+    "commentsRequired": null,
+    "mediaRequired": null,
+    "stages": {
+      "list": {
+        "status": "failed",
+        "error": "BLOCKED: robots.txt /"
+      },
+      "detail": {
+        "status": "unused"
+      },
+      "comments": {
+        "status": "unused"
+      },
+      "media": {
+        "status": "unused"
+      }
+    },
+    "availableFields": [],
+    "missingFields": [
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "BLOCKED: robots.txt /",
+    "alternatives": []
+  },
+  {
+    "id": "source-15",
+    "name": "이토랜드",
+    "url": "https://www.etoland.co.kr/bbs/board.php?bo_table=etohumor",
+    "checkedAt": "2026-09-21T22:09:04.720Z",
+    "mode": "AUTO",
+    "listSuccess": false,
+    "listCount": 0,
+    "detailRequired": null,
+    "commentsRequired": null,
+    "mediaRequired": null,
+    "stages": {
+      "list": {
+        "status": "failed",
+        "error": "UNSAFE_REDIRECT: HTTPS to HTTP"
+      },
+      "detail": {
+        "status": "unused"
+      },
+      "comments": {
+        "status": "unused"
+      },
+      "media": {
+        "status": "unused"
+      }
+    },
+    "availableFields": [],
+    "missingFields": [
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "UNSAFE_REDIRECT: HTTPS to HTTP",
+    "alternatives": []
+  },
+  {
+    "id": "dc-ib_new2",
+    "name": "인방갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=ib_new2&exception_mode=recommend",
+    "checkedAt": "2026-09-21T22:09:04.808Z",
+    "mode": "AUTO",
+    "listSuccess": false,
+    "listCount": 0,
+    "detailRequired": null,
+    "commentsRequired": null,
+    "mediaRequired": null,
+    "stages": {
+      "list": {
+        "status": "failed",
+        "error": "BLOCKED: robots.txt /board/lists/?id=ib_new"
+      },
+      "detail": {
+        "status": "unused"
+      },
+      "comments": {
+        "status": "unused"
+      },
+      "media": {
+        "status": "unused"
+      }
+    },
+    "availableFields": [],
+    "missingFields": [
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "body",
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "BLOCKED: robots.txt /board/lists/?id=ib_new",
+    "alternatives": []
+  },
+  {
+    "id": "dc-football_new9",
+    "name": "해축갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
+    "checkedAt": "2026-09-21T22:09:04.850Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 49,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 49
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "createdAt",
+      "author",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403",
+    "alternatives": [
+      {
+        "mode": "LINK_AGGREGATION",
+        "available": true,
+        "listCount": 49,
+        "availableFields": [
+          "title",
+          "sourceUrl",
+          "sourcePostId"
+        ],
+        "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+      }
+    ]
+  },
+  {
+    "id": "dc-neostock",
+    "name": "주갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=neostock&exception_mode=recommend",
+    "checkedAt": "2026-09-21T22:09:08.612Z",
+    "mode": "DETAIL_NO_COMMENTS",
+    "listSuccess": true,
+    "listCount": 50,
+    "detailRequired": true,
+    "commentsRequired": false,
+    "mediaRequired": true,
+    "stages": {
+      "list": {
+        "status": "passed",
+        "count": 50
+      },
+      "detail": {
+        "status": "passed",
+        "needed": true,
+        "count": 5
+      },
+      "comments": {
+        "status": "unused",
+        "needed": false
+      },
+      "media": {
+        "status": "empty",
+        "needed": true,
+        "count": 0,
+        "origin": "detail"
+      }
+    },
+    "availableFields": [
+      "views",
+      "recommends",
+      "title",
+      "sourceUrl",
+      "sourcePostId",
+      "createdAt",
+      "author",
+      "body"
+    ],
+    "missingFields": [
+      "image"
+    ],
+    "canEnable": false,
+    "reason": "REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403",
     "alternatives": [
       {
         "mode": "LINK_AGGREGATION",

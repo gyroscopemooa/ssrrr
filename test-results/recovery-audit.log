@@ -1,0 +1,9 @@
+source-2 BLOCKED list 20 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: robots.txt /
+source-3 BLOCKED list 30 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: robots.txt /
+source-14 BLOCKED list 45 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403
+source-15 NETWORK_ERROR list 0 detail 0 comments 0 media 0 UNSAFE_URL
+dc-baseball_new11 BLOCKED list 49 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403
+dc-chzzk BLOCKED list 50 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403
+dc-singlebungle1472 BLOCKED list 50 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403
+dc-football_new9 BLOCKED list 49 detail 2 comments 0 media 0 REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; SELECTOR_MISMATCH: body; BLOCKED: HTTP 403
+dc-neostock PARSING_UNVERIFIED list 0 detail 0 comments 0 media 0 SELECTOR_MISMATCH: list
