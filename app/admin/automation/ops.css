@@ -10,3 +10,5 @@
 .ops-source-row{scroll-margin-top:90px}
 
 .ops-panel{overflow-anchor:none}.ops-source-row:focus{outline:2px solid #5550e8;outline-offset:3px}
+
+.ops-panel .ops-add-error{color:#991b1b;background:#fff1f2;border:1px solid #fecaca;border-radius:8px;padding:12px;font-size:14px}
