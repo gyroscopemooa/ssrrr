@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "at": "2026-09-21T12:42:13.626Z",
+  "at": "2026-09-21T14:01:04.048Z",
   "results": [
     "admin and worker authentication",
     "live audit evidence application: PASS can enable, blocked cannot",
@@ -9,6 +9,7 @@
     "repeated scan and cross-candidate hash dedup",
     "Gmail dedicated mailbox, privacy hold, edit approval, dedup, economy feed",
     "shorts duplicate lock, heartbeat, QC approval gate, cancellation",
-    "parser changes and failed revalidation revoke ON eligibility"
+    "parser changes and failed revalidation revoke ON eligibility",
+    "manual add and test: OFF, queued, running, PASS, ON gate, invalid ID"
   ]
 }
