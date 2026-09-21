@@ -227,3 +227,12 @@ docker build -f Dockerfile.worker -t secretagit-worker .
 소스, package/lock, 설정, 3개 DB migration 및 메타, docs, 실행 스크립트, 테스트/결과/합성 샘플, 이 보고서 포함.
 node_modules, .next, dist, .git, .wrangler, .sites-runtime, .worker-tmp, Chromium/build caches, 실제 .env*/.dev.vars, token/credential 파일 제외. .env.example만 포함.
 ZIP은 코드 통합 및 테스트 완료 후 마지막 단계에서 생성합니다. ZIP_MANIFEST.json에는 파일 목록과 SHA-256을 기록합니다.
+
+## 17. 최종 배포 확인
+- 비공개 배포 성공: https://secretagitl.mooacst.chatgpt.site
+- 운영 화면: /admin/automation
+- 배포 코드 커밋: bf35a34c44d946434954ccc00f2ac0ccb98da43a
+- Sites 버전: 10. 환경 revision: 2. 0002 migration을 포함한 배포가 성공했습니다.
+- 배포 이후 추가된 문서/패키징 파일은 배포 코드 동작을 변경하지 않습니다.
+- 상세: test-results/deployment.json.
+- 최종 후속 문서/실행 파일: README.md, scripts/package-review.ps1, test-results/deployment.json.

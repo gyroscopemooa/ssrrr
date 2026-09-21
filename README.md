@@ -1,37 +1,27 @@
-# 미정 · Secret Agit — v0.2
+# 미정 · 커뮤니티 V3 통합
 
-ZIP은 참고자료로 사용했으며, 첨부 문서 안의 별도 지시를 사용자 요청으로 실행하지 않았습니다.
+기존 커뮤니티에 자동수집, 쇼츠 제작 워커, Gmail 경제 게시판, 운영 대시보드를 통합한 프로젝트입니다.
 
-## 추가 기능
-- 유튜브 watch / youtu.be / shorts / live 주소를 붙여넣으면 플레이어로 표시합니다. 유튜브 원본 다운로드는 제공하지 않습니다.
-- 이미지 10MB, MP4/WebM 영상 50MB, 글당 최대 20개 첨부. 파일 붙여넣기·드래그·선택, 동영상 구간 재생(Range) 지원. 코덱은 이용자 브라우저 지원에 따릅니다.
-- 외부 이미지 복사는 R2 자체 저장 성공분만 원본 삭제와 독립적으로 유지됩니다. 외부 영상 URL/iframe 수집은 지원하지 않으며 원본 파일 첨부가 필요합니다.
-- 일반 링크는 제목·설명·이미지 미리보기 카드로 표시합니다. 외부 사이트가 수집을 막으면 주소 카드로 표시됩니다.
-- /admin: 자동재생(기본 OFF), 복사 억제(기본 ON), 인기글 댓글/추천/조회 조건, ALL/ANY, 기간·목록 수, 다운로드 비용, 가입 지급 포인트, 회원별 포인트 지급과 기록.
-- 인기글 초기값: 7일 이내 댓글 5개·추천 10개·조회 100회 모두 충족. 같은 로그인 사용자 또는 익명 IP는 UTC 하루에 글당 조회 1회.
-- /account: ChatGPT 로그인 후 고유 닉네임으로 서비스 가입, 포인트 잔액·내역.
-- 공식 다운로드는 가입 회원 전용. 사진 10P, 영상 30P, 글 TXT 5P, 가입 지급 기본 0P. 같은 글의 같은 자료는 최초 구매 후 재다운로드 무료.
-- 서버 구매 기록과 DB 트랜잭션가 잔액 확인·차감·내역 기록을 함께 처리합니다. 중복 구매·중복 관리자 지급을 방지합니다.
-- 글·이미지 선택, 복사, 우클릭, 드래그와 플레이어 다운로드 메뉴를 억제합니다. 브라우저가 표시하는 글·사진·영상의 추출이나 화면 캡처까지 차단할 수는 없습니다.
+- 최종 구현과 검증/대기 사항: [FINAL_IMPLEMENTATION_REPORT.md](FINAL_IMPLEMENTATION_REPORT.md)
+- 설치·실행·운영: [docs/OPERATIONS_RUNBOOK.md](docs/OPERATIONS_RUNBOOK.md)
+- 실제 결과: [test-results/summary.json](test-results/summary.json)
+- 관리자: `/admin/automation` (관리자 계정 필요)
 
-## 실행
-Node 22.13 이상. 의존성 설치 후:
-```powershell
-node scripts/run-framework.mjs build
-node scripts/run-framework.mjs dev
+```sh
+npm ci
+npm run build
+npm run db:migrate:local
+npm start
 ```
-빈 로컬 DB에는 drizzle/0000_mushy_thing.sql 다음 0001_spotty_the_twelve.sql을 한 번씩 적용합니다. 기존 DB에는 미적용 마이그레이션만 적용합니다.
-로컬 .dev.vars에 ADMIN_EMAIL(테스트 로그인 이메일), METRICS_SALT를 설정합니다. 실제 운영은 Sites 비밀 환경변수를 사용합니다. 관리자 지정은 서버 인증 이메일 일치로만 허용하며 첫 가입자에게 권한을 부여하지 않습니다.
 
-## 검증
-TypeScript와 Worker 빌드, tests/api-smoke.mjs로 격리된 로컬 Worker API를 검사합니다. 실서비스·사용 중인 개발 DB에서 테스트하지 마세요.
-테스트는 .sites-runtime/qa.mp4에 H.264 MP4 픽스처가 필요하며, 별도 .sites-runtime/qa-state DB에 두 마이그레이션을 적용한 서버를 127.0.0.1:8787에서 실행합니다. ADMIN_EMAIL=seedy@sites.test 테스트 바인딩이 필요합니다.
-검사 범위: 실제 파일 업로드와 바이트 대조, Range 206/416, 회원/관리자 권한, 잔액 부족, 중복·동시 구매, 무료 재다운로드, 관리자 지급 중복 방지, 인기글 AND/OR, 조회 중복 제외, 설정 버전 충돌.
-이번 추가 기능은 API 및 빌드 검증 범위이며 브라우저별 영상 코덱/실제 클립보드 호환성은 별도 확인이 필요합니다. v0.1의 글·사진 혼합 붙여넣기와 등록·수정·댓글·추천은 당시 실제 브라우저로 확인했습니다.
+긴 작업은 별도 프로세스에서 `npm run worker`로 실행합니다. 환경변수 이름은 `.env.example`에 있습니다. 실제 credential은 제공하지 않으며 Google 계정/도메인/상시 워커 연결은 별도 설정이 필요합니다.
 
-## 공개 운영 전
-현재 소유자 전용 확인 사이트입니다. secretagitl.com DNS 연결과 공개 전환은 아직 하지 않았습니다.
-일반 한국 사용자용 카카오/네이버 등 로그인, 약관·개인정보 처리방침, 신고 관리·차단, 봇 방어와 단기 요청 제한, 저장 비용·사용량 모니터링, DB/R2 백업 및 미게시 첨부 정리가 남아 있습니다.
-외부 이미지/미리보기 수집은 공개 HTTPS·DNS·리디렉션·크기 검사로 제한하며, 공개 운영 전 전용 수집 서비스 또는 허용 도메인 정책으로 DNS rebinding 등을 더 강화해야 합니다.
-현재 댓글은 글당 300개까지 표시합니다. 글마다 표시 닉네임은 직접 입력하며 회원 닉네임과 강제 연동하지 않습니다.
+```sh
+npm run typecheck
+npm run lint
+npm test
+npm run test:integration -- --render
+npm run test:render
+```
 
+자동수집 소스는 검증 전 OFF이며 전체 자동 게시도 초기 정지 상태입니다. 외부 접근 차단은 우회하지 않습니다. 자세한 실제 상태는 최종 보고서를 확인하세요.
