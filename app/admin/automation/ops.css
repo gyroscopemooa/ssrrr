@@ -8,3 +8,5 @@
 .ops-source-row{align-items:flex-start}.ops-source-buttons{display:flex;flex-direction:column;flex:0 0 148px;gap:6px}.ops-row .ops-source-buttons button{width:100%;margin:0;white-space:normal;overflow-wrap:anywhere;padding:8px 10px;font-size:13px}.ops-failure-guidance{margin-top:10px;padding:10px 12px;border-radius:8px;background:#f7f8fb;border:1px solid #e0e4eb}.ops-failure-guidance>div+div{margin-top:10px}.ops-panel .ops-failure-guidance p{color:#4b5563;margin:5px 0 10px}.ops-failure-guidance strong{color:#374151}.ops-failure-guidance summary{font-size:13px}@media(max-width:650px){.ops-source-row{flex-direction:row;gap:10px}.ops-source-buttons{flex-basis:106px}.ops-row .ops-source-buttons button{font-size:12px;padding:8px 5px}.ops-failure-guidance{padding:8px}}@media(max-width:380px){.ops-source-row{flex-direction:column}.ops-source-buttons{flex-basis:auto;width:100%}}
 
 .ops-source-row{scroll-margin-top:90px}
+
+.ops-panel{overflow-anchor:none}.ops-source-row:focus{outline:2px solid #5550e8;outline-offset:3px}
