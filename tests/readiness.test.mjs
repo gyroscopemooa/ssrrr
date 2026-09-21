@@ -19,3 +19,9 @@ test('optional comments and media skip requests while body restrictions remain e
  const blocked=await validateSource(s,{fetcher:async()=>{throw Error('BLOCKED: robots.txt')}});assert(!blocked.validation.passed);
  const enabled=await validateSource({...s,commentLimit:1},{fetcher:async url=>url.includes('/comment/')?{bytes:Buffer.from('denied'),type:'text/html'}:fetcher(url)});assert(!enabled.validation.passed);assert.match(enabled.errors.join(),/BLOCKED/);
 });
+
+test('Humoruniv keeps unique post numbers and upgrades only its known image host',async()=>{
+ const {parseList,parseDetail}=await import('../worker/adapters.mjs');const s=sourceSchema.parse({name:'humor',url:'https://web.humoruniv.com/board/humor/board_best.html'});
+ const list=parseList('<article><h2>A</h2><a href="read.html?table=pds&number=1">A</a></article><article><h2>B</h2><a href="read.html?table=pds&number=2">B</a></article>',s);assert.deepEqual(list.map(x=>x.externalId),['1','2']);
+ const d=parseDetail('<article><img src="http://down.humoruniv.com/a.jpg"><img src="http://other.example.com/b.jpg"></article>',list[0],s);assert.equal(d.blocks[0].url,'https://down.humoruniv.com/a.jpg');assert.equal(d.blocks[1].url,'http://other.example.com/b.jpg');
+});

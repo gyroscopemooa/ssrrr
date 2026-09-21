@@ -1355,5 +1355,79 @@
       ],
       "errors": []
     }
+  },
+  {
+    "id": "source-16",
+    "name": "웃긴대학",
+    "url": "https://web.humoruniv.com/board/humor/board_best.html",
+    "at": "2026-09-21T14:59:58.570Z",
+    "status": "PASS",
+    "listCount": 50,
+    "details": 1,
+    "comments": 5,
+    "media": 2,
+    "error": "",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://web.humoruniv.com/board/humor/board_best.html\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr[id^=\\\"li_chk_\\\"]\",\"title\":\".li_sbj [id^=\\\"title_chk_\\\"]\",\"link\":\".li_sbj a[href*=\\\"read.html\\\"]\",\"body\":\"#wrap_copy\",\"comment\":\"tr[id^=\\\"comment_span_\\\"] .comment_more\",\"views\":\"td.li_und:nth-last-child(3)\",\"likes\":\"td.li_und .o\",\"comments\":\".list_comment_num\",\"date\":\".li_date\"},\"mediaHosts\":[\"down.humoruniv.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 50,
+      "details": 1,
+      "comments": 5,
+      "media": 2,
+      "passed": true,
+      "checkedAt": "2026-09-21T14:59:58.570Z",
+      "samples": [
+        {
+          "url": "https://web.humoruniv.com/board/humor/read.html?table=pds&number=1420879",
+          "blocks": 4,
+          "comments": 5,
+          "media": [
+            {
+              "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71001_583c8c6741ec9a46b901fe6d433f7683cde7e3aa.jpg",
+              "type": "image/jpeg",
+              "bytes": 332246
+            },
+            {
+              "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71002_0fe1ab8d1f3d90b6b49ca8918d9aa53d54f3d47f.jpg",
+              "type": "image/jpeg",
+              "bytes": 64393
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://web.humoruniv.com/board/humor/board_best.html",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html",
+          "bytes": 155856
+        },
+        {
+          "url": "https://web.humoruniv.com/board/humor/read.html?table=pds&number=1420879",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html",
+          "bytes": 290437
+        },
+        {
+          "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71001_583c8c6741ec9a46b901fe6d433f7683cde7e3aa.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 332246
+        },
+        {
+          "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71002_0fe1ab8d1f3d90b6b49ca8918d9aa53d54f3d47f.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 64393
+        }
+      ],
+      "errors": []
+    }
   }
 ]

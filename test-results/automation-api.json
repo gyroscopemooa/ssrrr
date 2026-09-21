@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "at": "2026-09-21T14:55:16.608Z",
+  "at": "2026-09-21T15:01:29.242Z",
   "results": [
     "admin and worker authentication",
     "live audit evidence application: PASS can enable, blocked cannot",
@@ -12,6 +12,7 @@
     "parser changes and failed revalidation revoke ON eligibility",
     "manual add and test: OFF, queued, running, PASS, ON gate, invalid ID",
     "source deletion: active work protected, queued scan cancelled, published post preserved",
-    "bulk selection and partial patches, validation invalidation, preserved verification, duplicate suppression, active work protection"
+    "bulk selection and partial patches, validation invalidation, preserved verification, duplicate suppression, active work protection",
+    "manual Humoruniv source can apply matching host preset without changing identity"
   ]
 }

@@ -29,3 +29,5 @@ for(const item of sourceCatalog){Object.assign(item,corrections[item.id!]);if(it
 for(const item of sourceCatalog){if(item.id==='source-0'){item.selectors.comment='.cmt_body > .xe_content';item.mediaHosts=['mbong.kr'];}if(item.id==='source-13')item.selectors.item='tr:not(.notice):has(a.subject-link)';}
 
 for(const item of sourceCatalog)if(item.id==='source-11')item.mediaHosts.push('pbs.twimg.com');
+
+sourceCatalog.push(sourceSchema.parse({id:'source-16',name:'웃긴대학',url:'https://web.humoruniv.com/board/humor/board_best.html',mediaHosts:['down.humoruniv.com'],selectors:{item:'tr[id^="li_chk_"]',title:'.li_sbj [id^="title_chk_"]',link:'.li_sbj a[href*="read.html"]',body:'#wrap_copy',comment:'tr[id^="comment_span_"] .comment_more',views:'td.li_und:nth-last-child(3)',likes:'td.li_und .o',comments:'.list_comment_num',date:'.li_date'}}));
