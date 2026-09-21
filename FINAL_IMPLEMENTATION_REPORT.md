@@ -241,3 +241,6 @@ ZIP은 코드 통합 및 테스트 완료 후 마지막 단계에서 생성합�
 - 배포 이후 추가된 문서/패키징 파일은 배포 코드 동작을 변경하지 않습니다.
 - 상세: test-results/deployment.json.
 - 최종 후속 문서/실행 파일: README.md, scripts/package-review.ps1, test-results/deployment.json.
+
+## 이번 수정의 배포 상태
+로컬 구현·검증·커밋 완료. 기존 Sites 저장소(git.chatgpt-team.site)로 소스 및 Git 이력을 push하는 단계가 자동 승인 검토에서 명시적 외부 전송 승인 부족으로 거절되었다. 우회하거나 업로드를 실행하지 않았다. 현재 서비스에는 이전 배포가 유지되며, 이 수정의 게시에는 사용자의 해당 저장소 전송·배포 승인이 필요하다.
