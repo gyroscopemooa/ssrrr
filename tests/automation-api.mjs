@@ -22,5 +22,23 @@ assert.equal((await rpc('claim',{workerId:'qa-worker'})).task,null);
 await op('sourceDelete',{id});assert.equal((await req('/api/posts/'+job.id)).post.title,item.title);
 await op('sourceDelete',{id:'missing-source'},404);
 results.push('source deletion: active work protected, queued scan cancelled, published post preserved');
+// Bulk actions preserve unselected sites and fields and prevent duplicate scans.
+const ba=await op('source',{source:{...manual,name:'bulk A',url:'https://example.com/bulk-a'}}),bb=await op('source',{source:{...manual,name:'bulk B',url:'https://example.com/bulk-b'}});
+await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{commentLimit:0,images:false,videos:false}});
+data=await snapshot();let ac=JSON.parse(data.sources.find(x=>x.id===ba.id).config);assert.equal(ac.commentLimit,0);assert.equal(ac.url,'https://example.com/bulk-a');assert.equal(JSON.parse(data.sources.find(x=>x.id===bb.id).config).commentLimit,5);
+await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{url:'https://other.example.com'}},400);
+await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{}},400);
+await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{commentLimit:-1}},400);
+let bulk=await op('sourcesBulk',{ids:[ba.id,ba.id,bb.id],mode:'test'});assert.equal(bulk.results.length,2);assert(bulk.results.every(r=>r.status==='queued'));
+bulk=await op('sourcesBulk',{ids:[ba.id,bb.id],mode:'test'});assert(bulk.results.every(r=>r.status==='skipped'));
+({task}=await rpc('claim',{workerId:'qa-worker'}));assert.equal(task.ref_id,ba.id);
+bulk=await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{dailyLimit:2}});assert.equal(bulk.results[0].status,'skipped');
+await rpc('complete',{id:task.id,token:task.lease_token,result:{items:[item],validation:{version:2,identity:sourceIdentity(ac),passed:true,listPage:1,fullPage:true,listCount:1,details:1,comments:0,media:0}}});
+assert((await snapshot()).sources.find(x=>x.id===ba.id).can_enable);
+await op('source',{source:{...ac,enabled:true}});await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{dailyLimit:2}});
+let ar=(await snapshot()).sources.find(x=>x.id===ba.id);assert.equal(ar.enabled,1);assert(ar.can_enable);
+await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{commentLimit:1}});ar=(await snapshot()).sources.find(x=>x.id===ba.id);assert.equal(ar.enabled,0);assert.equal(ar.can_enable,false);
+await op('sourceDelete',{id:ba.id});await op('sourceDelete',{id:bb.id});
+results.push('bulk selection and partial patches, validation invalidation, preserved verification, duplicate suppression, active work protection');
 // Leave this isolated QA environment paused after assertions.
 data=await snapshot();await op('settings',{revision:data.revision,config:{...data.config,paused:true}});writeFileSync('test-results/automation-api.json',JSON.stringify({passed:true,at:new Date().toISOString(),results},null,2));console.log('PASS:',results.join('; '));

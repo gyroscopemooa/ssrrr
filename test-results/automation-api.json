@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "at": "2026-09-21T14:37:41.737Z",
+  "at": "2026-09-21T14:55:16.608Z",
   "results": [
     "admin and worker authentication",
     "live audit evidence application: PASS can enable, blocked cannot",
@@ -11,6 +11,7 @@
     "shorts duplicate lock, heartbeat, QC approval gate, cancellation",
     "parser changes and failed revalidation revoke ON eligibility",
     "manual add and test: OFF, queued, running, PASS, ON gate, invalid ID",
-    "source deletion: active work protected, queued scan cancelled, published post preserved"
+    "source deletion: active work protected, queued scan cancelled, published post preserved",
+    "bulk selection and partial patches, validation invalidation, preserved verification, duplicate suppression, active work protection"
   ]
 }
