@@ -1,0 +1,1 @@
+PASS: upload, MP4 range bytes, membership, pricing, download authorization, atomic/idempotent charges, admin permissions/revisions, popular AND/OR and view deduplication

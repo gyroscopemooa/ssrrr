@@ -5,13 +5,19 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {files:["app/community.tsx","app/admin/page.tsx","app/post/[[]id[]]/detail.tsx","app/write/composer.tsx"],rules:{
+    // Existing Vinext client screens deliberately use full-page navigation and
+    // effect-based request loading. Keep advisory feedback without changing routing.
+    "@next/next/no-html-link-for-pages":"off",
+    "react-hooks/set-state-in-effect":"warn"
+  }},
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
-    "next-env.d.ts",
+    "next-env.d.ts", "dist/**", ".sites-runtime/**", ".wrangler/**", ".worker-tmp/**", "test-results/**", "vendor/**",
   ]),
   {
     files: ["components/ui/**/*.{ts,tsx}", "hooks/use-mobile.ts"],

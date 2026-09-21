@@ -1,0 +1,18 @@
+✔ new best candidates beat old high score; fallback and used exclusion (0.8249ms)
+✔ KST schedule interleaves sources at three-minute intervals (3.1687ms)
+✔ privacy rejects email phone resident ID account secret address and denylist (1.6625ms)
+✔ first page parser limits rows and preserves text/image/video order and five comments (18.3431ms)
+✔ network blocks local/IP/file targets before requests (3.0439ms)
+✔ shorts plan handles image GIF video comments safe minimum and split continuity (0.9675ms)
+✔ MIME HTML removes quoted mail (0.9654ms)
+✔ dedicated Gmail profile mismatch fails before listing messages (2.7796ms)
+✔ Gmail allow-label payload and YouTube statistics contract with mocked APIs (1.6525ms)
+✔ YouTube scheduled resumable upload checkpoints and resume prevent duplicate insert (15.4035ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 823.7713

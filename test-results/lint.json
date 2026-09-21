@@ -1,0 +1,146 @@
+{
+  "errors": 0,
+  "warnings": 20,
+  "messages": [
+    {
+      "file": "app\\admin\\page.tsx",
+      "line": 5,
+      "rule": "react-hooks/set-state-in-effect",
+      "severity": 1,
+      "message": "Error: Calling setState synchronously within an effect can trigger cascading renders"
+    },
+    {
+      "file": "app\\admin\\page.tsx",
+      "line": 5,
+      "rule": "react-hooks/exhaustive-deps",
+      "severity": 1,
+      "message": "React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array."
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 8,
+      "rule": "react-hooks/set-state-in-effect",
+      "severity": 1,
+      "message": "Error: Calling setState synchronously within an effect can trigger cascading renders"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 9,
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "severity": 1,
+      "message": "Do not use `location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 9,
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "severity": 1,
+      "message": "Do not use `location.assign()` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 9,
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "severity": 1,
+      "message": "Do not use `location.assign()` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 9,
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "severity": 1,
+      "message": "Do not use `location.assign()` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 9,
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "severity": 1,
+      "message": "Do not use `location.assign()` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 10,
+      "rule": "@next/next/no-img-element",
+      "severity": 1,
+      "message": "Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 10,
+      "rule": "@next/next/no-img-element",
+      "severity": 1,
+      "message": "Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 11,
+      "rule": "react-hooks/set-state-in-effect",
+      "severity": 1,
+      "message": "Error: Calling setState synchronously within an effect can trigger cascading renders"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 11,
+      "rule": "react-hooks/set-state-in-effect",
+      "severity": 1,
+      "message": "Error: Calling setState synchronously within an effect can trigger cascading renders"
+    },
+    {
+      "file": "app\\community.tsx",
+      "line": 11,
+      "rule": "@next/next/no-img-element",
+      "severity": 1,
+      "message": "Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element"
+    },
+    {
+      "file": "app\\content-blocks.tsx",
+      "line": 4,
+      "rule": "@next/next/no-img-element",
+      "severity": 1,
+      "message": "Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element"
+    },
+    {
+      "file": "app\\content-blocks.tsx",
+      "line": 6,
+      "rule": "@next/next/no-img-element",
+      "severity": 1,
+      "message": "Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element"
+    },
+    {
+      "file": "app\\post\\[id]\\detail.tsx",
+      "line": 12,
+      "rule": "react-hooks/set-state-in-effect",
+      "severity": 1,
+      "message": "Error: Calling setState synchronously within an effect can trigger cascading renders"
+    },
+    {
+      "file": "app\\post\\[id]\\detail.tsx",
+      "line": 12,
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "severity": 1,
+      "message": "Do not use `location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination"
+    },
+    {
+      "file": "app\\write\\composer.tsx",
+      "line": 9,
+      "rule": "react-hooks/set-state-in-effect",
+      "severity": 1,
+      "message": "Error: Calling setState synchronously within an effect can trigger cascading renders"
+    },
+    {
+      "file": "app\\write\\composer.tsx",
+      "line": 14,
+      "rule": "@next/next/no-location-assign-relative-destination",
+      "severity": 1,
+      "message": "Do not use `location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination"
+    },
+    {
+      "file": "tests\\automation-api.mjs",
+      "line": 1,
+      "rule": "@typescript-eslint/no-unused-vars",
+      "severity": 1,
+      "message": "'randomUUID' is defined but never used."
+    }
+  ]
+}

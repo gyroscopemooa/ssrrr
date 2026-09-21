@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "at": "2026-09-21T10:05:19.276Z",
+  "jobId": "9dc0464d-86a0-4250-bded-589ce270f20c",
+  "stages": [
+    "queued",
+    "analyzing",
+    "ready_to_render",
+    "rendering",
+    "qc",
+    "ready",
+    "approved"
+  ],
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "durationMs": 12200,
+    "bytes": 114828
+  },
+  "checks": [
+    "Node RPC claim",
+    "heartbeat",
+    "actual Remotion render",
+    "R2 stream upload",
+    "QC metadata",
+    "admin approval",
+    "range download"
+  ]
+}

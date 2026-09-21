@@ -1,0 +1,244 @@
+{
+  "file": ".sites-runtime/render-qa/job/output.mp4",
+  "plan": {
+    "scenes": [
+      {
+        "type": "intro",
+        "from": 0,
+        "frames": 45,
+        "payload": {
+          "text": "미정",
+          "startFrame": 0,
+          "totalFrames": 45
+        }
+      },
+      {
+        "type": "post_title",
+        "from": 45,
+        "frames": 54,
+        "payload": {
+          "text": "함께 웃는 아지트",
+          "startFrame": 0,
+          "totalFrames": 54
+        }
+      },
+      {
+        "type": "post_body_scroll",
+        "from": 99,
+        "frames": 183,
+        "payload": {
+          "text": "오늘도 웃음 하나 나누고 가세요. 사진과 움직이는 짤, 소리 있는 영상이 차례대로 나옵니다.",
+          "startFrame": 0,
+          "totalFrames": 183
+        }
+      },
+      {
+        "type": "image_hold",
+        "from": 282,
+        "frames": 180,
+        "payload": {
+          "src": "http://127.0.0.1:6323/image.png",
+          "hasAudio": false,
+          "originalVolume": 1,
+          "startFrame": 0,
+          "totalFrames": 180
+        }
+      },
+      {
+        "type": "gif_play",
+        "from": 462,
+        "frames": 180,
+        "payload": {
+          "src": "http://127.0.0.1:6323/gif.gif",
+          "hasAudio": false,
+          "originalVolume": 1,
+          "startFrame": 0,
+          "totalFrames": 180
+        }
+      },
+      {
+        "type": "video_play",
+        "from": 642,
+        "frames": 60,
+        "payload": {
+          "src": "http://127.0.0.1:6323/video.mp4",
+          "hasAudio": true,
+          "originalVolume": 1,
+          "startFrame": 0,
+          "totalFrames": 60
+        }
+      },
+      {
+        "type": "comments",
+        "from": 702,
+        "frames": 60,
+        "payload": {
+          "text": "작은 웃음이 하루를 바꾸네요!",
+          "startFrame": 0,
+          "totalFrames": 60
+        }
+      },
+      {
+        "type": "outro",
+        "from": 762,
+        "frames": 60,
+        "payload": {
+          "text": "미정에서 더 보기",
+          "startFrame": 0,
+          "totalFrames": 60
+        }
+      }
+    ],
+    "durationFrames": 822,
+    "fullDurationFrames": 822,
+    "partCount": 1,
+    "parts": [
+      {
+        "scenes": [
+          {
+            "type": "intro",
+            "from": 0,
+            "frames": 45,
+            "payload": {
+              "text": "미정",
+              "startFrame": 0,
+              "totalFrames": 45
+            }
+          },
+          {
+            "type": "post_title",
+            "from": 45,
+            "frames": 54,
+            "payload": {
+              "text": "함께 웃는 아지트",
+              "startFrame": 0,
+              "totalFrames": 54
+            }
+          },
+          {
+            "type": "post_body_scroll",
+            "from": 99,
+            "frames": 183,
+            "payload": {
+              "text": "오늘도 웃음 하나 나누고 가세요. 사진과 움직이는 짤, 소리 있는 영상이 차례대로 나옵니다.",
+              "startFrame": 0,
+              "totalFrames": 183
+            }
+          },
+          {
+            "type": "image_hold",
+            "from": 282,
+            "frames": 180,
+            "payload": {
+              "src": "http://127.0.0.1:6323/image.png",
+              "hasAudio": false,
+              "originalVolume": 1,
+              "startFrame": 0,
+              "totalFrames": 180
+            }
+          },
+          {
+            "type": "gif_play",
+            "from": 462,
+            "frames": 180,
+            "payload": {
+              "src": "http://127.0.0.1:6323/gif.gif",
+              "hasAudio": false,
+              "originalVolume": 1,
+              "startFrame": 0,
+              "totalFrames": 180
+            }
+          },
+          {
+            "type": "video_play",
+            "from": 642,
+            "frames": 60,
+            "payload": {
+              "src": "http://127.0.0.1:6323/video.mp4",
+              "hasAudio": true,
+              "originalVolume": 1,
+              "startFrame": 0,
+              "totalFrames": 60
+            }
+          },
+          {
+            "type": "comments",
+            "from": 702,
+            "frames": 60,
+            "payload": {
+              "text": "작은 웃음이 하루를 바꾸네요!",
+              "startFrame": 0,
+              "totalFrames": 60
+            }
+          },
+          {
+            "type": "outro",
+            "from": 762,
+            "frames": 60,
+            "payload": {
+              "text": "미정에서 더 보기",
+              "startFrame": 0,
+              "totalFrames": 60
+            }
+          }
+        ],
+        "durationFrames": 822
+      }
+    ],
+    "settings": {
+      "minDuration": 25,
+      "targetDuration": 40,
+      "maxDuration": 60,
+      "maxPosts": 2,
+      "maxComments": 3,
+      "includeComments": true,
+      "autoCombine": true,
+      "autoSplit": false,
+      "bgmEnabled": true,
+      "bgmVolume": 0.12,
+      "originalVolume": 1,
+      "audioPolicy": "duck",
+      "effects": "low",
+      "intro": true,
+      "outro": true,
+      "watermark": true,
+      "cta": true,
+      "backgroundId": "",
+      "bgmId": "bgm",
+      "logoId": "",
+      "sfxId": "",
+      "defaultPrivacy": "private",
+      "speed": 1,
+      "maxRetries": 2
+    },
+    "brand": {
+      "name": "미정",
+      "url": ""
+    },
+    "warnings": [],
+    "requiresSplit": false,
+    "audioMode": "duck",
+    "lastScene": "outro",
+    "bgm": "http://127.0.0.1:6323/bgm.wav"
+  },
+  "qc": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "blackSegments": [],
+    "sceneComplete": true,
+    "size": 1625488,
+    "duration": 27.456,
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "hasAudio": true,
+    "codec": "h264"
+  },
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "durationMs": 27456,
+  "size": 1625488,
+  "audioMode": "duck"
+}

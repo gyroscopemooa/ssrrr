@@ -1,0 +1,4 @@
+PASS (exit 0): node scripts/run-framework.mjs build
+Vinext 1.0.0-beta.5 / Vite 8.0.13
+Final build includes /admin/automation, /api/ops, /api/worker, /api/brand and post OpenGraph metadata.
+Sites build helper encountered a broken Windows npm shim; the identical project build script was invoked directly.

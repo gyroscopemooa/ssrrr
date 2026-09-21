@@ -1,4 +1,3 @@
-import type {Metadata} from 'next';
-import './globals.css';
-export const metadata:Metadata={title:'미정 — 유머, 짤, 소소한 이야기',description:'웃긴 건 같이 보자. 유머와 일상의 이야기를 나누는 커뮤니티 미정.',icons:{icon:'/favicon.svg'}};
+import type {Metadata} from 'next';import {ops} from '@/lib/automation/server';import './globals.css';
+export async function generateMetadata():Promise<Metadata>{let name='미정',url='';try{const {config}=await ops();name=config.siteName;url=config.siteUrl}catch{}return {title:name+' — 유머, 짤, 소소한 이야기',description:'웃긴 건 같이 보자. 유머와 일상의 이야기를 나누는 '+name+'.',icons:{icon:'/favicon.svg'},...(url?{metadataBase:new URL(url),alternates:{canonical:url}}:{}),openGraph:{title:name,description:'오늘의 웃음을 같이 나눠요.',type:'website',locale:'ko_KR',...(url?{url,images:[url+'/images/welcome-bird.png']}:{})}}}
 export default function Layout({children}:{children:React.ReactNode}){return <html lang="ko"><body>{children}</body></html>}
