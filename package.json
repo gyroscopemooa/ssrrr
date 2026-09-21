@@ -21,7 +21,10 @@
     "oauth": "node scripts/google-oauth.mjs",
     "db:migrate:local": "node scripts/migrate-local.mjs",
     "test:integration": "node scripts/test-integration.mjs",
-    "test:sources": "node scripts/source-audit.mjs"
+    "test:sources": "node scripts/source-audit.mjs",
+    "worker:windows:start": "pwsh -NoProfile -File scripts/worker-windows.ps1",
+    "worker:windows:stop": "pwsh -NoProfile -File scripts/worker-windows.ps1 -Stop",
+    "worker:windows:status": "pwsh -NoProfile -File scripts/worker-windows.ps1 -Status"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

@@ -26,7 +26,7 @@
 | WAITING_FOR_USER | Gmail 실계정 연결 | 전용 Gmail, Google OAuth client/refresh token, 개인 계정의 전달 필터와 AUTO_POST 라벨 설정 |
 | WAITING_FOR_USER | YouTube 실채널 업로드 | 채널 소유자의 OAuth 동의/credential, Google API 활성화 및 앱 공개 제한 확인 |
 | WAITING_FOR_USER | 실제 도메인 | DNS/도메인 소유권, hosting custom-domain 및 로그인 callback 지원 경로 확정 |
-| WAITING_FOR_USER | 상시 워커 실운영 연결 | 워커 호스트와 secret 주입. 웹 WORKER_TOKEN은 secret으로 설정했으나 로컬 credential 파일 저장은 자동 승인 검토에서 거절되어 실행하지 않음 |
+| CONNECTED (PC 실행 중) | Windows 수집·렌더 worker | 실제 인증/claim 확인. DPAPI 암호화 저장. PC가 꺼지면 중지되며 재부팅 자동 시작은 미등록. Gmail/YouTube OAuth 별도 |
 | BLOCKED / 미검증 OFF | 외부 소스 21개 | robots·접근 제한·기존 주소/페이지 형식 문제. 상세 결과는 live-sources.json. 차단을 우회하지 않으며 해당 소스는 운영 ON 처리하지 않음 |
 
 위 외부 연결 대기는 UI/API/worker 코드 미구현과 구분됩니다. 실 Google 전송과 실 도메인 접속, 24시간 운영은 아직 검증 완료가 아닙니다.
@@ -244,3 +244,6 @@ ZIP은 코드 통합 및 테스트 완료 후 마지막 단계에서 생성합�
 
 ## 이번 수정의 배포 상태
 로컬 구현·검증·커밋 완료. 기존 Sites 저장소(git.chatgpt-team.site)로 소스 및 Git 이력을 push하는 단계가 자동 승인 검토에서 명시적 외부 전송 승인 부족으로 거절되었다. 우회하거나 업로드를 실행하지 않았다. 이후 사용자가 기존 저장소 업로드와 배포를 명시적으로 승인하여 배포를 재개했다. 배포 완료 여부는 Sites 배포 결과를 기준으로 확인한다.
+
+## Windows worker 연결 완료
+2026-09-21: secretagit-windows-main 실제 사이트 인증 및 claim 성공, 백그라운드 실행 확인. 평문 저장 없이 Windows DPAPI 사용. 상시 외부 서버는 아직 사용하지 않으며 PC 전원이 필요합니다. 상세 시작/중지 방법은 docs/OPERATIONS_RUNBOOK.md.

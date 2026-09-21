@@ -90,3 +90,17 @@ npm run test:sources
 사이트를 공개로 전환하는 것은 별도 소유자 결정이며 이번 작업에서 공개 범위를 바꾸지 않았습니다.
 
 최신 재검수, Gmail 완료/실패/검토 라벨 처리 및 메뉴 설명은 [PRODUCTION_READINESS.md](PRODUCTION_READINESS.md)를 참고하세요.
+
+## 현재 Windows worker 연결 (2026-09-21)
+실제 사이트 인증 및 claim 응답 확인 완료. 작업자 이름 secretagit-windows-main. 수집/렌더 활성, Gmail/YouTube credential 미연결. PC 전원·인터넷이 필요하며 재부팅 자동 시작은 등록하지 않았습니다.
+
+PowerShell 7에서 프로젝트 디렉터리 기준 실행:
+```powershell
+./scripts/worker-windows.ps1          # 백그라운드 시작, 중복 실행 방지
+./scripts/worker-windows.ps1 -Status  # 상태
+./scripts/worker-windows.ps1 -Stop    # 이 프로젝트 worker만 종료
+```
+
+인증키는 .worker-runtime/credentials.dpapi에 Windows 현재 사용자 DPAPI로 암호화됩니다. 평문 .env.worker를 만들지 않았고 Git/검수 ZIP에서 제외합니다. 다른 PC/Windows 사용자에게 복사해도 복호화되지 않습니다. 시작 스크립트가 자식 Node 프로세스에만 환경변수를 전달하고 부모 환경을 복원합니다. 구성 도구 scripts/configure-worker-windows.mjs는 에코를 끈 터미널 입력으로 JSON을 받아 인증 확인 후 암호화하며, 토큰을 명령줄 인자로 전달하지 마세요. PowerShell 7 및 Node가 필요합니다.
+
+관리 화면에서 수집 테스트를 누르면 정지 상태에서도 테스트 작업을 받을 수 있습니다. 자동 게시를 가동하려면 검증된 사이트 ON 및 자동 게시 재개를 사용합니다. 스캔 개수 30은 상한이며 첫 페이지가 20개면 20개만 확인합니다. 페이지를 추가로 넘기지 않습니다. 펨코는 현 실검증 BLOCKED이므로 ON 대상이 아닙니다.

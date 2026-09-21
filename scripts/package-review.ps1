@@ -7,7 +7,7 @@ $archivePath = [IO.Path]::GetFullPath($Destination)
 if ([IO.File]::Exists($archivePath)) { throw 'Destination already exists; choose a new review ZIP name.' }
 $filePaths = & git -c "safe.directory=$($projectRoot.Replace('\','/'))" -C $projectRoot ls-files
 if ($LASTEXITCODE -ne 0) { throw 'Cannot enumerate source files.' }
-$excluded = '(^|/)(node_modules|\.next|dist|\.git|\.wrangler|\.sites-runtime|\.worker-tmp|\.remotion|coverage|build|\.cache)(/|$)|(^|/)\.dev\.vars|\.tsbuildinfo$|\.zip$|\.tar\.gz$'
+$excluded = '(^|/)(node_modules|\.next|dist|\.git|\.wrangler|\.sites-runtime|\.worker-tmp|\.worker-runtime|\.remotion|coverage|build|\.cache)(/|$)|(^|/)\.dev\.vars|\.tsbuildinfo$|\.dpapi$|\.zip$|\.tar\.gz$'
 $files = @($filePaths | Where-Object { $_ -notmatch $excluded -and ($_ -notmatch '(^|/)\.env' -or $_ -eq '.env.example') })
 foreach ($required in @('package.json','package-lock.json','.env.example','FINAL_IMPLEMENTATION_REPORT.md','drizzle/0002_dashing_red_skull.sql','test-results/summary.json')) { if ($files -notcontains $required) { throw "Missing $required" } }
 $manifest = @()
