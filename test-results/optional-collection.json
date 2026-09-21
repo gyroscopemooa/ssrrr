@@ -1,0 +1,23 @@
+{
+  "unitTests": {
+    "passed": 17,
+    "failed": 0
+  },
+  "liveUrl": "https://gall.dcinside.com/board/lists/?id=leagueoflegends6&exception_mode=recommend",
+  "commentsOffMediaOn": {
+    "passed": false,
+    "list": 49,
+    "details": 5,
+    "comments": 0,
+    "media": 0,
+    "error": "MEDIA_INVALID_CONTENT_TYPE: application/octet-stream"
+  },
+  "commentsOffMediaOff": {
+    "passed": true,
+    "list": 49,
+    "details": 1,
+    "comments": 0,
+    "media": 0
+  },
+  "note": "No production source settings were changed; disabled resources are not requested."
+}

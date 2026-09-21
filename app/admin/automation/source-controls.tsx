@@ -7,7 +7,7 @@ const failureGuides=[
  {pattern:/SELECTOR_MISMATCH/,title:'추출 규칙 확인 필요 · 목록·본문 인식 실패',text:'페이지 구조 변경이나 잘못된 주소일 수 있습니다. 차단 안내 페이지가 반환됐는지도 확인해야 합니다.'},
  {pattern:/PARSING_UNVERIFIED/,title:'추출 확인 필요 · 댓글·미디어 미확인',text:'표본 글에 댓글·미디어가 없거나 추출 규칙이 맞지 않을 수 있습니다. 이 오류만으로 수집 불가라고 판단하지 마세요.'},
  {pattern:/robots\.txt/,title:'현재 자동수집 제한 · robots.txt 금지',text:'요청 경로의 자동 접근이 금지돼 있습니다. 허용된 제공 경로나 운영자 허가가 없으면 현재 방식으로 수집할 수 없습니다. 사용하지 않을 경우 삭제해도 됩니다.'},
- {pattern:/DC public comment endpoint denied access/,title:'현재 자동수집 제한 · 디시 댓글 접근 거부',text:'현재 댓글 요청 방식이 거부됐습니다. 댓글까지 통과해야 켤 수 있으므로 지금은 OFF로 두거나 목록에서 삭제하세요.'},
+ {pattern:/DC public comment endpoint denied access/,title:'현재 자동수집 제한 · 디시 댓글 접근 거부',text:'현재 댓글 요청 방식이 거부됐습니다. 댓글이 필요 없다면 수집 조건에서 가져올 댓글 수를 0으로 저장한 뒤 다시 검사하세요. 본문·미디어가 통과하면 댓글 없이 사용할 수 있습니다.'},
  {pattern:/HTTP 403/,title:'접근 거부 · 원본 사이트 확인 필요',text:'권한 또는 자동 접근 제한일 수 있습니다. 현재 요청은 거부됐지만 영구 불가라는 뜻은 아닙니다. 정상 접근 방법이 확인되기 전에는 OFF로 두세요.'},
  {pattern:/HTTP 406/,title:'요청 거부 · 원인 확인 필요',text:'요청 형식 문제나 접근 제한일 수 있습니다. 주소와 서버 응답을 확인해야 하며 이 코드만으로 영구 차단을 판단할 수 없습니다.'},
  {pattern:/HTTP (429|430)/,title:'접근 제한 · 요청 빈도 확인 필요',text:'요청량 제한 또는 접근 정책에 걸렸을 수 있습니다. 반복 검사하지 말고 서버 응답을 확인한 뒤 간격을 조정하세요.'},
@@ -16,10 +16,12 @@ const failureGuides=[
 export function SourceVerification({row}:{row:Record<string,unknown>}){
  let counts:Record<string,number>={};try{counts=JSON.parse(String(row.validation_counts||'{}')).validation||{}}catch{}
  const reason=String(row.validation_error||''),status=String(row.validation_status||'미검증'),pending=['검사 대기','검사 중'].includes(status);
+ let source:Record<string,unknown>={};try{source=JSON.parse(String(row.config||'{}'))}catch{}
  const guides=failureGuides.filter(g=>g.pattern.test(reason));
  return <div className="source-verification" aria-live="polite">
  <strong className={status==='통과'?'ops-validation-passed':undefined}>{status}</strong>
  {status==='검사 대기'&&<span> · worker가 순서대로 실행합니다.</span>}{status==='검사 중'&&<span> · 목록 → 상세 → 댓글·미디어 확인 중</span>}
+ {source.commentLimit===0&&<p>댓글 수집 OFF · 댓글 요청·검증 생략</p>}{source.images===false&&source.videos===false&&<p>사진·동영상 수집 OFF · 미디어 요청·검증 생략</p>}
  {Object.keys(counts).length>0&&<p>최근 검사: 목록 {counts.listCount||0}개 · 상세 {counts.details||0}건 · 댓글 {counts.comments||0}개 · 미디어 {counts.media||0}개</p>}
  {status!=='통과'&&<div className="ops-failure-guidance">
  {pending&&<p>현재 검사 결과는 아직 나오지 않았습니다. 아래 내용이 있으면 이전 검사 기록입니다.</p>}
