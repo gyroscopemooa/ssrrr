@@ -1,4 +1,62 @@
-PASS (exit 0): node scripts/run-framework.mjs build
-Vinext 1.0.0-beta.5 / Vite 8.0.13
-Final build includes /admin/automation, /api/ops, /api/worker, /api/brand and post OpenGraph metadata.
-Sites build helper encountered a broken Windows npm shim; the identical project build script was invoked directly.
+
+  vinext build  (Vite 8.0.13)
+
+[1/5] analyze client references...
+[2Ktransforming...✓ 278 modules transformed.
+rendering chunks...
+✓ built in 1.68s
+[2/5] analyze server references...
+[2Ktransforming...✓ 229 modules transformed.
+rendering chunks...
+✓ built in 702ms
+[3/5] build rsc environment...
+[2Ktransforming...✓ 275 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 1.28s
+[4/5] build client environment...
+[2Ktransforming...✓ 2060 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 6.34s
+[5/5] build ssr environment...
+[2Ktransforming...✓ 235 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 994ms
+[0m
+  Route (app)
+  ┌ ? /                      
+  ├ ? /account               
+  ├ ? /admin                 
+  ├ ? /admin/automation      
+  ├ λ /api/account           
+  ├ λ /api/admin             
+  ├ λ /api/brand             
+  ├ λ /api/downloads         
+  ├ λ /api/downloads/:id     
+  ├ λ /api/me                
+  ├ λ /api/media             
+  ├ λ /api/media/:id         
+  ├ λ /api/ops               
+  ├ λ /api/ops/assets        
+  ├ λ /api/posts             
+  ├ λ /api/posts/:id         
+  ├ λ /api/posts/:id/actions 
+  ├ λ /api/posts/:id/view    
+  ├ λ /api/previews          
+  ├ λ /api/previews/:id/image
+  ├ λ /api/settings          
+  ├ λ /api/worker            
+  ├ λ /api/worker/files      
+  ├ ƒ /post/:id              
+  └ ? /write                 
+
+  λ API  ƒ Dynamic  ? Unknown
+
+  ? Some routes could not be classified. vinext currently uses static analysis
+    and cannot detect dynamic API usage (headers(), cookies(), etc.) at build time.
+    Automatic classification will be improved in a future release.
+
+  Build complete. Run `vinext start` to start the production server.
+

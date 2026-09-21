@@ -55,20 +55,6 @@
       "range download"
     ]
   },
-  "render": {
-    "passed": true,
-    "errors": [],
-    "warnings": [],
-    "blackSegments": [],
-    "sceneComplete": true,
-    "size": 1625488,
-    "duration": 27.456,
-    "width": 1080,
-    "height": 1920,
-    "fps": 30,
-    "hasAudio": true,
-    "codec": "h264"
-  },
   "sources": {
     "total": 26,
     "statuses": {
@@ -101,6 +87,5 @@
     "live": "WAITING_FOR_USER: dedicated Gmail OAuth gmail.modify"
   },
   "databaseMigrationsAdded": [],
-  "dependenciesAdded": [],
-  "renderNote": "Mixed-media render baseline retained from V3; current real worker render rechecked above."
+  "dependenciesAdded": []
 }

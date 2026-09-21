@@ -1,5 +1,7 @@
 # FINAL IMPLEMENTATION REPORT
 
+2026-09-21 실운영 준비 재검수 반영: **엄격 PASS 5개(엠봉·개드립·더쿠·루리웹·인벤)**, 신규 통과 3개/기존 재검수 탈락 3개. Gmail DONE/ERROR/REVIEW 후처리와 검증 기반 ON gate 추가. 상세는 docs/PRODUCTION_READINESS.md 및 test-results/readiness-summary.json.
+
 기준일: 2026-09-21 (KST). 대상: 현재 프로젝트 전체 + 사용자 제공 V3 핸드오프.
 현재 소스 기준 통합 기능과 로컬 검증을 완료했습니다. 실제 Google 계정 연결, 도메인 연결, 상시 운영 워커의 실운영 secret 설정은 아래와 같이 별도로 남아 있습니다. 외부 서비스 미연결을 실제 운영 성공으로 표기하지 않습니다.
 
@@ -28,6 +30,8 @@
 | BLOCKED / 미검증 OFF | 외부 소스 21개 | robots·접근 제한·기존 주소/페이지 형식 문제. 상세 결과는 live-sources.json. 차단을 우회하지 않으며 해당 소스는 운영 ON 처리하지 않음 |
 
 위 외부 연결 대기는 UI/API/worker 코드 미구현과 구분됩니다. 실 Google 전송과 실 도메인 접속, 24시간 운영은 아직 검증 완료가 아닙니다.
+
+이번 수정: worker/{network,adapters,google,index,public-comments,validate-source}.mjs, lib/automation/{catalog,collect,server,mail,validation}, app/api/{ops,worker}/route.ts, app/admin/automation/page.tsx, scripts/{source-audit,google-oauth}.mjs, tests/{automation,readiness}.test.mjs, tests/automation-api.mjs, package.json, docs/PRODUCTION_READINESS.md, docs/OPERATIONS_RUNBOOK.md, test-results. 신규 dependency/DB migration 없음.
 
 ## 3. 변경 / 추가 파일 목록
 기존 소스 전체를 보존하며 아래를 변경/추가했습니다. docs의 번호 문서는 원본 V3 참고 자료이며 현재 구현의 증거는 이 보고서와 test-results입니다.
@@ -171,8 +175,9 @@ docker build -f Dockerfile.worker -t secretagit-worker .
 ## 9. 자동수집 테스트 결과
 - 정책 테스트: 신규 우선/fallback/사용 이력/7일 제한/하루 제한/KST 교차 예약/SSRF 차단 통과.
 - 실제 D1 API: OFF→테스트→ON gate, 정지 상태 테스트 수집, 후보/게시/댓글/중복·사용 이력·하루 제한/권한 통과.
-- 26개 공개 소스 접근 및 목록+상세 표본: PASS 5개, 나머지는 상세 상태 기록. PASS는 모든 원본 미디어/동적 댓글을 무조건 확보한다는 뜻이 아닙니다.
-- 실제 개집넷 첫 페이지 전체: 20개 상세, 본문 블록 61개, 댓글 85개(글별 최대 5), 대표 미디어 지문 2개, 상세 오류 0개. 원본 사이트/운영 사이트에 게시하지 않은 읽기 테스트.
+- 26개 전체 재검수: PASS 5 / BLOCKED 17 / PARSING_UNVERIFIED 3 / NETWORK_ERROR 1. 목록 전체, 상세 본문, 실제 댓글 및 미디어 바이트 응답을 함께 검증.
+- 신규 PASS 엠봉·개드립·루리웹, 유지 더쿠·인벤. 기존 개집넷·오늘의유머는 표본 이미지 robots 제한, 인스티즈는 403으로 OFF. 이전 약한 기준 결과는 live-sources-before-readiness.json에 별도 보존.
+- 디시 URL/공통 Adapter 수정 후 10개 재검수. 공개 댓글 API 접근 거절·robots 또는 간헐적 HTML 차이로 전부 OFF. 차단 우회 없음.
 - 파일: live-sources.json, full-source-scan.json, automation-api.json.
 
 ## 10. 쇼츠 렌더 / QC 테스트 결과
@@ -184,7 +189,7 @@ docker build -f Dockerfile.worker -t secretagit-worker .
 
 ## 11. Gmail / 경제게시판 테스트 결과
 - 실제 로컬 D1/API: 전용 mailbox 불일치 403, 안전 메일 경제 게시, Message-ID/본문 중복, 개인정보 메일 review_required, 수정 재검사 승인, 경제 feed 노출 통과.
-- Google API mock: 개인 mailbox profile 불일치 시 메시지를 읽기 전에 차단, 전용 profile/라벨/MIME 처리 통과.
+- Google API mock: 전용 profile/MIME/라벨 생성, DONE·ERROR·REVIEW 이동, 원래 AUTO_POST 제거, 페이지 누락 방지, 라벨 실패 재시도, 수동 승인 라벨 변경 통과. 실제 계정 미연결. gmail.modify 재동의 필요.
 - 실제 Gmail credential 없음. 개인 Gmail에 접근하거나 전달 필터를 변경하지 않았습니다.
 
 ## 12. YouTube 연동 상태
@@ -204,7 +209,7 @@ docker build -f Dockerfile.worker -t secretagit-worker .
 | lint | exit 0, 오류 0, 경고 20 |
 | typecheck | PASS (tsc --noEmit --incremental false) |
 | build | PASS, Vinext production build |
-| 단위·계약 테스트 | 10 / 10 PASS |
+| 단위·계약 테스트 | 16 / 16 PASS |
 | 기존 API 회귀 | PASS |
 | 자동수집·Gmail·쇼츠 운영 API | PASS |
 | Node worker 실제 렌더 E2E | PASS |

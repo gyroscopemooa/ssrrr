@@ -15,7 +15,7 @@
     "worker": "node worker/index.mjs",
     "worker:once": "node worker/index.mjs --once",
     "typecheck": "tsc --noEmit --incremental false",
-    "test": "node --test tests/automation.test.mjs",
+    "test": "node --test tests/automation.test.mjs tests/readiness.test.mjs",
     "test:api": "node tests/api-smoke.mjs",
     "test:render": "node tests/render-smoke.mjs",
     "oauth": "node scripts/google-oauth.mjs",

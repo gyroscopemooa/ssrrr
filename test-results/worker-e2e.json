@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "at": "2026-09-21T10:05:19.276Z",
-  "jobId": "9dc0464d-86a0-4250-bded-589ce270f20c",
+  "at": "2026-09-21T12:42:42.920Z",
+  "jobId": "a332aa10-eb28-47f9-af6c-e19713058311",
   "stages": [
     "queued",
     "analyzing",
@@ -16,7 +16,7 @@
     "height": 1920,
     "fps": 30,
     "durationMs": 12200,
-    "bytes": 114828
+    "bytes": 113378
   },
   "checks": [
     "Node RPC claim",

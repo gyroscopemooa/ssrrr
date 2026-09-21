@@ -35,7 +35,7 @@ docker run --restart unless-stopped --env-file /secure/worker.env secretagit-wor
 
 ## 수집
 1. 기본 소스 등록 → 필요한 소스 설정 확인 → **수집 테스트**.
-2. worker가 테스트를 완료하고 후보를 실제 찾은 소스만 켤 수 있습니다. 최초 전체 자동 게시는 정지 상태입니다.
+2. 목록 1페이지 전체·상세·댓글·미디어 실검증을 모두 통과한 소스만 켤 수 있습니다. ‘검수된 기본값 적용 (OFF)’으로 이번 PASS 증거를 반영하거나 worker 수집 테스트를 실행하세요. 최초 전체 자동 게시는 정지 상태입니다.
 3. ON 소스의 새 후보가 우선, 없으면 미사용 과거 후보가 선택됩니다. 기본 하루 1개/소스, 한국시간 19:00 이후 3분 간격.
 4. robots/CAPTCHA/로그인 차단은 우회하지 않습니다. 실패 소스는 OFF로 유지합니다.
 5. 공개 이미지 호스트는 소스별 `mediaHosts`에 추가합니다. 미디어 실패 정책 기본은 검수 대기입니다. 허용 목록을 광범위하게 풀지 마세요.
@@ -60,7 +60,7 @@ npm run oauth -- youtube
 ```
 이 보조 CLI는 localhost 콜백 + state/PKCE를 검증하고 refresh token을 ignored `.env.worker`에 기록합니다. 이 파일 저장을 원하지 않으면 조직의 secret manager 흐름으로 토큰을 발급·주입하세요.
 콜백: `http://127.0.0.1:8765/callback`.
-Gmail scopes: `gmail.readonly`. YouTube scopes: `youtube.upload`, `youtube.readonly`.
+Gmail scopes: `gmail.modify` (기존 readonly 토큰은 재동의 필요). YouTube scopes: `youtube.upload`, `youtube.readonly`.
 Gmail 워커는 profile의 주소가 관리자 지정 전용 주소와 일치할 때만 메시지를 읽습니다. 허용 발신자·제목 키워드·AUTO_POST 라벨을 모두 검사합니다. 기존 개인 Gmail은 연결/조회하지 않았습니다.
 개인 Gmail→전용 계정의 전달 필터 및 라벨은 계정 소유자가 설정해야 합니다.
 YouTube 앱 검증/감사 상태에 따라 API 업로드는 비공개로 제한될 수 있습니다. 실제 계정 연결 뒤 비공개 업로드로 검증하고 예약/공개를 사용하세요.
@@ -88,3 +88,5 @@ npm run test:sources
 연결 전: 도메인 소유/DNS 접근, 사용 가능한 hosting custom-domain 경로, 인증 callback 지원, 전용 Google OAuth 앱, 상시 워커 호스트를 확정합니다.
 연결 후: 관리자 사이트 주소 또는 `SITE_URL`과 이름을 변경하고 웹 재배포, 워커 주소 갱신, HTTPS/로그인/첨부 Range/OG 미리보기/YouTube 설명 주소를 확인합니다. 이전 URL의 redirect 정책과 쿠키·로그인 동작도 검증하세요.
 사이트를 공개로 전환하는 것은 별도 소유자 결정이며 이번 작업에서 공개 범위를 바꾸지 않았습니다.
+
+최신 재검수, Gmail 완료/실패/검토 라벨 처리 및 메뉴 설명은 [PRODUCTION_READINESS.md](PRODUCTION_READINESS.md)를 참고하세요.

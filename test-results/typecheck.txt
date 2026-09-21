@@ -1,1 +1,1 @@
-PASS (exit 0)
+PASS: tsc --noEmit --incremental false (2026-09-21 production readiness)

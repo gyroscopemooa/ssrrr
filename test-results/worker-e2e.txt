@@ -1,2 +1,2 @@
-{"task":"e2807240-6287-43bf-a48b-89b5bfbd6658","kind":"render","status":"completed"}
+{"task":"26a07f6c-9607-4168-a879-4b4d793bf12b","kind":"render","status":"completed"}
 PASS: worker render -> R2 -> QC -> approval -> range download

@@ -11,3 +11,21 @@ const verified:Record<string,Partial<(typeof sourceCatalog)[number]>>={
 'source-11':{mediaHosts:['theqoo.net','img.theqoo.net'],selectors:{item:'tr:not(.notice):has(td.title)',title:'td.title a:not(.replyNum)',link:'td.title a:not(.replyNum)',body:'.xe_content',comment:'.comment-content',views:'.m_no',likes:'.voteNum',comments:'.replyNum',date:'.time'}},
 'source-13':{mediaHosts:['inven.co.kr'],selectors:{item:'tr:has(a.subject-link)',title:'a.subject-link',link:'a.subject-link',body:'#powerbbsContent',comment:'.comment-content',views:'.view',likes:'.reco',comments:'.con-comment',date:'.date'}}};
 for(const item of sourceCatalog)Object.assign(item,verified[item.id!]);
+
+// Canonical gallery routes and source-specific selectors verified in production-readiness audit.
+const corrections:Record<string,Partial<(typeof sourceCatalog)[number]>>={
+'dc-makjang':{url:'https://gall.dcinside.com/board/lists/?id=accident_new&exception_mode=recommend'},
+'dc-korea':{url:'https://gall.dcinside.com/board/lists/?id=comedy_new1&exception_mode=recommend'},
+'dc-baseball_new11':{url:'https://gall.dcinside.com/board/lists/?id=baseball_new13&exception_mode=recommend'},
+'dc-chzzk':{url:'https://gall.dcinside.com/mgallery/board/lists/?id=chzzk&exception_mode=recommend'},
+'dc-singlebungle1472':{url:'https://gall.dcinside.com/mgallery/board/lists/?id=singlebungle1472&exception_mode=recommend'},
+'source-9':{url:'https://ygosu.com/community/real_article'},
+'source-1':{mediaHosts:['dogdrip.net'],selectors:{item:'li.webzine',title:'a.title-link',link:'a.title-link',body:'.xe_content',comment:'.comment-content .xe_content',views:'.view-count',likes:'.list-meta .text-primary:last-child',comments:'h5.title .text-primary',date:'.list-meta .text-muted'}},
+'source-4':{mediaHosts:['image.fmkorea.com'],selectors:{item:'li.li',title:'h3.title a',link:'h3.title a',body:'.xe_content',comment:'.comment-content',views:'.readNum',likes:'.pc_voted_count .count',comments:'.comment_count',date:'.regdate'}},
+'source-12':{mediaHosts:['ruliweb.com','ruliweb.net'],selectors:{item:'tr.table_body:not(.best_top_row)',title:'.subject_link',link:'.subject_link',body:'.view_content',comment:'.comment_view .text',views:'.hit',likes:'.recomd',comments:'.num_reply',date:'.time'}},
+'source-14':{mediaHosts:['arca.live','namu.la','namu.wiki'],selectors:{item:'a.vrow:not(.notice)',title:'.title',link:':self',body:'.article-content',comment:'.comment-wrapper .text',views:'.col-view',likes:'.col-rate',comments:'.comment-count',date:'time'}}};
+for(const item of sourceCatalog){Object.assign(item,corrections[item.id!]);if(item.adapter==='dcinside')item.mediaHosts=['dcinside.co.kr','dcinside.com'];}
+
+for(const item of sourceCatalog){if(item.id==='source-0'){item.selectors.comment='.cmt_body > .xe_content';item.mediaHosts=['mbong.kr'];}if(item.id==='source-13')item.selectors.item='tr:not(.notice):has(a.subject-link)';}
+
+for(const item of sourceCatalog)if(item.id==='source-11')item.mediaHosts.push('pbs.twimg.com');
