@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "at": "2026-09-21T15:09:14.194Z",
+  "at": "2026-09-21T22:04:20.685Z",
   "results": [
     "admin and worker authentication",
     "live audit evidence application: PASS can enable, blocked cannot",
@@ -14,6 +14,7 @@
     "source deletion: active work protected, queued scan cancelled, published post preserved",
     "bulk selection and partial patches, validation invalidation, preserved verification, duplicate suppression, active work protection",
     "manual Humoruniv source can apply matching host preset without changing identity",
-    "source notes persist, clear, validate length and leave collection settings unchanged"
+    "source notes persist, clear, validate length and leave collection settings unchanged",
+    "V3 list-only passes with zero detail/comments/media; detected mode persists; stronger required fields revoke eligibility"
   ]
 }

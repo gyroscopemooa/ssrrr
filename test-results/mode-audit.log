@@ -1,0 +1,27 @@
+source-0 PASS list 20 detail 1 comments 0 media 1 
+source-1 PASS list 23 detail 1 comments 0 media 1 
+source-2 BLOCKED list 20 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: robots.txt /; BLOCKED: earlier media denial for image.fmkorea.com
+source-3 BLOCKED list 30 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: robots.txt /; BLOCKED: earlier media denial for thimg.todayhumor.co.kr
+source-4 BLOCKED list 24 detail 0 comments 0 media 0 BLOCKED: robots.txt /
+source-5 BLOCKED list 0 detail 0 comments 0 media 0 HTTP 406
+source-6 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: HTTP 403
+source-7 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: HTTP 403
+source-8 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: robots.txt /service/recommend
+source-9 BLOCKED list 27 detail 0 comments 0 media 0 BLOCKED: robots.txt /*?*list_context=
+source-10 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: robots.txt /
+source-11 PASS list 20 detail 1 comments 0 media 1 
+source-12 PASS list 28 detail 1 comments 0 media 1 
+source-13 PASS list 50 detail 1 comments 0 media 1 
+source-14 BLOCKED list 45 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for ac.arca.live
+source-15 NETWORK_ERROR list 0 detail 0 comments 0 media 0 UNSAFE_URL
+dc-makjang PASS list 49 detail 1 comments 0 media 1 
+dc-korea PASS list 50 detail 3 comments 0 media 1 
+dc-baseball_new11 BLOCKED list 49 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg6.dcinside.co.kr
+dc-ib_new2 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: robots.txt /board/lists/?id=ib_new
+dc-depression PASS list 50 detail 1 comments 0 media 1 
+dc-leagueoflegends6 PASS list 49 detail 1 comments 0 media 1 
+dc-chzzk BLOCKED list 50 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; REQUIRED_FIELDS_MISSING: body, image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg6.dcinside.co.kr
+dc-singlebungle1472 BLOCKED list 50 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg8.dcinside.co.kr; BLOCKED: earlier media denial for dcimg5.dcinside.com
+dc-football_new9 PARSING_UNVERIFIED list 0 detail 0 comments 0 media 0 SELECTOR_MISMATCH: list
+dc-neostock BLOCKED list 50 detail 3 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; SELECTOR_MISMATCH: body; BLOCKED: HTTP 403; BLOCKED: earlier media denial for dcimg8.dcinside.co.kr
+source-16 PASS list 50 detail 1 comments 0 media 1 

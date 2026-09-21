@@ -1,0 +1,1433 @@
+[
+  {
+    "id": "source-0",
+    "name": "엠봉",
+    "url": "https://mbong.kr/best",
+    "at": "2026-09-21T12:39:27.571Z",
+    "status": "PASS",
+    "listCount": 20,
+    "details": 1,
+    "comments": 1,
+    "media": 2,
+    "error": "",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://mbong.kr/best\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".cmt_body > .xe_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[\"mbong.kr\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 20,
+      "details": 1,
+      "comments": 1,
+      "media": 2,
+      "passed": true,
+      "checkedAt": "2026-09-21T12:39:27.571Z",
+      "samples": [
+        {
+          "url": "https://mbong.kr/best/6363443",
+          "blocks": 11,
+          "comments": 1,
+          "media": [
+            {
+              "url": "https://img.mbong.kr/files/member_extra_info/profile_image/224/389/003/3389224.jpg?t=1779068927",
+              "type": "image/jpeg",
+              "bytes": 2319
+            },
+            {
+              "url": "https://img.mbong.kr/files/attach/images/2026/07/18/fb2c0001fc5a94ac0d0ee1e6cef95d04.webp",
+              "type": "image/webp",
+              "bytes": 51532
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://mbong.kr/best",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 118990
+        },
+        {
+          "url": "https://mbong.kr/best/6363443",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 147817
+        },
+        {
+          "url": "https://img.mbong.kr/files/member_extra_info/profile_image/224/389/003/3389224.jpg?t=1779068927",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 2319
+        },
+        {
+          "url": "https://img.mbong.kr/files/attach/images/2026/07/18/fb2c0001fc5a94ac0d0ee1e6cef95d04.webp",
+          "method": "GET",
+          "status": 200,
+          "type": "image/webp",
+          "bytes": 51532
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "id": "source-1",
+    "name": "개드립",
+    "url": "https://www.dogdrip.net/dogdrip",
+    "at": "2026-09-21T12:39:29.456Z",
+    "status": "PASS",
+    "listCount": 23,
+    "details": 1,
+    "comments": 5,
+    "media": 2,
+    "error": "",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.dogdrip.net/dogdrip\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"li.webzine\",\"title\":\"a.title-link\",\"link\":\"a.title-link\",\"body\":\".xe_content\",\"comment\":\".comment-content .xe_content\",\"views\":\".view-count\",\"likes\":\".list-meta .text-primary:last-child\",\"comments\":\"h5.title .text-primary\",\"date\":\".list-meta .text-muted\"},\"mediaHosts\":[\"dogdrip.net\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 23,
+      "details": 1,
+      "comments": 5,
+      "media": 2,
+      "passed": true,
+      "checkedAt": "2026-09-21T12:39:29.456Z",
+      "samples": [
+        {
+          "url": "https://www.dogdrip.net/dogdrip/725792913?sort_index=popular&page=1",
+          "blocks": 4,
+          "comments": 5,
+          "media": [
+            {
+              "url": "https://www.dogdrip.net/dvs/d/26/09/21/79bbe79e1356867aeb4ed3de70de9f3a.jpg",
+              "type": "image/jpeg",
+              "bytes": 77998
+            },
+            {
+              "url": "https://www.dogdrip.net/dvs/d/26/09/21/b1228abdffab28785af32f312107c7f7.jpg",
+              "type": "image/jpeg",
+              "bytes": 39608
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://www.dogdrip.net/dogdrip",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 93805
+        },
+        {
+          "url": "https://www.dogdrip.net/dogdrip/725792913?sort_index=popular&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 158710
+        },
+        {
+          "url": "https://www.dogdrip.net/dvs/d/26/09/21/79bbe79e1356867aeb4ed3de70de9f3a.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 77998
+        },
+        {
+          "url": "https://www.dogdrip.net/dvs/d/26/09/21/b1228abdffab28785af32f312107c7f7.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 39608
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "id": "source-2",
+    "name": "개집넷",
+    "url": "https://gezip.net/bbs/board.php?bo_table=best",
+    "at": "2026-09-21T12:39:59.582Z",
+    "status": "BLOCKED",
+    "listCount": 20,
+    "details": 2,
+    "comments": 10,
+    "media": 0,
+    "error": "BLOCKED: robots.txt /",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gezip.net/bbs/board.php?bo_table=best\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"li.list-item:not(:has(.wr-notice))\",\"title\":\"a.item-subject\",\"link\":\"a.item-subject\",\"body\":\".view-content\",\"comment\":\"[id^=c_] .media-content\",\"views\":\".wr-hit\",\"likes\":\".wr-good\",\"comments\":\".count\",\"date\":\".wr-date\"},\"mediaHosts\":[\"gezip.net\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 20,
+      "details": 2,
+      "comments": 10,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:39:59.582Z",
+      "samples": [
+        {
+          "url": "https://gezip.net/bbs/board.php?bo_table=best&wr_id=3493954",
+          "blocks": 1,
+          "comments": 5,
+          "media": []
+        },
+        {
+          "url": "https://gezip.net/bbs/board.php?bo_table=best&wr_id=3493931",
+          "blocks": 1,
+          "comments": 5,
+          "media": []
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://gezip.net/bbs/board.php?bo_table=best",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 114402
+        },
+        {
+          "url": "https://gezip.net/bbs/board.php?bo_table=best&wr_id=3493954",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 149204
+        },
+        {
+          "url": "https://gezip.net/bbs/board.php?bo_table=best&wr_id=3493931",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 158009
+        },
+        {
+          "url": "https://image.fmkorea.com/files/attach/new5/20260920/10355241523_486616_8915c5a326f5cef6ee9609ae9091af5d.jpeg.webp",
+          "method": "GET",
+          "error": "BLOCKED: robots.txt /"
+        }
+      ],
+      "errors": [
+        "BLOCKED: robots.txt /"
+      ]
+    }
+  },
+  {
+    "id": "source-3",
+    "name": "오늘의유머",
+    "url": "https://www.todayhumor.co.kr/board/list.php?table=bestofbest",
+    "at": "2026-09-21T12:40:01.241Z",
+    "status": "BLOCKED",
+    "listCount": 30,
+    "details": 2,
+    "comments": 0,
+    "media": 0,
+    "error": "FETCH_TIMEOUT; BLOCKED: robots.txt /",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.todayhumor.co.kr/board/list.php?table=bestofbest\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr.view\",\"title\":\"td.subject a\",\"link\":\"td.subject a\",\"body\":\".viewContent\",\"comment\":\".memoContent\",\"views\":\".hits\",\"likes\":\".oknok\",\"comments\":\".list_memo_count_span\",\"date\":\".date\"},\"mediaHosts\":[\"todayhumor.co.kr\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 30,
+      "details": 2,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:01.241Z",
+      "samples": [
+        {
+          "url": "https://www.todayhumor.co.kr/board/view.php?table=bestofbest&no=483860&s_no=483860&page=1",
+          "blocks": 2,
+          "comments": 0,
+          "media": []
+        },
+        {
+          "url": "https://www.todayhumor.co.kr/board/view.php?table=bestofbest&no=483859&s_no=483859&page=1",
+          "blocks": 4,
+          "comments": 0,
+          "media": []
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://www.todayhumor.co.kr/board/list.php?table=bestofbest",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 92444
+        },
+        {
+          "url": "https://www.todayhumor.co.kr/board/view.php?table=bestofbest&no=483860&s_no=483860&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 124196
+        },
+        {
+          "url": "https://thimg.todayhumor.co.kr/upfile/202609/178935106141f5be57234d4f2197cd1861dee5bf07__mn807542__w800__h601__f47204__Ym202609.jpg",
+          "method": "GET",
+          "error": "FETCH_TIMEOUT"
+        },
+        {
+          "url": "https://www.todayhumor.co.kr/board/view.php?table=bestofbest&no=483859&s_no=483859&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 128334
+        },
+        {
+          "url": "https://thimg.todayhumor.co.kr/upfile/202609/17898961129aba7328841841aaa745504d9ae003a4__w422__h638__f9038087__Ym202609__ANIGIF.gif",
+          "method": "GET",
+          "error": "BLOCKED: robots.txt /"
+        }
+      ],
+      "errors": [
+        "FETCH_TIMEOUT",
+        "BLOCKED: robots.txt /"
+      ]
+    }
+  },
+  {
+    "id": "source-4",
+    "name": "FM코리아",
+    "url": "https://www.fmkorea.com/best",
+    "at": "2026-09-21T12:40:17.290Z",
+    "status": "BLOCKED",
+    "listCount": 24,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: robots.txt /",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.fmkorea.com/best\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"li.li\",\"title\":\"h3.title a\",\"link\":\"h3.title a\",\"body\":\".xe_content\",\"comment\":\".comment-content\",\"views\":\".readNum\",\"likes\":\".pc_voted_count .count\",\"comments\":\".comment_count\",\"date\":\".regdate\"},\"mediaHosts\":[\"image.fmkorea.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 24,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:17.290Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://www.fmkorea.com/best",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 74986
+        },
+        {
+          "url": "https://www.fmkorea.com/index.php?mid=best2&sort_index=pop&order_type=desc&document_srl=10361929422",
+          "method": "GET",
+          "error": "BLOCKED: robots.txt /"
+        }
+      ],
+      "errors": [
+        "BLOCKED: robots.txt /"
+      ]
+    }
+  },
+  {
+    "id": "source-5",
+    "name": "보배드림",
+    "url": "https://www.bobaedream.co.kr/list?code=best",
+    "at": "2026-09-21T12:40:17.407Z",
+    "status": "BLOCKED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "HTTP 406",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.bobaedream.co.kr/list?code=best\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".comment-content, .comment_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:17.407Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://www.bobaedream.co.kr/list?code=best",
+          "method": "GET",
+          "error": "HTTP 406"
+        }
+      ],
+      "errors": [
+        "HTTP 406"
+      ]
+    }
+  },
+  {
+    "id": "source-6",
+    "name": "뽐뿌",
+    "url": "https://www.ppomppu.co.kr/zboard/zboard.php?id=humor",
+    "at": "2026-09-21T12:40:17.467Z",
+    "status": "BLOCKED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: HTTP 403",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.ppomppu.co.kr/zboard/zboard.php?id=humor\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".comment-content, .comment_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:17.467Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://www.ppomppu.co.kr/zboard/zboard.php?id=humor",
+          "method": "GET",
+          "error": "BLOCKED: HTTP 403"
+        }
+      ],
+      "errors": [
+        "BLOCKED: HTTP 403"
+      ]
+    }
+  },
+  {
+    "id": "source-7",
+    "name": "인스티즈",
+    "url": "https://www.instiz.net/pt",
+    "at": "2026-09-21T12:40:17.530Z",
+    "status": "BLOCKED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: HTTP 403",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.instiz.net/pt\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr:has(.listsubject)\",\"title\":\".listsubject a\",\"link\":\".listsubject a\",\"body\":\"#memo_content_1\",\"comment\":\".comment_content\",\"views\":\"td.listno:nth-last-child(2)\",\"likes\":\"td.listno:last-child\",\"comments\":\".cmt3\",\"date\":\"td.listno:first-of-type\"},\"mediaHosts\":[\"instiz.net\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:17.530Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://www.instiz.net/pt",
+          "method": "GET",
+          "error": "BLOCKED: HTTP 403"
+        }
+      ],
+      "errors": [
+        "BLOCKED: HTTP 403"
+      ]
+    }
+  },
+  {
+    "id": "source-8",
+    "name": "클리앙",
+    "url": "https://www.clien.net/service/recommend",
+    "at": "2026-09-21T12:40:17.574Z",
+    "status": "BLOCKED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: robots.txt /service/recommend",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.clien.net/service/recommend\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".comment-content, .comment_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:17.574Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://www.clien.net/service/recommend",
+          "method": "GET",
+          "error": "BLOCKED: robots.txt /service/recommend"
+        }
+      ],
+      "errors": [
+        "BLOCKED: robots.txt /service/recommend"
+      ]
+    }
+  },
+  {
+    "id": "source-9",
+    "name": "와이고수",
+    "url": "https://ygosu.com/community/real_article",
+    "at": "2026-09-21T12:40:17.632Z",
+    "status": "BLOCKED",
+    "listCount": 27,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: robots.txt /*?*list_context=",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://ygosu.com/community/real_article\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".comment-content, .comment_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 27,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:17.632Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://ygosu.com/community/real_article",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 87223
+        },
+        {
+          "url": "https://ygosu.com/board/real_article/notice/783/?type=group0&list_context=real_article&page=1",
+          "method": "GET",
+          "error": "BLOCKED: robots.txt /*?*list_context="
+        }
+      ],
+      "errors": [
+        "BLOCKED: robots.txt /*?*list_context="
+      ]
+    }
+  },
+  {
+    "id": "source-10",
+    "name": "MLBPARK",
+    "url": "https://mlbpark.donga.com/mp/b.php?b=bullpen",
+    "at": "2026-09-21T12:40:18.038Z",
+    "status": "BLOCKED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: robots.txt /",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://mlbpark.donga.com/mp/b.php?b=bullpen\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".comment-content, .comment_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:18.038Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://mlbpark.donga.com/mp/b.php?b=bullpen",
+          "method": "GET",
+          "error": "BLOCKED: robots.txt /"
+        }
+      ],
+      "errors": [
+        "BLOCKED: robots.txt /"
+      ]
+    }
+  },
+  {
+    "id": "source-11",
+    "name": "더쿠",
+    "url": "https://theqoo.net/hot",
+    "at": "2026-09-21T12:40:18.090Z",
+    "status": "PASS",
+    "listCount": 20,
+    "details": 1,
+    "comments": 5,
+    "media": 2,
+    "error": "",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://theqoo.net/hot\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr:not(.notice):has(td.title)\",\"title\":\"td.title a:not(.replyNum)\",\"link\":\"td.title a:not(.replyNum)\",\"body\":\".xe_content\",\"comment\":\".comment-content\",\"views\":\".m_no\",\"likes\":\".voteNum\",\"comments\":\".replyNum\",\"date\":\".time\"},\"mediaHosts\":[\"theqoo.net\",\"img.theqoo.net\",\"pbs.twimg.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 20,
+      "details": 1,
+      "comments": 5,
+      "media": 2,
+      "passed": true,
+      "checkedAt": "2026-09-21T12:40:18.090Z",
+      "samples": [
+        {
+          "url": "https://theqoo.net/hot/4352274080",
+          "blocks": 7,
+          "comments": 5,
+          "media": [
+            {
+              "url": "https://pbs.twimg.com/media/HN5i6S1bYAAMIYI?format=jpg&name=large",
+              "type": "image/jpeg",
+              "bytes": 232477
+            },
+            {
+              "url": "https://pbs.twimg.com/media/HN5i6S3aIAAFw46?format=jpg&name=large",
+              "type": "image/jpeg",
+              "bytes": 1143705
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://theqoo.net/hot",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 24412
+        },
+        {
+          "url": "https://theqoo.net/hot/4352274080",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 34612
+        },
+        {
+          "url": "https://theqoo.net/index.php",
+          "method": "POST",
+          "status": 200,
+          "type": "application/json; charset=UTF-8",
+          "bytes": 11356
+        },
+        {
+          "url": "https://pbs.twimg.com/media/HN5i6S1bYAAMIYI?format=jpg&name=large",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 232477
+        },
+        {
+          "url": "https://pbs.twimg.com/media/HN5i6S3aIAAFw46?format=jpg&name=large",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 1143705
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "id": "source-12",
+    "name": "루리웹",
+    "url": "https://bbs.ruliweb.com/best",
+    "at": "2026-09-21T12:40:21.318Z",
+    "status": "PASS",
+    "listCount": 28,
+    "details": 1,
+    "comments": 2,
+    "media": 1,
+    "error": "",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://bbs.ruliweb.com/best\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr.table_body:not(.best_top_row)\",\"title\":\".subject_link\",\"link\":\".subject_link\",\"body\":\".view_content\",\"comment\":\".comment_view .text\",\"views\":\".hit\",\"likes\":\".recomd\",\"comments\":\".num_reply\",\"date\":\".time\"},\"mediaHosts\":[\"ruliweb.com\",\"ruliweb.net\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 28,
+      "details": 1,
+      "comments": 2,
+      "media": 1,
+      "passed": true,
+      "checkedAt": "2026-09-21T12:40:21.318Z",
+      "samples": [
+        {
+          "url": "https://bbs.ruliweb.com/best/board/300143/read/76748998?m=humor_only&t=now",
+          "blocks": 2,
+          "comments": 2,
+          "media": [
+            {
+              "url": "https://i1.ruliweb.com/ori/26/09/21/1a0c185c6689a6f1.mp4",
+              "type": "video/mp4",
+              "bytes": 15080080
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://bbs.ruliweb.com/best",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 176389
+        },
+        {
+          "url": "https://bbs.ruliweb.com/best/board/300143/read/76748998?m=humor_only&t=now",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 217087
+        },
+        {
+          "url": "https://i1.ruliweb.com/ori/26/09/21/1a0c185c6689a6f1.mp4",
+          "method": "GET",
+          "status": 200,
+          "type": "video/mp4",
+          "bytes": 15080080
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "id": "source-14",
+    "name": "아카라이브",
+    "url": "https://arca.live/b/singbung",
+    "at": "2026-09-21T12:40:28.408Z",
+    "status": "BLOCKED",
+    "listCount": 45,
+    "details": 1,
+    "comments": 2,
+    "media": 0,
+    "error": "BLOCKED: HTTP 403",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://arca.live/b/singbung\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"a.vrow:not(.notice)\",\"title\":\".title\",\"link\":\":self\",\"body\":\".article-content\",\"comment\":\".comment-wrapper .text\",\"views\":\".col-view\",\"likes\":\".col-rate\",\"comments\":\".comment-count\",\"date\":\"time\"},\"mediaHosts\":[\"arca.live\",\"namu.la\",\"namu.wiki\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 45,
+      "details": 1,
+      "comments": 2,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:28.408Z",
+      "samples": [
+        {
+          "url": "https://arca.live/b/singbung/128011088?p=1",
+          "blocks": 6,
+          "comments": 2,
+          "media": []
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://arca.live/b/singbung",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 161490
+        },
+        {
+          "url": "https://arca.live/b/singbung/128011088?p=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 174623
+        },
+        {
+          "url": "https://ac.arca.live/20250204sac/0910e9a719d9bd5a961db3bddab1957bdb9222a05a862764342c1930cdd20812.webp?expires=1789998023&key=7s_dGm5siJwhQFolN9wwHQ",
+          "method": "GET",
+          "error": "BLOCKED: HTTP 403"
+        }
+      ],
+      "errors": [
+        "BLOCKED: HTTP 403"
+      ]
+    }
+  },
+  {
+    "id": "source-15",
+    "name": "이토랜드",
+    "url": "https://www.etoland.co.kr/bbs/board.php?bo_table=etohumor",
+    "at": "2026-09-21T12:40:29.487Z",
+    "status": "NETWORK_ERROR",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "UNSAFE_URL",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.etoland.co.kr/bbs/board.php?bo_table=etohumor\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".comment-content, .comment_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:29.487Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://www.etoland.co.kr/bbs/board.php?bo_table=etohumor",
+          "method": "GET",
+          "error": "UNSAFE_URL"
+        }
+      ],
+      "errors": [
+        "UNSAFE_URL"
+      ]
+    }
+  },
+  {
+    "id": "dc-makjang",
+    "name": "막갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=accident_new&exception_mode=recommend",
+    "at": "2026-09-21T12:40:29.612Z",
+    "status": "BLOCKED",
+    "listCount": 49,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: DC public comment endpoint denied access",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=accident_new&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 49,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:29.612Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=accident_new&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 219218
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=accident_new&no=1261824&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 304450
+        },
+        {
+          "url": "https://gall.dcinside.com/board/comment/",
+          "method": "POST",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 36
+        }
+      ],
+      "errors": [
+        "BLOCKED: DC public comment endpoint denied access"
+      ]
+    }
+  },
+  {
+    "id": "dc-korea",
+    "name": "코갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=comedy_new1&exception_mode=recommend",
+    "at": "2026-09-21T12:40:31.110Z",
+    "status": "BLOCKED",
+    "listCount": 50,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: DC public comment endpoint denied access",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=comedy_new1&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 50,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:31.110Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=comedy_new1&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 204042
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=comedy_new1&no=696669&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 283444
+        },
+        {
+          "url": "https://gall.dcinside.com/board/comment/",
+          "method": "POST",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 36
+        }
+      ],
+      "errors": [
+        "BLOCKED: DC public comment endpoint denied access"
+      ]
+    }
+  },
+  {
+    "id": "dc-baseball_new11",
+    "name": "야갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=baseball_new13&exception_mode=recommend",
+    "at": "2026-09-21T12:40:33.241Z",
+    "status": "BLOCKED",
+    "listCount": 49,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: DC public comment endpoint denied access",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=baseball_new13&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 49,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:33.241Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=baseball_new13&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 208260
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=baseball_new13&no=2352990&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 297128
+        },
+        {
+          "url": "https://gall.dcinside.com/board/comment/",
+          "method": "POST",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 36
+        }
+      ],
+      "errors": [
+        "BLOCKED: DC public comment endpoint denied access"
+      ]
+    }
+  },
+  {
+    "id": "dc-ib_new2",
+    "name": "인방갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=ib_new2&exception_mode=recommend",
+    "at": "2026-09-21T12:40:35.360Z",
+    "status": "BLOCKED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: robots.txt /board/lists/?id=ib_new",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=ib_new2&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:35.360Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=ib_new2&exception_mode=recommend",
+          "method": "GET",
+          "error": "BLOCKED: robots.txt /board/lists/?id=ib_new"
+        }
+      ],
+      "errors": [
+        "BLOCKED: robots.txt /board/lists/?id=ib_new"
+      ]
+    }
+  },
+  {
+    "id": "dc-depression",
+    "name": "우울갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=depression&exception_mode=recommend",
+    "at": "2026-09-21T12:40:35.361Z",
+    "status": "BLOCKED",
+    "listCount": 50,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: DC public comment endpoint denied access",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=depression&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 50,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:35.361Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=depression&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 211604
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=depression&no=10288399&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 284231
+        },
+        {
+          "url": "https://gall.dcinside.com/board/comment/",
+          "method": "POST",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 36
+        }
+      ],
+      "errors": [
+        "BLOCKED: DC public comment endpoint denied access"
+      ]
+    }
+  },
+  {
+    "id": "dc-leagueoflegends6",
+    "name": "롤갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=leagueoflegends6&exception_mode=recommend",
+    "at": "2026-09-21T12:40:37.488Z",
+    "status": "BLOCKED",
+    "listCount": 49,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: DC public comment endpoint denied access",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=leagueoflegends6&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 49,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:37.488Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=leagueoflegends6&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 205960
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=leagueoflegends6&no=15758192&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 292516
+        },
+        {
+          "url": "https://gall.dcinside.com/board/comment/",
+          "method": "POST",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 36
+        }
+      ],
+      "errors": [
+        "BLOCKED: DC public comment endpoint denied access"
+      ]
+    }
+  },
+  {
+    "id": "dc-chzzk",
+    "name": "치지직",
+    "url": "https://gall.dcinside.com/mgallery/board/lists/?id=chzzk&exception_mode=recommend",
+    "at": "2026-09-21T12:40:39.634Z",
+    "status": "PARSING_UNVERIFIED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "SELECTOR_MISMATCH: list",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/mgallery/board/lists/?id=chzzk&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:39.634Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/mgallery/board/lists/?id=chzzk&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 0
+        }
+      ],
+      "errors": [
+        "SELECTOR_MISMATCH: list"
+      ]
+    }
+  },
+  {
+    "id": "dc-singlebungle1472",
+    "name": "싱글벙글",
+    "url": "https://gall.dcinside.com/mgallery/board/lists/?id=singlebungle1472&exception_mode=recommend",
+    "at": "2026-09-21T12:40:40.351Z",
+    "status": "BLOCKED",
+    "listCount": 50,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "BLOCKED: DC public comment endpoint denied access",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/mgallery/board/lists/?id=singlebungle1472&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 50,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:40.351Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/mgallery/board/lists/?id=singlebungle1472&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 237364
+        },
+        {
+          "url": "https://gall.dcinside.com/mgallery/board/view/?id=singlebungle1472&no=2505589&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 329386
+        },
+        {
+          "url": "https://gall.dcinside.com/board/comment/",
+          "method": "POST",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 36
+        }
+      ],
+      "errors": [
+        "BLOCKED: DC public comment endpoint denied access"
+      ]
+    }
+  },
+  {
+    "id": "dc-football_new9",
+    "name": "해축갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
+    "at": "2026-09-21T12:40:42.453Z",
+    "status": "PARSING_UNVERIFIED",
+    "listCount": 49,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "SELECTOR_MISMATCH: body; SELECTOR_MISMATCH: body; SELECTOR_MISMATCH: body; SELECTOR_MISMATCH: body; SELECTOR_MISMATCH: body",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 49,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:42.453Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 210171
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6879642&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 0
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6879454&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 0
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6879391&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 0
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6879373&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 0
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6879212&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 0
+        }
+      ],
+      "errors": [
+        "SELECTOR_MISMATCH: body",
+        "SELECTOR_MISMATCH: body",
+        "SELECTOR_MISMATCH: body",
+        "SELECTOR_MISMATCH: body",
+        "SELECTOR_MISMATCH: body"
+      ]
+    }
+  },
+  {
+    "id": "dc-neostock",
+    "name": "주갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=neostock&exception_mode=recommend",
+    "at": "2026-09-21T12:40:46.705Z",
+    "status": "PARSING_UNVERIFIED",
+    "listCount": 0,
+    "details": 0,
+    "comments": 0,
+    "media": 0,
+    "error": "SELECTOR_MISMATCH: list",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=neostock&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": false,
+      "listCount": 0,
+      "details": 0,
+      "comments": 0,
+      "media": 0,
+      "passed": false,
+      "checkedAt": "2026-09-21T12:40:46.705Z",
+      "samples": [],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=neostock&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 0
+        }
+      ],
+      "errors": [
+        "SELECTOR_MISMATCH: list"
+      ]
+    }
+  },
+  {
+    "id": "source-13",
+    "name": "인벤",
+    "url": "https://www.inven.co.kr/board/webzine/2097",
+    "at": "2026-09-21T12:42:52.827Z",
+    "status": "PASS",
+    "listCount": 50,
+    "details": 1,
+    "comments": 1,
+    "media": 2,
+    "error": "",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://www.inven.co.kr/board/webzine/2097\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr:not(.notice):has(a.subject-link)\",\"title\":\"a.subject-link\",\"link\":\"a.subject-link\",\"body\":\"#powerbbsContent\",\"comment\":\".comment-content\",\"views\":\".view\",\"likes\":\".reco\",\"comments\":\".con-comment\",\"date\":\".date\"},\"mediaHosts\":[\"inven.co.kr\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 50,
+      "details": 1,
+      "comments": 1,
+      "media": 2,
+      "passed": true,
+      "checkedAt": "2026-09-21T12:42:52.827Z",
+      "samples": [
+        {
+          "url": "https://www.inven.co.kr/board/webzine/2097/2731075",
+          "blocks": 7,
+          "comments": 1,
+          "media": [
+            {
+              "url": "https://upload3.inven.co.kr/upload/2026/09/21/bbs/i9876865794148995.mp4",
+              "type": "video/mp4",
+              "bytes": 1963590
+            },
+            {
+              "url": "https://upload3.inven.co.kr/upload/2026/09/21/bbs/i9302108015014805.mp4",
+              "type": "video/mp4",
+              "bytes": 1963590
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://www.inven.co.kr/board/webzine/2097",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 360986
+        },
+        {
+          "url": "https://www.inven.co.kr/board/webzine/2097/2731075",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 424025
+        },
+        {
+          "url": "https://www.inven.co.kr/common/board/comment.json.php",
+          "method": "POST",
+          "status": 200,
+          "type": "application/json",
+          "bytes": 550
+        },
+        {
+          "url": "https://upload3.inven.co.kr/upload/2026/09/21/bbs/i9876865794148995.mp4",
+          "method": "GET",
+          "status": 200,
+          "type": "video/mp4",
+          "bytes": 1963590
+        },
+        {
+          "url": "https://upload3.inven.co.kr/upload/2026/09/21/bbs/i9302108015014805.mp4",
+          "method": "GET",
+          "status": 200,
+          "type": "video/mp4",
+          "bytes": 1963590
+        }
+      ],
+      "errors": []
+    }
+  },
+  {
+    "id": "source-16",
+    "name": "웃긴대학",
+    "url": "https://web.humoruniv.com/board/humor/board_best.html",
+    "at": "2026-09-21T14:59:58.570Z",
+    "status": "PASS",
+    "listCount": 50,
+    "details": 1,
+    "comments": 5,
+    "media": 2,
+    "error": "",
+    "validation": {
+      "version": 2,
+      "identity": "{\"version\":2,\"url\":\"https://web.humoruniv.com/board/humor/board_best.html\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr[id^=\\\"li_chk_\\\"]\",\"title\":\".li_sbj [id^=\\\"title_chk_\\\"]\",\"link\":\".li_sbj a[href*=\\\"read.html\\\"]\",\"body\":\"#wrap_copy\",\"comment\":\"tr[id^=\\\"comment_span_\\\"] .comment_more\",\"views\":\"td.li_und:nth-last-child(3)\",\"likes\":\"td.li_und .o\",\"comments\":\".list_comment_num\",\"date\":\".li_date\"},\"mediaHosts\":[\"down.humoruniv.com\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 50,
+      "details": 1,
+      "comments": 5,
+      "media": 2,
+      "passed": true,
+      "checkedAt": "2026-09-21T14:59:58.570Z",
+      "samples": [
+        {
+          "url": "https://web.humoruniv.com/board/humor/read.html?table=pds&number=1420879",
+          "blocks": 4,
+          "comments": 5,
+          "media": [
+            {
+              "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71001_583c8c6741ec9a46b901fe6d433f7683cde7e3aa.jpg",
+              "type": "image/jpeg",
+              "bytes": 332246
+            },
+            {
+              "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71002_0fe1ab8d1f3d90b6b49ca8918d9aa53d54f3d47f.jpg",
+              "type": "image/jpeg",
+              "bytes": 64393
+            }
+          ]
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://web.humoruniv.com/board/humor/board_best.html",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html",
+          "bytes": 155856
+        },
+        {
+          "url": "https://web.humoruniv.com/board/humor/read.html?table=pds&number=1420879",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html",
+          "bytes": 290437
+        },
+        {
+          "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71001_583c8c6741ec9a46b901fe6d433f7683cde7e3aa.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 332246
+        },
+        {
+          "url": "https://down.humoruniv.com/hwiparambbs/data/pds/a_w2d2a71002_0fe1ab8d1f3d90b6b49ca8918d9aa53d54f3d47f.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 64393
+        }
+      ],
+      "errors": []
+    }
+  }
+]

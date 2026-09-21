@@ -24,7 +24,7 @@ const corrections:Record<string,Partial<(typeof sourceCatalog)[number]>>={
 'source-4':{mediaHosts:['image.fmkorea.com'],selectors:{item:'li.li',title:'h3.title a',link:'h3.title a',body:'.xe_content',comment:'.comment-content',views:'.readNum',likes:'.pc_voted_count .count',comments:'.comment_count',date:'.regdate'}},
 'source-12':{mediaHosts:['ruliweb.com','ruliweb.net'],selectors:{item:'tr.table_body:not(.best_top_row)',title:'.subject_link',link:'.subject_link',body:'.view_content',comment:'.comment_view .text',views:'.hit',likes:'.recomd',comments:'.num_reply',date:'.time'}},
 'source-14':{mediaHosts:['arca.live','namu.la','namu.wiki'],selectors:{item:'a.vrow:not(.notice)',title:'.title',link:':self',body:'.article-content',comment:'.comment-wrapper .text',views:'.col-view',likes:'.col-rate',comments:'.comment-count',date:'time'}}};
-for(const item of sourceCatalog){Object.assign(item,corrections[item.id!]);if(item.adapter==='dcinside')item.mediaHosts=['dcinside.co.kr','dcinside.com'];}
+for(const item of sourceCatalog){Object.assign(item,corrections[item.id!]);if(item.adapter==='dcinside')item.mediaHosts=['dcinside.co.kr','dcinside.com','i.ytimg.com','imgnews.pstatic.net'];}
 
 for(const item of sourceCatalog){if(item.id==='source-0'){item.selectors.comment='.cmt_body > .xe_content';item.mediaHosts=['mbong.kr'];}if(item.id==='source-13')item.selectors.item='tr:not(.notice):has(a.subject-link)';}
 

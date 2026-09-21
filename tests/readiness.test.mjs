@@ -17,7 +17,7 @@ test('optional comments and media skip requests while body restrictions remain e
  const {validation:v}=await validateSource(s,{fetcher});assert(v.passed);assert(validEvidence(s,v));assert.equal(v.comments,0);assert.equal(v.media,0);assert.equal(calls.length,2);
  assert(!validEvidence({...s,commentLimit:1},v));assert(!validEvidence({...s,images:true},v));
  const blocked=await validateSource(s,{fetcher:async()=>{throw Error('BLOCKED: robots.txt')}});assert(!blocked.validation.passed);
- const enabled=await validateSource({...s,commentLimit:1},{fetcher:async url=>url.includes('/comment/')?{bytes:Buffer.from('denied'),type:'text/html'}:fetcher(url)});assert(!enabled.validation.passed);assert.match(enabled.errors.join(),/BLOCKED/);
+ const enabled=await validateSource({...s,commentLimit:1,requiredFields:['title','sourceUrl','sourcePostId','body','comments']},{fetcher:async url=>url.includes('/comment/')?{bytes:Buffer.from('denied'),type:'text/html'}:fetcher(url)});assert(!enabled.validation.passed);assert.match(enabled.errors.join(),/BLOCKED/);
 });
 
 test('Humoruniv keeps unique post numbers and upgrades only its known image host',async()=>{

@@ -2,7 +2,7 @@ import {z} from 'zod';
 import {db,HttpError} from '@/lib/server';
 import {sourceSchema} from './config';
 import {sourceIdentity} from './validation.mjs';
-export const bulkPatchSchema=sourceSchema.pick({commentLimit:true,images:true,videos:true,gifs:true,scanLimit:true,dailyLimit:true,intervalMinutes:true,minViews:true,minLikes:true,minComments:true,maxAgeDays:true,preferNew:true,fallback:true,board:true,prefix:true,selection:true,mediaFailure:true,denyWords:true,weights:true}).partial().strict();
+export const bulkPatchSchema=sourceSchema.pick({collectionMode:true,requiredFields:true,optionalFields:true,commentLimit:true,images:true,videos:true,gifs:true,scanLimit:true,dailyLimit:true,intervalMinutes:true,minViews:true,minLikes:true,minComments:true,maxAgeDays:true,preferNew:true,fallback:true,board:true,prefix:true,selection:true,mediaFailure:true,denyWords:true,weights:true}).partial().strict();
 export async function bulkSources(raw:Record<string,unknown>){
  const ids=[...new Set(z.array(z.string().min(1).max(80)).min(1).max(200).parse(raw.ids))];
  const mode=z.enum(['test','settings','off']).parse(raw.mode),patch=mode==='settings'?bulkPatchSchema.parse(raw.patch):{};
