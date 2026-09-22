@@ -49,5 +49,33 @@ const listItem={...item,externalId:'list-'+run,title:'목록 글 '+run,url:'http
 await rpc('complete',{id:task.id,token:task.lease_token,result:{items:[listItem],validation:{version:3,identity:sourceIdentity(listConfig),mode:'LIST_ONLY',passed:true,listPage:1,fullPage:true,listCount:30,details:0,comments:0,media:0,eligibleCount:1,samples:[{eligible:true,availableFields:listItem.availableFields}]}}});
 let listRow=(await snapshot()).sources.find(r=>r.id===listCreated.id);assert(listRow.can_enable);assert.equal(JSON.parse(listRow.config).resolvedMode,'LIST_ONLY');await op('source',{source:{...JSON.parse(listRow.config),enabled:true}});
 await op('sourcesBulk',{ids:[listCreated.id],mode:'settings',patch:{requiredFields:['title','sourceUrl','sourcePostId','body','image']}});listRow=(await snapshot()).sources.find(r=>r.id===listCreated.id);assert.equal(listRow.can_enable,false);assert.equal(listRow.enabled,0);await op('sourceDelete',{id:listCreated.id});results.push('V3 list-only passes with zero detail/comments/media; detected mode persists; stronger required fields revoke eligibility');
+// Operational edits keep evidence; technical edits automatically inspect and only resume on matching PASS.
+const autoSource=sourceSchema.parse({name:'자동 재검사 QA',url:'https://example.com/auto',collectionMode:'LIST_ONLY',requiredFields:['title','sourceUrl','sourcePostId'],enabled:true});
+const autoCreated=await op('source',{source:autoSource,autoTest:true});
+assert(autoCreated.testQueued&&autoCreated.resumeAfterTest);
+async function finishAuto(passed=true){
+ const claimed=await rpc('claim',{workerId:'qa-worker'});const t=claimed.task;assert.equal(t.ref_id,autoCreated.id);
+ const sc=t.payload.source,detail={...listItem,externalId:randomUUID(),url:sc.url+'/post',title:randomUUID(),policyIdentity:sourceIdentity(sc)};
+ await rpc('complete',{id:t.id,token:t.lease_token,result:{items:passed?[detail]:[],validation:{version:3,identity:sourceIdentity(sc),mode:'LIST_ONLY',passed,listPage:1,fullPage:true,listCount:30,details:0,comments:0,media:0,eligibleCount:passed?1:0,samples:passed?[{eligible:true,availableFields:detail.availableFields}]:[]}}});
+ return (await snapshot()).sources.find(r=>r.id===autoCreated.id);
+}
+let autoRow=await finishAuto();assert.equal(autoRow.enabled,1);assert(autoRow.can_enable);
+const testedAt=autoRow.tested_at;
+let autoSave=await op('source',{source:{...JSON.parse(autoRow.config),dailyLimit:3,scanLimit:50,intervalMinutes:60},autoTest:true});
+assert.equal(autoSave.testQueued,false);autoRow=(await snapshot()).sources.find(r=>r.id===autoCreated.id);assert.equal(autoRow.enabled,1);assert.equal(autoRow.tested_at,testedAt);assert(autoRow.can_enable);
+autoSave=await op('source',{source:{...JSON.parse(autoRow.config),url:'https://example.com/auto-new'},autoTest:true});assert(autoSave.testQueued&&autoSave.resumeAfterTest);
+autoRow=(await snapshot()).sources.find(r=>r.id===autoCreated.id);assert.equal(autoRow.enabled,0);assert.equal(autoRow.can_enable,false);assert.equal(autoRow.validation_status,'검사 대기');
+autoRow=await finishAuto();assert.equal(autoRow.enabled,1);
+await op('source',{source:{...JSON.parse(autoRow.config),url:'https://example.com/auto-fail'},autoTest:true});autoRow=await finishAuto(false);assert.equal(autoRow.enabled,0);assert.equal(autoRow.can_enable,false);assert.equal(autoRow.resume_after_test,false);
+await op('source',{source:{...JSON.parse(autoRow.config),enabled:true},autoTest:true});
+await op('source',{source:{...JSON.parse(autoRow.config),enabled:false},autoTest:true});autoRow=await finishAuto();assert.equal(autoRow.enabled,0);assert(autoRow.can_enable);
+// Replaced running tasks must not turn a new URL ON or revoke its verification.
+await op('source',{source:{...JSON.parse(autoRow.config),enabled:true,url:'https://example.com/old-running'},autoTest:true});
+const stale=(await rpc('claim',{workerId:'qa-worker'})).task;
+await op('source',{source:{...JSON.parse(autoRow.config),enabled:true,url:'https://example.com/new-running'},autoTest:true});
+await rpc('complete',{id:stale.id,token:stale.lease_token,result:{items:[]}},409);
+await rpc('fail',{id:stale.id,token:stale.lease_token,error:'old failure',blocked:true},409);
+autoRow=await finishAuto();assert.equal(autoRow.enabled,1);assert(autoRow.can_enable);
+await op('sourceDelete',{id:autoCreated.id});results.push('daily count edit preserves ON/evidence; URL save auto-tests; matching PASS resumes ON; failure stays OFF; explicit OFF wins; stale tasks rejected');
 // Leave this isolated QA environment paused after assertions.
 data=await snapshot();await op('settings',{revision:data.revision,config:{...data.config,paused:true}});writeFileSync('test-results/automation-api.json',JSON.stringify({passed:true,at:new Date().toISOString(),results},null,2));console.log('PASS:',results.join('; '));

@@ -1,3 +1,5 @@
+import {sourceEditorFields} from '../lib/automation/source-editor.mjs';
+import {sourceIdentity} from '../lib/automation/validation.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';import {sourceSchema} from '../lib/automation/config.ts';import {validateSource} from '../worker/validate-source.mjs';import {scanSource} from '../worker/adapters.mjs';import {validEvidence} from '../lib/automation/validation.mjs';
 const base=['title','sourceUrl','sourcePostId'],url='https://example.com/list',jpg=Buffer.from([255,216,255,224,0,0,0,0]);
 function fixture({list='<article><h2>A</h2><a href="/post/1">A</a></article>',body='<article>Body<img src="/image.jpg"></article>',mediaFail=false,commentDeny=false}={}){const calls=[];return {calls,fetcher:async(u,o)=>{calls.push({url:u,method:o?.method||'GET'});if(u===url)return {bytes:Buffer.from(list),type:'text/html'};if(u.endsWith('/image.jpg'))return {bytes:jpg,type:'application/octet-stream'};if(u.endsWith('/bad.mp4')||mediaFail)throw Error('HTTP 404');if(u.includes('/board/comment/'))return {bytes:Buffer.from(commentDeny?'denied':'{"comments":[]}'),type:'text/html'};return {bytes:Buffer.from(body),type:'text/html'}}}}
@@ -16,3 +18,16 @@ test('FULL optional DC comment denial is a warning; required comments fail',asyn
 test('optional video failure does not revoke required body and image',async()=>{const f=fixture({body:'<article>Body<img src="/image.jpg"><video src="/bad.mp4"></video></article>'}),r=await validateSource(cfg({collectionMode:'DETAIL_NO_COMMENTS'}),f);assert(r.validation.passed);assert(r.validation.warnings.some(e=>e.includes('404')));assert(!r.items[0].blocks.some(b=>b.type==='video'));});
 test('LINK_AGGREGATION only copies short list summary and URL',async()=>{const f=fixture({list:'<article><h2>A</h2><a href="/post/1">A</a><p class="summary">'+ 'x'.repeat(900)+'</p></article>'}),s=cfg({collectionMode:'LINK_AGGREGATION'}),r=await scanSource(s,f);assert.equal(f.calls.length,1);assert.equal(r.items[0].blocks[0].text.length,500);assert(r.items[0].blocks.some(b=>b.type==='link'));assert(validEvidence(s,r.validation));});
 test('required fields must coexist in one post; disabled required stages do not pass',async()=>{const f=fixture({list:'<article><h2>A</h2><a href="/a">A</a><p class="summary">body</p></article><article><h2>B</h2><a href="/b">B</a><img src="/image.jpg"></article>'}),r=await validateSource(cfg({collectionMode:'LIST_WITH_MEDIA',requiredFields:[...base,'body','image']}),f);assert(!r.validation.passed);assert(!validEvidence(cfg({collectionMode:'LIST_WITH_MEDIA',requiredFields:[...base,'body','image']}),r.validation));const q=await validateSource(cfg({collectionMode:'LIST_ONLY',requiredFields:[...base,'image']}),fixture());assert(!q.validation.passed);assert(q.errors.some(e=>e.includes('DISABLED')));});
+
+test('source editor display defaults do not mutate saved policy when only daily count changes',()=>{
+ const source=cfg({}),before=sourceIdentity(source);
+ const displayed=sourceEditorFields(source);
+ assert(displayed.requiredFields.includes('image'));
+ assert.equal(source.requiredFields,undefined);
+ const saved=sourceSchema.parse({...source,dailyLimit:3,scanLimit:50,intervalMinutes:60,minLikes:10,prefix:'웃음 '});
+ assert.equal(sourceIdentity(saved),before);
+ const evidence={version:2,identity:before,passed:true,listPage:1,fullPage:true,listCount:20,details:1,comments:1,media:1};
+ assert(validEvidence(saved,evidence));
+ assert(!validEvidence({...saved,url:'https://example.com/other'},evidence));
+ assert.notEqual(sourceIdentity({...source,requiredFields:displayed.requiredFields}),before);
+});
