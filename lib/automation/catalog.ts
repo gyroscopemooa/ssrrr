@@ -26,7 +26,7 @@ const corrections:Record<string,Partial<(typeof sourceCatalog)[number]>>={
 'source-14':{mediaHosts:['arca.live','namu.la','namu.wiki'],selectors:{item:'a.vrow:not(.notice)',title:'.title',link:':self',body:'.article-content',comment:'.comment-wrapper .text',views:'.col-view',likes:'.col-rate',comments:'.comment-count',date:'time'}}};
 for(const item of sourceCatalog){Object.assign(item,corrections[item.id!]);if(item.adapter==='dcinside')item.mediaHosts=['dcinside.co.kr','dcinside.com','i.ytimg.com','imgnews.pstatic.net'];}
 
-for(const item of sourceCatalog){if(item.id==='source-0'){item.selectors.comment='.cmt_body > .xe_content';item.mediaHosts=['mbong.kr'];}if(item.id==='source-13')item.selectors.item='tr:not(.notice):has(a.subject-link)';}
+for(const item of sourceCatalog){if(item.id==='source-0'){Object.assign(item.selectors,{body:'.ink_atc .xe_content[class*="document_"]',comment:'.cmt_body > .xe_content',views:'td.extra_col:nth-last-child(3)',likes:'td.extra_col:last-child',comments:'.cmt_num'});item.mediaHosts=['mbong.kr'];}if(item.id==='source-13')item.selectors.item='tr:not(.notice):has(a.subject-link)';}
 
 for(const item of sourceCatalog)if(item.id==='source-11')item.mediaHosts.push('pbs.twimg.com');
 

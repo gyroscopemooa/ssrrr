@@ -1,8 +1,11 @@
+import {visibleText} from '../lib/content-text.ts';
 import {publicComments} from './public-comments.mjs';
 import {load} from 'cheerio';import {fetchPage,decodeHTML} from './network.mjs';import {createHash} from 'node:crypto';import {mediaType} from './media-type.mjs';import {requiredFields} from '../lib/automation/modes.mjs';
 const number=v=>{const s=String(v).replace(/,/g,'');return Math.round((parseFloat(s.match(/[\d.]+/)?.[0]||'0'))*(s.includes('만')?10000:s.includes('천')?1000:1))};
 export function parseList(html,source){
- const $=load(html),c=source.selectors,ls=source.listSelectors||{},items=[],seen=new Set();
+ const $=load(html),c={...source.selectors},ls=source.listSelectors||{},items=[],seen=new Set();
+ // Upgrade the old generic Mbong rules only; keep administrator overrides.
+ if(new URL(source.url).hostname==='mbong.kr'){for(const [key,old,next] of [['views','.readNum, .hit','td.extra_col:nth-last-child(3)'],['likes','.voteNum, .recommend','td.extra_col:last-child'],['comments','.replyNum, .comment_count','.cmt_num']])if(c[key]===old)c[key]=next;}
  $(c.item).each((_,el)=>{const row=$(el),pinned=row.find('.wr-num,.no,.gall_num').first().text().trim();if(pinned&&!/^\d+$/.test(pinned.replace(/,/g,'')))return;
  const a=c.link===':self'?row:row.find(c.link).first(),titleNode=row.find(c.title).first().clone();titleNode.find('.count,.wr-comment,.cmt3,.replyNum,.category').remove();const title=titleNode.text().replace(/\s+/g,' ').trim()||a.text().trim(),href=a.attr('href');if(!title||!href)return;
  let u;try{u=new URL(href,source.url)}catch{return}if(u.hostname!==new URL(source.url).hostname||u.protocol!=='https:'||u.username||u.password)return;u.hash='';if(seen.has(u.href))return;seen.add(u.href);
@@ -15,7 +18,42 @@ export function parseList(html,source){
  items.push({externalId,url:u.href,title:title.slice(0,120),publishedAt:Number.isFinite(time)?time:null,author,metrics:{views:number(row.find(c.views).text()),likes:number(row.find(c.likes).text()),comments:number(row.find(c.comments).text())},blocks:blocks.slice(0,100),comments:[],mediaHash:'',availableFields});
  });return items.slice(0,source.scanLimit)
 }
-export function parseDetail(html,item,source){if(!html.trim())throw Error("EMPTY_RESPONSE: detail");const $=load(html),root=$(source.selectors.body).first();if(!root.length)throw Error('SELECTOR_MISMATCH: body');root.find('script,style,form,button,nav,aside,noscript').remove();const blocks=[];let text='';const flush=()=>{const t=text.replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();if(t)blocks.push({type:'text',text:t.slice(0,30000)});text=''};function walk(node){if(node.type==='text'){text+=node.data;return}const tag=node.name;if(['img','video','iframe'].includes(tag)){flush();const el=$(node),raw=el.attr('data-original')||el.attr('data-src')||el.attr('src')||el.find('source').attr('src');if(!raw)return;let url;try{const address=new URL(raw,item.url);if(new URL(item.url).hostname==='web.humoruniv.com'&&address.hostname==='down.humoruniv.com'&&address.protocol==='http:')address.protocol='https:';url=address.href}catch{return}if(tag==='iframe'){const match=url.match(/(?:youtube(?:-nocookie)?\.com\/embed\/|youtu\.be\/)([\w-]{11})/);if(match)blocks.push({type:'youtube',videoId:match[1]})}else blocks.push({type:tag==='video'?'video':'image',url});return}if(tag==='br'){text+='\n';return}for(const n of node.children||[])walk(n);if(['p','div','li','h1','h2','h3'].includes(tag))text+='\n'}for(const n of root[0].children||[])walk(n);flush();const comments=[];$(source.selectors.comment).slice(0,source.commentLimit).each((i,el)=>{const content=$(el).clone();content.find('script,style,button,input,.cmt-good-btn,.en').remove();content.find('br').replaceWith('\n');const text=content.text().trim().slice(0,2000);if(text)comments.push({id:$(el).attr('data-id')||$(el).attr('id')||$(el).closest('[id]').attr('id')||String(i),text})});return {...item,blocks:blocks.slice(0,100),comments,mediaHash:''}}
+export function parseDetail(html,item,source){
+ if(!html.trim())throw Error('EMPTY_RESPONSE: detail');
+ const $=load(html),matches=$(source.selectors.body);
+ // A comma-separated CSS selector is returned in document order, not selector priority.
+ // Prefer the explicit content element over an enclosing article (which includes comments).
+ const specific=matches.filter((_,el)=>el.name!=='article');
+ const selected=specific.length?specific.first():matches.first();
+ if(!selected.length)throw Error('SELECTOR_MISMATCH: body');
+ const root=selected.clone();
+ const noise='script,style,form,button,nav,aside,noscript,.cmt_unit,.cmt_body,.comment-content,.comment_content,.comment-wrapper,.comment-list,.comments,.atc_buttons,.cmt_buttons';
+ root.find(noise).remove();
+ if(source.selectors.comment)root.find(source.selectors.comment).remove();
+ const blocks=[];let text='';
+ const flush=()=>{const t=visibleText(text).replace(/[ \t]+/g,' ').replace(/\n[ \t]+/g,'\n').replace(/\n{3,}/g,'\n\n').trim();if(t)blocks.push({type:'text',text:t.slice(0,30000)});text=''};
+ function walk(node){
+  if(node.type==='text'){text+=node.data;return}
+  const tag=node.name;
+  if(['img','video','iframe'].includes(tag)){
+   flush();const el=$(node),raw=el.attr('data-original')||el.attr('data-src')||el.attr('src')||el.find('source').attr('src');if(!raw)return;
+   let url;try{const address=new URL(raw,item.url);if(new URL(item.url).hostname==='web.humoruniv.com'&&address.hostname==='down.humoruniv.com'&&address.protocol==='http:')address.protocol='https:';url=address.href}catch{return}
+   if(tag==='iframe'){const match=url.match(/(?:youtube(?:-nocookie)?\.com\/embed\/|youtu\.be\/)([\w-]{11})/);if(match)blocks.push({type:'youtube',videoId:match[1]})}
+   else blocks.push({type:tag==='video'?'video':'image',url});return;
+  }
+  if(tag==='br'){text+='\n';return}
+  for(const n of node.children||[])walk(n);
+  if(['p','div','li','h1','h2','h3'].includes(tag))text+='\n';
+ }
+ for(const n of root[0].children||[])walk(n);flush();
+ const comments=[];
+ // Read comments from the original document, not the pruned body clone.
+ if(source.commentLimit>0&&source.selectors.comment)$(source.selectors.comment).slice(0,source.commentLimit).each((i,el)=>{
+  const content=$(el).clone();content.find('script,style,button,input,.cmt-good-btn,.en,.cmt_buttons').remove();content.find('br').replaceWith('\n');
+  const text=visibleText(content.text()).slice(0,2000);if(text)comments.push({id:$(el).attr('data-id')||$(el).attr('id')||$(el).closest('[id]').attr('id')||String(i),text});
+ });
+ return {...item,blocks:blocks.slice(0,100),comments,mediaHash:''};
+}
 export class GenericHtmlAdapter{constructor(fetcher=fetchPage){this.fetcher=fetcher}async scanList(source){const r=await this.fetcher(source.url);const html=decodeHTML(r.bytes,r.type);if(!html.trim())throw Error("EMPTY_RESPONSE: list");const items=parseList(html,source);if(!items.length){const $=load(html);const title=$('title').text();if(/access denied|just a moment|접근.*차단|captcha/i.test(title)||$('#challenge-form,#cf-challenge-running').length)throw Error('BLOCKED: challenge');throw Error('SELECTOR_MISMATCH: list')}return items}async loadDetail(item,source){const r=await this.fetcher(item.url);const html=decodeHTML(r.bytes,r.type),detail=parseDetail(html,item,source);try{return await publicComments(detail,html,source,this.fetcher)}catch(e){if(!source.ignoreCommentErrors)throw e;return {...detail,commentError:e.message}}}}
 export class DcinsideAdapter extends GenericHtmlAdapter{
  async loadDetail(item,source){const r=await this.fetcher(item.url),html=decodeHTML(r.bytes,r.type),detail=parseDetail(html,item,source),$=load(html);const publicToken=$('#e_s_n_o').val();try{if(source.commentLimit>0&&publicToken){const url=new URL(item.url),id=url.searchParams.get('id'),no=url.searchParams.get('no');const body=new URLSearchParams({id,no,cmt_id:id,cmt_no:no,e_s_n_o:String(publicToken),comment_page:'1',sort:'D',prevCnt:'0',board_type:'',_GALLTYPE_:String($('#_GALLTYPE_').val()||'G')}).toString();const response=await this.fetcher(url.origin+'/board/comment/',{method:'POST',body,referer:item.url});let data;try{data=JSON.parse(response.bytes.toString())}catch{throw Error('BLOCKED: DC public comment endpoint denied access')}if(!Array.isArray(data.comments)&&Number(data.total_cnt||data.comment_cnt)!==0)throw Error('COMMENT_PARSE_FAILED: DC response');detail.comments=(data.comments||[]).filter(c=>c.memo&&!['1','Y',true].includes(c.is_delete)&&c.nicktype!=='COMMENT_BOY').slice(0,source.commentLimit).map(c=>{const content=load(String(c.memo));content('script,style,button').remove();content('br').replaceWith('\n');return {id:String(c.no),text:content.text().trim().slice(0,2000)}}).filter(c=>c.text);detail.commentCheck={available:true,total:Number(data.total_cnt||data.comment_cnt||0)}}}catch(e){if(!source.ignoreCommentErrors)throw e;detail.commentError=e.message}return detail}

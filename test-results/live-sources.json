@@ -1,125 +1,5 @@
 [
   {
-    "id": "source-0",
-    "name": "엠봉",
-    "url": "https://mbong.kr/best",
-    "at": "2026-09-21T15:26:15.565Z",
-    "status": "PASS",
-    "listCount": 20,
-    "details": 1,
-    "comments": 0,
-    "media": 1,
-    "error": "",
-    "validation": {
-      "version": 3,
-      "identity": "{\"version\":2,\"url\":\"https://mbong.kr/best\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".xe_content, .view_content, #writeContents, .content_view, article\",\"comment\":\".cmt_body > .xe_content\",\"views\":\".readNum, .hit\",\"likes\":\".voteNum, .recommend\",\"comments\":\".replyNum, .comment_count\",\"date\":\"time, .date\"},\"mediaHosts\":[\"mbong.kr\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
-      "mode": "DETAIL_NO_COMMENTS",
-      "listPage": 1,
-      "fullPage": true,
-      "listCount": 20,
-      "details": 1,
-      "comments": 0,
-      "media": 1,
-      "eligibleCount": 1,
-      "passed": true,
-      "requiredFields": [
-        "title",
-        "sourceUrl",
-        "sourcePostId",
-        "body",
-        "image"
-      ],
-      "availableFields": [
-        "title",
-        "sourceUrl",
-        "sourcePostId",
-        "body",
-        "image"
-      ],
-      "missingFields": [],
-      "stages": {
-        "list": {
-          "status": "passed",
-          "count": 20
-        },
-        "detail": {
-          "status": "passed",
-          "needed": true,
-          "count": 1
-        },
-        "comments": {
-          "status": "unused",
-          "needed": false
-        },
-        "media": {
-          "status": "passed",
-          "needed": true,
-          "count": 1,
-          "origin": "detail"
-        }
-      },
-      "checkedAt": "2026-09-21T15:26:15.565Z",
-      "samples": [
-        {
-          "url": "https://mbong.kr/best/6363443",
-          "availableFields": [
-            "title",
-            "sourceUrl",
-            "sourcePostId",
-            "body",
-            "image"
-          ],
-          "missingFields": [],
-          "eligible": true,
-          "errors": [],
-          "blocks": 5,
-          "comments": 0
-        }
-      ],
-      "requests": [
-        {
-          "url": "https://mbong.kr/best",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 118990
-        },
-        {
-          "url": "https://mbong.kr/best/6363443",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 147844
-        },
-        {
-          "url": "https://img.mbong.kr/files/member_extra_info/profile_image/224/389/003/3389224.jpg?t=1779068927",
-          "method": "GET",
-          "status": 200,
-          "type": "image/jpeg",
-          "bytes": 2319
-        }
-      ],
-      "errors": [],
-      "warnings": [],
-      "alternatives": [
-        {
-          "mode": "LINK_AGGREGATION",
-          "available": true,
-          "listCount": 20,
-          "availableFields": [
-            "title",
-            "sourceUrl",
-            "sourcePostId"
-          ],
-          "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-        }
-      ],
-      "detailRequired": true,
-      "commentsRequired": false,
-      "mediaRequired": true
-    }
-  },
-  {
     "id": "source-1",
     "name": "개드립",
     "url": "https://www.dogdrip.net/dogdrip",
@@ -3882,296 +3762,6 @@
     }
   },
   {
-    "id": "dc-football_new9",
-    "name": "해축갤",
-    "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
-    "at": "2026-09-21T22:09:04.850Z",
-    "status": "BLOCKED",
-    "listCount": 49,
-    "details": 5,
-    "comments": 0,
-    "media": 0,
-    "error": "REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403",
-    "validation": {
-      "version": 3,
-      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\",\"i.ytimg.com\",\"imgnews.pstatic.net\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
-      "mode": "DETAIL_NO_COMMENTS",
-      "listPage": 1,
-      "fullPage": true,
-      "listCount": 49,
-      "details": 5,
-      "comments": 0,
-      "media": 0,
-      "eligibleCount": 0,
-      "passed": false,
-      "requiredFields": [
-        "title",
-        "sourceUrl",
-        "sourcePostId",
-        "body",
-        "image"
-      ],
-      "availableFields": [
-        "views",
-        "recommends",
-        "title",
-        "sourceUrl",
-        "sourcePostId",
-        "createdAt",
-        "author",
-        "body"
-      ],
-      "missingFields": [
-        "image"
-      ],
-      "stages": {
-        "list": {
-          "status": "passed",
-          "count": 49
-        },
-        "detail": {
-          "status": "passed",
-          "needed": true,
-          "count": 5
-        },
-        "comments": {
-          "status": "unused",
-          "needed": false
-        },
-        "media": {
-          "status": "empty",
-          "needed": true,
-          "count": 0,
-          "origin": "detail"
-        }
-      },
-      "checkedAt": "2026-09-21T22:09:04.850Z",
-      "samples": [
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881186&exception_mode=recommend&page=1",
-          "availableFields": [
-            "views",
-            "recommends",
-            "title",
-            "sourceUrl",
-            "sourcePostId",
-            "createdAt",
-            "author"
-          ],
-          "missingFields": [
-            "body",
-            "image"
-          ],
-          "eligible": false,
-          "errors": [
-            "BLOCKED: HTTP 403"
-          ],
-          "blocks": 0,
-          "comments": 0
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881179&exception_mode=recommend&page=1",
-          "availableFields": [
-            "views",
-            "recommends",
-            "title",
-            "sourceUrl",
-            "sourcePostId",
-            "createdAt",
-            "author",
-            "body"
-          ],
-          "missingFields": [
-            "image"
-          ],
-          "eligible": false,
-          "errors": [
-            "BLOCKED: HTTP 403",
-            "BLOCKED: HTTP 403"
-          ],
-          "blocks": 1,
-          "comments": 0
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881135&exception_mode=recommend&page=1",
-          "availableFields": [
-            "views",
-            "recommends",
-            "title",
-            "sourceUrl",
-            "sourcePostId",
-            "createdAt",
-            "author",
-            "body"
-          ],
-          "missingFields": [
-            "image"
-          ],
-          "eligible": false,
-          "errors": [
-            "BLOCKED: HTTP 403"
-          ],
-          "blocks": 1,
-          "comments": 0
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881090&exception_mode=recommend&page=1",
-          "availableFields": [
-            "views",
-            "recommends",
-            "title",
-            "sourceUrl",
-            "sourcePostId",
-            "createdAt",
-            "author",
-            "body"
-          ],
-          "missingFields": [
-            "image"
-          ],
-          "eligible": false,
-          "errors": [
-            "BLOCKED: HTTP 403",
-            "BLOCKED: HTTP 403"
-          ],
-          "blocks": 1,
-          "comments": 0
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881071&exception_mode=recommend&page=1",
-          "availableFields": [
-            "views",
-            "recommends",
-            "title",
-            "sourceUrl",
-            "sourcePostId",
-            "createdAt",
-            "author",
-            "body"
-          ],
-          "missingFields": [
-            "image"
-          ],
-          "eligible": false,
-          "errors": [
-            "BLOCKED: HTTP 403"
-          ],
-          "blocks": 1,
-          "comments": 0
-        }
-      ],
-      "requests": [
-        {
-          "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 208584
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881186&exception_mode=recommend&page=1",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 291938
-        },
-        {
-          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e178faa059914a75af54be594a436b55fd81df1d6ac766939e4b1fdb55a3c342d19abf164627b098c7baaea1d3ccf781991aaaede8803cea",
-          "method": "GET",
-          "error": "BLOCKED: HTTP 403"
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881179&exception_mode=recommend&page=1",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 294590
-        },
-        {
-          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afa5b22975cb5b55cac10688c0f7b06c6f18fd72c80683a27e63dcfbcd3bb7704afcbfd530ce",
-          "method": "GET",
-          "error": "BLOCKED: HTTP 403"
-        },
-        {
-          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e178faa156904173ad5db65b4e436957fdd6af245f6692d5924d962661c0be2c0b8a127e8a90e3d89e767dfd65f2dc15f22738017addf6532489bfbe",
-          "method": "GET",
-          "error": "BLOCKED: HTTP 403"
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881135&exception_mode=recommend&page=1",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 292307
-        },
-        {
-          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e178faa55f9d4c74ac51b7544c436b56af87f0428598904d9f0283c205880a917442f04a7c673ad57061e92d97cffb71bada1e20c62c341c94b3d7d6",
-          "method": "GET",
-          "error": "BLOCKED: HTTP 403"
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881090&exception_mode=recommend&page=1",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 289367
-        },
-        {
-          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e178faa05895497ca557bf5d4e436901fe86caf2743b9f16dfe5ac25bf4acf7eedae837c4dda673baa9b91fb2747b2e3ca1aa75042",
-          "method": "GET",
-          "error": "BLOCKED: HTTP 403"
-        },
-        {
-          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e178faa0599c4175a555bf5e40433d05fd8540a2651533ec112d0a9896695df20feae6a315ccbb8a3595369cc731310642c5751db4",
-          "method": "GET",
-          "error": "BLOCKED: HTTP 403"
-        },
-        {
-          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881071&exception_mode=recommend&page=1",
-          "method": "GET",
-          "status": 200,
-          "type": "text/html; charset=UTF-8",
-          "bytes": 293198
-        },
-        {
-          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e17897cd5f914e75ad51bb5b4b280754ad84cb3125df17b9990f0e2374b5149cc48335459f424547ba6c2d430f2d2a7eeb06d10769",
-          "method": "GET",
-          "error": "BLOCKED: HTTP 403"
-        }
-      ],
-      "errors": [
-        "REQUIRED_FIELDS_MISSING: body, image",
-        "REQUIRED_FIELDS_MISSING: image",
-        "BLOCKED: HTTP 403"
-      ],
-      "warnings": [
-        "BLOCKED: HTTP 403",
-        "BLOCKED: HTTP 403",
-        "BLOCKED: HTTP 403",
-        "BLOCKED: HTTP 403",
-        "BLOCKED: HTTP 403",
-        "BLOCKED: HTTP 403",
-        "BLOCKED: HTTP 403"
-      ],
-      "alternatives": [
-        {
-          "mode": "LINK_AGGREGATION",
-          "available": true,
-          "listCount": 49,
-          "availableFields": [
-            "title",
-            "sourceUrl",
-            "sourcePostId"
-          ],
-          "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
-        }
-      ],
-      "detailRequired": true,
-      "commentsRequired": false,
-      "mediaRequired": true
-    }
-  },
-  {
     "id": "dc-neostock",
     "name": "주갤",
     "url": "https://gall.dcinside.com/board/lists/?id=neostock&exception_mode=recommend",
@@ -4460,6 +4050,308 @@
           "mode": "LINK_AGGREGATION",
           "available": true,
           "listCount": 50,
+          "availableFields": [
+            "title",
+            "sourceUrl",
+            "sourcePostId"
+          ],
+          "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+        }
+      ],
+      "detailRequired": true,
+      "commentsRequired": false,
+      "mediaRequired": true
+    }
+  },
+  {
+    "id": "dc-football_new9",
+    "name": "해축갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
+    "at": "2026-09-22T02:55:10.229Z",
+    "status": "PASS",
+    "listCount": 49,
+    "details": 2,
+    "comments": 0,
+    "media": 1,
+    "error": "",
+    "validation": {
+      "version": 3,
+      "identity": "{\"version\":2,\"url\":\"https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend\",\"adapter\":\"dcinside\",\"selectors\":{\"item\":\"tr.ub-content\",\"title\":\".gall_tit a:not(.reply_numbox)\",\"link\":\".gall_tit a:not(.reply_numbox)\",\"body\":\".write_div\",\"comment\":\".usertxt\",\"views\":\".gall_count\",\"likes\":\".gall_recommend\",\"comments\":\".reply_num\",\"date\":\".gall_date\"},\"mediaHosts\":[\"dcinside.co.kr\",\"dcinside.com\",\"i.ytimg.com\",\"imgnews.pstatic.net\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "mode": "DETAIL_NO_COMMENTS",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 49,
+      "details": 2,
+      "comments": 0,
+      "media": 1,
+      "eligibleCount": 1,
+      "passed": true,
+      "requiredFields": [
+        "title",
+        "sourceUrl",
+        "sourcePostId",
+        "body",
+        "image"
+      ],
+      "availableFields": [
+        "views",
+        "recommends",
+        "title",
+        "sourceUrl",
+        "sourcePostId",
+        "createdAt",
+        "author",
+        "body",
+        "image"
+      ],
+      "missingFields": [],
+      "stages": {
+        "list": {
+          "status": "passed",
+          "count": 49
+        },
+        "detail": {
+          "status": "passed",
+          "needed": true,
+          "count": 2
+        },
+        "comments": {
+          "status": "unused",
+          "needed": false
+        },
+        "media": {
+          "status": "passed",
+          "needed": true,
+          "count": 1,
+          "origin": "detail"
+        }
+      },
+      "checkedAt": "2026-09-22T02:55:10.229Z",
+      "samples": [
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881648&exception_mode=recommend&page=1",
+          "availableFields": [
+            "views",
+            "recommends",
+            "title",
+            "sourceUrl",
+            "sourcePostId",
+            "createdAt",
+            "author",
+            "body"
+          ],
+          "missingFields": [
+            "image"
+          ],
+          "eligible": false,
+          "errors": [
+            "BLOCKED: HTTP 403",
+            "BLOCKED: HTTP 403",
+            "BLOCKED: HTTP 403"
+          ],
+          "blocks": 4,
+          "comments": 0
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881386&exception_mode=recommend&page=1",
+          "availableFields": [
+            "views",
+            "recommends",
+            "title",
+            "sourceUrl",
+            "sourcePostId",
+            "createdAt",
+            "author",
+            "body",
+            "image"
+          ],
+          "missingFields": [],
+          "eligible": true,
+          "errors": [],
+          "blocks": 5,
+          "comments": 0
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 209557
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881648&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 299315
+        },
+        {
+          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e17897cd5b934f75ac56bb5a412f0756fdd573e9d4567a661526920579becdaf4b51c447300c96734677e43d67a355d0eff0eccb0abc5fcc1a0deaebb3a75380",
+          "method": "GET",
+          "error": "BLOCKED: HTTP 403"
+        },
+        {
+          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e178faa65d914976ad52b95d4c436b55a8d51405be386c4a30c57caef1b89a42dd8ccb7145724670f32db92950686ffc20c9101d590d3031410546340f3790",
+          "method": "GET",
+          "error": "BLOCKED: HTTP 403"
+        },
+        {
+          "url": "https://dcimg6.dcinside.co.kr/viewimage.php?id=2bb2df32e7d334aa51b1d3a24f&no=24b0d769e1d32ca73fe782fa11d02831b9aa83954b71cedd5ba4b6e67dc3c34013921974f3f6d070b95b0211afe5e17897cd569d4d74ae55b95d4b2b0753f686dde4baa427437f72dd989beea82041f04575d38a0adf1bfdc7c6ccd1e98842e8f01d3efbe9ac97f7ee1f3fb2efb2",
+          "method": "GET",
+          "error": "BLOCKED: HTTP 403"
+        },
+        {
+          "url": "https://gall.dcinside.com/board/view/?id=football_new9&no=6881386&exception_mode=recommend&page=1",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 298372
+        },
+        {
+          "url": "https://imgnews.pstatic.net/image/025/2022/01/03/0003163828_001_20220103144802773.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 131114
+        }
+      ],
+      "errors": [],
+      "warnings": [
+        "BLOCKED: HTTP 403",
+        "BLOCKED: HTTP 403",
+        "BLOCKED: HTTP 403"
+      ],
+      "alternatives": [
+        {
+          "mode": "LINK_AGGREGATION",
+          "available": true,
+          "listCount": 49,
+          "availableFields": [
+            "title",
+            "sourceUrl",
+            "sourcePostId"
+          ],
+          "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+        }
+      ],
+      "detailRequired": true,
+      "commentsRequired": false,
+      "mediaRequired": true
+    }
+  },
+  {
+    "id": "source-0",
+    "name": "엠봉",
+    "url": "https://mbong.kr/best",
+    "at": "2026-09-22T11:06:59.590Z",
+    "status": "PASS",
+    "listCount": 20,
+    "details": 1,
+    "comments": 0,
+    "media": 1,
+    "error": "",
+    "validation": {
+      "version": 3,
+      "identity": "{\"version\":2,\"url\":\"https://mbong.kr/best\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"tr, article, .list_item\",\"title\":\".title, .subject, .title_link, .list_subject\",\"link\":\"a\",\"body\":\".ink_atc .xe_content[class*=\\\"document_\\\"]\",\"comment\":\".cmt_body > .xe_content\",\"views\":\"td.extra_col:nth-last-child(3)\",\"likes\":\"td.extra_col:last-child\",\"comments\":\".cmt_num\",\"date\":\"time, .date\"},\"mediaHosts\":[\"mbong.kr\"],\"commentLimit\":5,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "mode": "DETAIL_NO_COMMENTS",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 20,
+      "details": 1,
+      "comments": 0,
+      "media": 1,
+      "eligibleCount": 1,
+      "passed": true,
+      "requiredFields": [
+        "title",
+        "sourceUrl",
+        "sourcePostId",
+        "body",
+        "image"
+      ],
+      "availableFields": [
+        "views",
+        "recommends",
+        "title",
+        "sourceUrl",
+        "sourcePostId",
+        "body",
+        "image"
+      ],
+      "missingFields": [],
+      "stages": {
+        "list": {
+          "status": "passed",
+          "count": 20
+        },
+        "detail": {
+          "status": "passed",
+          "needed": true,
+          "count": 1
+        },
+        "comments": {
+          "status": "unused",
+          "needed": false
+        },
+        "media": {
+          "status": "passed",
+          "needed": true,
+          "count": 1,
+          "origin": "detail"
+        }
+      },
+      "checkedAt": "2026-09-22T11:06:59.590Z",
+      "samples": [
+        {
+          "url": "https://mbong.kr/best/78350873",
+          "availableFields": [
+            "views",
+            "recommends",
+            "title",
+            "sourceUrl",
+            "sourcePostId",
+            "body",
+            "image"
+          ],
+          "missingFields": [],
+          "eligible": true,
+          "errors": [],
+          "blocks": 1,
+          "comments": 0
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://mbong.kr/best",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 118828
+        },
+        {
+          "url": "https://mbong.kr/best/78350873",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=UTF-8",
+          "bytes": 150248
+        },
+        {
+          "url": "https://img.mbong.kr/files/attach/images/2026/09/22/040c2cfcd5c88af91b798ab51b66808a.jpg",
+          "method": "GET",
+          "status": 200,
+          "type": "image/jpeg",
+          "bytes": 2006601
+        }
+      ],
+      "errors": [],
+      "warnings": [],
+      "alternatives": [
+        {
+          "mode": "LINK_AGGREGATION",
+          "available": true,
+          "listCount": 20,
           "availableFields": [
             "title",
             "sourceUrl",
