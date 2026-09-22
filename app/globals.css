@@ -30,3 +30,5 @@
 .composer-board-option [data-slot=radio-group-indicator]::after{content:'';display:block;width:8px;height:8px;border-radius:50%;background:currentColor}
 
 .admin-shortcuts{max-width:1224px;margin:12px auto 0;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#eeedff;border:1px solid #dedbff;border-radius:10px;font-size:14px}.admin-shortcuts>span{display:inline-flex;align-items:center;gap:6px;color:#57518c}.admin-shortcuts>a{display:inline-flex;align-items:center;min-height:40px;padding:8px 12px;border-radius:7px;background:white;color:#423ab9;font-weight:700}.admin-shortcuts>a:hover{background:#dedbff}@media(max-width:700px){.admin-shortcuts{margin:10px 12px 0;gap:6px;padding:8px}.admin-shortcuts>span{width:100%;font-size:13px}.admin-shortcuts>a{flex:1;text-align:center;justify-content:center}}
+
+.admin-source-label{display:block;color:#7a8293;font-size:12px;font-weight:400;line-height:1.5;margin:6px 0 12px;overflow-wrap:anywhere}
