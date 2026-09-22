@@ -1,0 +1,67 @@
+
+  vinext build  (Vite 8.0.13)
+
+[1/5] analyze client references...
+[2K
+transforming...✓ 280 modules transformed.
+rendering chunks...
+✓ built in 1.20s
+[2/5] analyze server references...
+[2K
+transforming...✓ 248 modules transformed.
+rendering chunks...
+✓ built in 481ms
+[3/5] build rsc environment...
+[2K
+transforming...✓ 277 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 761ms
+[4/5] build client environment...
+[2K
+transforming...✓ 2079 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 2.89s
+[5/5] build ssr environment...
+[2K
+transforming...✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 731ms
+[0m
+  Route (app)
+  ┌ ? /                      
+  ├ ? /account               
+  ├ ? /admin                 
+  ├ ? /admin/automation      
+  ├ λ /api/account           
+  ├ λ /api/admin             
+  ├ λ /api/brand             
+  ├ λ /api/downloads         
+  ├ λ /api/downloads/:id     
+  ├ λ /api/me                
+  ├ λ /api/media             
+  ├ λ /api/media/:id         
+  ├ λ /api/ops               
+  ├ λ /api/ops/assets        
+  ├ λ /api/posts             
+  ├ λ /api/posts/:id         
+  ├ λ /api/posts/:id/actions 
+  ├ λ /api/posts/:id/view    
+  ├ λ /api/previews          
+  ├ λ /api/previews/:id/image
+  ├ λ /api/settings          
+  ├ λ /api/worker            
+  ├ λ /api/worker/files      
+  ├ ƒ /post/:id              
+  └ ? /write                 
+
+  λ API  ƒ Dynamic  ? Unknown
+
+  ? Some routes could not be classified. vinext currently uses static analysis
+    and cannot detect dynamic API usage (headers(), cookies(), etc.) at build time.
+    Automatic classification will be improved in a future release.
+
+  Build complete. Run `vinext start` to start the production server.
+
