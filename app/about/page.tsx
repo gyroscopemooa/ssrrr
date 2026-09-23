@@ -1,0 +1,4 @@
+import type {Metadata} from 'next';
+import {Shell} from '../community';
+export const metadata:Metadata={title:'SSRRR 스르륵 소개 | 유머 커뮤니티',description:'SSRRR 스르륵은 최신 유머, 밈, 웃긴 짤과 화제의 이슈를 함께 보는 유머 커뮤니티입니다.'};
+export default function About(){return <Shell><article className="about-page"><p className="about-kicker">SSRRR · 스르륵</p><h1>오늘의 유머 게시판</h1><p className="about-lead">대한민국과 글로벌에서 지금 화제가 되는 유머, 밈, 이슈를 한곳에 모아 봅니다.</p><section><h2>오늘 가장 웃긴 이야기</h2><p>오늘의 유머 게시판은 최신 유머글과 핫한 주제를 모아 보는 게시판입니다. 최근 밈과 화제의 이슈를 가볍게 훑고, 하루 한 번 이곳에서 놓친 이야기를 한눈에 살펴볼 수 있도록 운영합니다.</p><p>재미있는 짤, 웃긴 글, 인터넷에서 화제가 된 이야기를 매일 즐길 수 있도록 좋은 콘텐츠를 차곡차곡 모으겠습니다.</p><p className="about-slogan">세상 모든 유머와 이슈가 이곳에, 쌉싸루룰라.</p></section><section><h2>쌉싸루룰라의 시작</h2><p>쌉싸루룰라는 웃긴 이야기를 함께 보고 나누기 위해 만든 유머 커뮤니티입니다. 정식 브랜드명은 <strong>SSRRR</strong>, 읽는 이름은 <strong>스르륵</strong>입니다.</p><p>부담 없이 들어와 웃고, 재미있는 이야기를 남기고, 내일의 새로운 밈을 함께 찾는 공간이 되겠습니다.</p></section></article></Shell>}
