@@ -1,1 +1,1 @@
-export function RotatingLogo(){return <span className="rotating-logo" role="img" aria-label="SSRRR 스르륵 유머 커뮤니티 로고"/>}
+export function RotatingLogo(){return <span className="rotating-logo-wrap"><span className="rotating-logo" role="img" aria-label="SSRRR 스르륵 유머 커뮤니티 로고" title="스르륵~!"/><span className="logo-tooltip" aria-hidden="true">스르륵~!</span></span>}

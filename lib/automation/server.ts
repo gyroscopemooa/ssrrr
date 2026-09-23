@@ -3,7 +3,7 @@ import {env} from 'cloudflare:workers';
 import {db,HttpError} from '../server';
 import {opsSchema,defaultOps,type OpsConfig} from './config';
 export type Row=Record<string,string|number|null>;
-export async function ops(){const r=await db().prepare("SELECT value,revision FROM ops_settings WHERE id='main'").first<{value:string;revision:number}>();return {config:r?opsSchema.parse(JSON.parse(r.value)):{...defaultOps,siteName:env.SITE_NAME||defaultOps.siteName,siteUrl:env.SITE_URL||defaultOps.siteUrl},revision:r?.revision||0}}
+export async function ops(){const r=await db().prepare("SELECT value,revision FROM ops_settings WHERE id='main'").first<{value:string;revision:number}>();const config=r?opsSchema.parse(JSON.parse(r.value)):{...defaultOps,siteName:env.SITE_NAME||defaultOps.siteName,siteUrl:env.SITE_URL||defaultOps.siteUrl};return {config:config.authorName==='아지트 소식'?{...config,authorName:'꿀잼픽'}:config,revision:r?.revision||0}}
 export async function event(job:string,stage:string,message=''){await db().prepare('INSERT INTO job_events(id,job_id,stage,message,created_at) VALUES(?,?,?,?,?)').bind(crypto.randomUUID(),job,stage,message.slice(0,2000),Date.now()).run()}
 export function taskStatement(kind:string,ref:string,payload:unknown={},at=Date.now(),max=3){const id=crypto.randomUUID(),now=Date.now();return db().prepare("INSERT INTO worker_tasks(id,kind,ref_id,payload,status,attempts,max_attempts,run_at,lease_token,lease_until,error,created_at,updated_at) VALUES(?,?,?,?,'queued',0,?,?,NULL,NULL,'',?,?)").bind(id,kind,ref,JSON.stringify(payload),max,at,now,now)}
 export async function enqueue(kind:string,ref:string,payload:unknown={},at=Date.now(),max=3){await taskStatement(kind,ref,payload,at,max).run()}
