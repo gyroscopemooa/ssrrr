@@ -42,7 +42,8 @@ bulk=await op('sourcesBulk',{ids:[ba.id,bb.id],mode:'test'});assert(bulk.results
 bulk=await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{dailyLimit:2}});assert.equal(bulk.results[0].status,'skipped');
 await rpc('complete',{id:task.id,token:task.lease_token,result:{items:[item],validation:{version:2,identity:sourceIdentity(ac),passed:true,listPage:1,fullPage:true,listCount:1,details:1,comments:0,media:0}}});
 assert((await snapshot()).sources.find(x=>x.id===ba.id).can_enable);
-await op('source',{source:{...ac,enabled:true}});await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{dailyLimit:2}});
+bulk=await op('sourcesBulk',{ids:[ba.id,bb.id],mode:'on'});assert.equal(bulk.results.find(x=>x.id===ba.id).status,'updated');assert.equal(bulk.results.find(x=>x.id===bb.id).status,'skipped');
+await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{dailyLimit:2}});
 let ar=(await snapshot()).sources.find(x=>x.id===ba.id);assert.equal(ar.enabled,1);assert(ar.can_enable);
 await op('sourcesBulk',{ids:[ba.id],mode:'settings',patch:{commentLimit:1}});ar=(await snapshot()).sources.find(x=>x.id===ba.id);assert.equal(ar.enabled,0);assert.equal(ar.can_enable,false);
 await op('sourceDelete',{id:ba.id});await op('sourceDelete',{id:bb.id});
