@@ -1,0 +1,1 @@
+ALTER TABLE `posts` ADD `topic` text DEFAULT '' NOT NULL;
