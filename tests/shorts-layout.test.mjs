@@ -31,6 +31,12 @@ test('a single image short stays concise even when the configured target is 40 s
  assert.equal(plan.scenes.find(scene=>scene.type==='image_hold').payload.title,'오늘의 스르륵');
  assert.equal(plan.warnings.length,0);
 });
+test('impact intro keeps the 1.1 second opening and uses the three-frame scene',()=>{
+ const plan=buildPlan([{title:'임팩트 테스트',blocks:[],media:[],comments:[]}],{maxPosts:1,intro:true,introStyle:'impact',outro:true,cta:true,includeComments:false,maxComments:0,speed:1,targetDuration:10,minDuration:5,maxDuration:60});
+ assert.equal(plan.scenes[0].type,'intro_impact');
+ assert.equal(plan.scenes[0].frames,Math.round(1.1*FPS));
+ assert.equal(plan.scenes[1].type,'feed_open');
+});
 test('auto combine is limited to text-only non-economy posts',()=>{
  assert.equal(mayAutoCombine([{type:'text',text:'짧은 유머'}],'유머'),true);
  assert.equal(mayAutoCombine([{type:'image',id:'i'}],'유머'),false);
