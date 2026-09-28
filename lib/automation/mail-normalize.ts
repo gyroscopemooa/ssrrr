@@ -1,5 +1,10 @@
 const TASK_UPDATE_PREFIX = /^\s*\[Task Update\]\s*([^:\r\n]{1,200}):\s*(.+?)\s*$/i;
 
+export function isTaskUpdatePreview(subject: string, body: string) {
+  return /^\s*\[Task Update\]/i.test(subject) &&
+    (/\bView message\b/i.test(body) || /(?:\u2026|\.\.\.)\s*(?:View message)?\s*$/i.test(body.trim()));
+}
+
 function escapeRegex(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
