@@ -18,7 +18,7 @@ $secretPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($protecte
 try { $workerConfig = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($secretPointer) | ConvertFrom-Json } finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($secretPointer) }
 $previousWorkerEnv = @{}
 try {
- foreach ($entry in $workerConfig.PSObject.Properties) { if ($entry.Name -notmatch '^(WORKER_|SITES_DISPATCHER_TOKEN$|GMAIL_|YOUTUBE_)') { throw 'Unexpected credential key.' }; $previousWorkerEnv[$entry.Name]=[Environment]::GetEnvironmentVariable($entry.Name,'Process'); [Environment]::SetEnvironmentVariable($entry.Name,[string]$entry.Value,'Process') }
+ foreach ($entry in $workerConfig.PSObject.Properties) { if ($entry.Name -notmatch '^(WORKER_|SITES_DISPATCHER_TOKEN$|GMAIL_|YOUTUBE_|CHATGPT_)') { throw 'Unexpected credential key.' }; $previousWorkerEnv[$entry.Name]=[Environment]::GetEnvironmentVariable($entry.Name,'Process'); [Environment]::SetEnvironmentVariable($entry.Name,[string]$entry.Value,'Process') }
  $workerProcess = Start-Process -FilePath (Get-Command node.exe).Source -ArgumentList @('"'+$workerScript+'"') -WorkingDirectory $workerRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $workerRuntime 'stdout.log') -RedirectStandardError (Join-Path $workerRuntime 'stderr.log') -PassThru
  @{pid=$workerProcess.Id;startedAt=[DateTime]::UtcNow.ToString('o')} | ConvertTo-Json | Set-Content -LiteralPath $workerPidFile
  Write-Output "Worker started: PID $($workerProcess.Id)"

@@ -24,7 +24,9 @@
     "test:sources": "node scripts/source-audit.mjs",
     "worker:windows:start": "pwsh -NoProfile -File scripts/worker-windows.ps1",
     "worker:windows:stop": "pwsh -NoProfile -File scripts/worker-windows.ps1 -Stop",
-    "worker:windows:status": "pwsh -NoProfile -File scripts/worker-windows.ps1 -Status"
+    "worker:windows:status": "pwsh -NoProfile -File scripts/worker-windows.ps1 -Status",
+    "chatgpt:login": "node scripts/chatgpt-login.mjs",
+    "chatgpt:test": "node scripts/chatgpt-relay-test.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
@@ -47,6 +49,7 @@
     "lucide-react": "^1.31.0",
     "next": "16.3.4",
     "next-themes": "^0.4.6",
+    "playwright-core": "^1.55.0",
     "radix-ui": "^1.6.7",
     "react": "19.2.6",
     "react-day-picker": "^10.0.1",
