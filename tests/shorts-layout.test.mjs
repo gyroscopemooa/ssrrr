@@ -23,6 +23,7 @@ test('a single image short stays concise even when the configured target is 40 s
  assert.deepEqual(plan.scenes.map(scene=>scene.type),['feed_open','post_title','image_hold','outro']);
  assert.equal(plan.scenes[0].payload.text,'오늘의 스르륵');
  assert.equal(plan.scenes[1].payload.text,'오늘의 스르륵');
+ assert.equal(plan.scenes.find(scene=>scene.type==='image_hold').payload.title,'오늘의 스르륵');
  assert.equal(plan.warnings.length,0);
 });
 test('auto combine is limited to text-only non-economy posts',()=>{
