@@ -5,4 +5,4 @@ declare namespace Cloudflare {
   }
 }
 declare namespace Cloudflare { interface Env { ADMIN_EMAIL?: string; METRICS_SALT?: string; } }
-declare namespace Cloudflare { interface Env { WORKER_TOKEN?: string; SITE_NAME?: string; SITE_URL?: string; } }
+declare namespace Cloudflare { interface Env { WORKER_TOKEN?: string; MCP_INGEST_TOKEN?: string; SITE_NAME?: string; SITE_URL?: string; } }
