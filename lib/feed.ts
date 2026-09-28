@@ -9,10 +9,10 @@ export type FeedQuery={board?:string;sort?:string;q?:string;offset?:number;scope
 type FeedRow={id:string;title:string;nickname:string;category:string;topic:string;thumbnail?:string;body:string;created_at:number;views:number;likes:number;comments:number};
 
 export async function getFeed(query:FeedQuery={}){
- const popular=query.sort==='popular',sitePopular=popular&&query.scope==='site',requestedBoard=query.board||'전체';
+ const popular=query.sort==='popular'&&query.board!=='경제',sitePopular=popular&&query.scope==='site',requestedBoard=query.board||'전체';
  const board=popular&&!sitePopular&&requestedBoard==='전체'?'유머':requestedBoard,q=(query.q||'').slice(0,100),offset=Math.floor(Math.min(10000,Math.max(0,query.offset||0)));
  const s=(await settings()).settings,rule=popularPredicate(s),limit=popular?(query.preview==='sidebar'?7:s.popularLimit):20,cutoff=s.popularDays?Date.now()-s.popularDays*86400000:0;
- const categoryFilter=sitePopular?" AND p.category<>'경제'":'',filter=popular?' AND created_at>=? AND '+rule.sql:'';
+ const categoryFilter=requestedBoard==='전체'||sitePopular?" AND p.category<>'경제'":'',filter=popular?' AND created_at>=? AND '+rule.sql:'';
  const values:(string|number)[]=[query.hidden||0,board,board,'%'+q+'%'];if(popular)values.push(cutoff,...rule.values);values.push(limit+1,offset);
  const rows=await db().prepare("SELECT * FROM (SELECT p.id,p.title,COALESCE(CASE WHEN p.system_author='system:auto' THEN '꿀잼픽' ELSE (SELECT display_name FROM system_profiles WHERE id=p.system_author) END,p.nickname) nickname,p.category,p.topic,p.thumbnail,p.body,p.created_at,p.views,(SELECT COUNT(*) FROM likes WHERE post_id=p.id) AS likes,(SELECT COUNT(*) FROM comments WHERE post_id=p.id) AS comments FROM posts p WHERE p.hidden=? AND (?='전체' OR p.category=?)"+categoryFilter+" AND p.title LIKE ?) WHERE 1=1"+filter+" ORDER BY "+(popular?'likes DESC,comments DESC,views DESC,created_at DESC':'created_at DESC')+" LIMIT ? OFFSET ?").bind(...values).all<FeedRow>();
  const sources=await adminSourceNames(rows.results.slice(0,limit).map(row=>String(row.id)));
