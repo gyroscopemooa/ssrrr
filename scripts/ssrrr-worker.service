@@ -1,0 +1,20 @@
+[Unit]
+Description=SSRRR collection and mail worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/ssrrr-worker
+ExecStart=/usr/bin/node /home/ubuntu/ssrrr-worker/worker/index.mjs
+Restart=always
+RestartSec=10
+Environment=NODE_ENV=production
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/home/ubuntu/ssrrr-worker/.worker-tmp
+
+[Install]
+WantedBy=multi-user.target
