@@ -1,5 +1,11 @@
 # 경제 원고 수신 API
 
+## ChatGPT 예약 작업용 MCP 도구
+
+배포된 사이트의 `/mcp` 엔드포인트는 ChatGPT에 연결된 SSRRR 관리자만 사용할 수 있다. `submit_economy_report`는 전체 경제 알림을 자동 공개하지 않고 검수함에 저장한다. 본문 첫 줄은 반드시 `SSRRR_ECONOMY`여야 하며, 같은 본문은 SHA-256 기반 키로 중복 방지된다. 이 경로에는 `WORKER_TOKEN`이나 OpenAI 개발자 API 키를 입력하지 않는다.
+
+예약 작업에 추가할 정확한 지시문은 [economy-scheduled-task-addon.md](./economy-scheduled-task-addon.md)를 참고한다.
+
 사이트 전용 경제 원고 수신 주소는 `POST /api/ingest/economy`입니다. ChatGPT의 작업 알림 메일을 거치지 않으므로 전체 본문을 그대로 받을 수 있습니다.
 
 ## 인증
