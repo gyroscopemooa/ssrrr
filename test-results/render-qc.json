@@ -3,41 +3,43 @@
   "plan": {
     "scenes": [
       {
-        "type": "intro",
+        "type": "feed_open",
         "from": 0,
-        "frames": 45,
+        "frames": 60,
         "payload": {
-          "text": "미정",
+          "text": "함께 웃는 아지트",
+          "src": "http://127.0.0.1:13362/image.png",
           "startFrame": 0,
-          "totalFrames": 45
+          "totalFrames": 60
         }
       },
       {
         "type": "post_title",
-        "from": 45,
-        "frames": 54,
+        "from": 60,
+        "frames": 90,
         "payload": {
           "text": "함께 웃는 아지트",
+          "src": "http://127.0.0.1:13362/image.png",
           "startFrame": 0,
-          "totalFrames": 54
+          "totalFrames": 90
         }
       },
       {
         "type": "post_body_scroll",
-        "from": 99,
-        "frames": 183,
+        "from": 150,
+        "frames": 189,
         "payload": {
-          "text": "오늘도 웃음 하나 나누고 가세요. 사진과 움직이는 짤, 소리 있는 영상이 차례대로 나옵니다.",
+          "text": "오늘도 웃음 하나 나누고 가세요. \n사진과 움직이는 짤, 소리 있는 영\n상이 차례대로 나옵니다.",
           "startFrame": 0,
-          "totalFrames": 183
+          "totalFrames": 189
         }
       },
       {
         "type": "image_hold",
-        "from": 282,
+        "from": 339,
         "frames": 180,
         "payload": {
-          "src": "http://127.0.0.1:6323/image.png",
+          "src": "http://127.0.0.1:13362/image.png",
           "hasAudio": false,
           "originalVolume": 1,
           "startFrame": 0,
@@ -46,10 +48,10 @@
       },
       {
         "type": "gif_play",
-        "from": 462,
+        "from": 519,
         "frames": 180,
         "payload": {
-          "src": "http://127.0.0.1:6323/gif.gif",
+          "src": "http://127.0.0.1:13362/gif.gif",
           "hasAudio": false,
           "originalVolume": 1,
           "startFrame": 0,
@@ -58,10 +60,10 @@
       },
       {
         "type": "video_play",
-        "from": 642,
+        "from": 699,
         "frames": 60,
         "payload": {
-          "src": "http://127.0.0.1:6323/video.mp4",
+          "src": "http://127.0.0.1:13362/video.mp4",
           "hasAudio": true,
           "originalVolume": 1,
           "startFrame": 0,
@@ -70,7 +72,7 @@
       },
       {
         "type": "comments",
-        "from": 702,
+        "from": 759,
         "frames": 60,
         "payload": {
           "text": "작은 웃음이 하루를 바꾸네요!",
@@ -80,57 +82,59 @@
       },
       {
         "type": "outro",
-        "from": 762,
-        "frames": 60,
+        "from": 819,
+        "frames": 90,
         "payload": {
-          "text": "미정에서 더 보기",
+          "text": "이 글의 다음 이야기는?\n스르륵에서 같이 봐요",
           "startFrame": 0,
-          "totalFrames": 60
+          "totalFrames": 90
         }
       }
     ],
-    "durationFrames": 822,
-    "fullDurationFrames": 822,
+    "durationFrames": 909,
+    "fullDurationFrames": 909,
     "partCount": 1,
     "parts": [
       {
         "scenes": [
           {
-            "type": "intro",
+            "type": "feed_open",
             "from": 0,
-            "frames": 45,
+            "frames": 60,
             "payload": {
-              "text": "미정",
+              "text": "함께 웃는 아지트",
+              "src": "http://127.0.0.1:13362/image.png",
               "startFrame": 0,
-              "totalFrames": 45
+              "totalFrames": 60
             }
           },
           {
             "type": "post_title",
-            "from": 45,
-            "frames": 54,
+            "from": 60,
+            "frames": 90,
             "payload": {
               "text": "함께 웃는 아지트",
+              "src": "http://127.0.0.1:13362/image.png",
               "startFrame": 0,
-              "totalFrames": 54
+              "totalFrames": 90
             }
           },
           {
             "type": "post_body_scroll",
-            "from": 99,
-            "frames": 183,
+            "from": 150,
+            "frames": 189,
             "payload": {
-              "text": "오늘도 웃음 하나 나누고 가세요. 사진과 움직이는 짤, 소리 있는 영상이 차례대로 나옵니다.",
+              "text": "오늘도 웃음 하나 나누고 가세요. \n사진과 움직이는 짤, 소리 있는 영\n상이 차례대로 나옵니다.",
               "startFrame": 0,
-              "totalFrames": 183
+              "totalFrames": 189
             }
           },
           {
             "type": "image_hold",
-            "from": 282,
+            "from": 339,
             "frames": 180,
             "payload": {
-              "src": "http://127.0.0.1:6323/image.png",
+              "src": "http://127.0.0.1:13362/image.png",
               "hasAudio": false,
               "originalVolume": 1,
               "startFrame": 0,
@@ -139,10 +143,10 @@
           },
           {
             "type": "gif_play",
-            "from": 462,
+            "from": 519,
             "frames": 180,
             "payload": {
-              "src": "http://127.0.0.1:6323/gif.gif",
+              "src": "http://127.0.0.1:13362/gif.gif",
               "hasAudio": false,
               "originalVolume": 1,
               "startFrame": 0,
@@ -151,10 +155,10 @@
           },
           {
             "type": "video_play",
-            "from": 642,
+            "from": 699,
             "frames": 60,
             "payload": {
-              "src": "http://127.0.0.1:6323/video.mp4",
+              "src": "http://127.0.0.1:13362/video.mp4",
               "hasAudio": true,
               "originalVolume": 1,
               "startFrame": 0,
@@ -163,7 +167,7 @@
           },
           {
             "type": "comments",
-            "from": 702,
+            "from": 759,
             "frames": 60,
             "payload": {
               "text": "작은 웃음이 하루를 바꾸네요!",
@@ -173,16 +177,16 @@
           },
           {
             "type": "outro",
-            "from": 762,
-            "frames": 60,
+            "from": 819,
+            "frames": 90,
             "payload": {
-              "text": "미정에서 더 보기",
+              "text": "이 글의 다음 이야기는?\n스르륵에서 같이 봐요",
               "startFrame": 0,
-              "totalFrames": 60
+              "totalFrames": 90
             }
           }
         ],
-        "durationFrames": 822
+        "durationFrames": 909
       }
     ],
     "settings": {
@@ -212,14 +216,14 @@
       "maxRetries": 2
     },
     "brand": {
-      "name": "미정",
-      "url": ""
+      "name": "스르륵",
+      "url": "https://www.ssrrr.net"
     },
     "warnings": [],
     "requiresSplit": false,
     "audioMode": "duck",
     "lastScene": "outro",
-    "bgm": "http://127.0.0.1:6323/bgm.wav"
+    "bgm": "http://127.0.0.1:13362/bgm.wav"
   },
   "qc": {
     "passed": true,
@@ -227,8 +231,8 @@
     "warnings": [],
     "blackSegments": [],
     "sceneComplete": true,
-    "size": 1625488,
-    "duration": 27.456,
+    "size": 1767481,
+    "duration": 30.357333,
     "width": 1080,
     "height": 1920,
     "fps": 30,
@@ -238,7 +242,7 @@
   "width": 1080,
   "height": 1920,
   "fps": 30,
-  "durationMs": 27456,
-  "size": 1625488,
+  "durationMs": 30357,
+  "size": 1767481,
   "audioMode": "duck"
 }

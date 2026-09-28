@@ -85,8 +85,9 @@ npm run test:sources
 현재 웹 hosting은 Sites를 유지합니다. 배포 시 `drizzle` migration이 포함됩니다.
 
 ## 도메인 전환
-연결 전: 도메인 소유/DNS 접근, 사용 가능한 hosting custom-domain 경로, 인증 callback 지원, 전용 Google OAuth 앱, 상시 워커 호스트를 확정합니다.
-연결 후: 관리자 사이트 주소 또는 `SITE_URL`과 이름을 변경하고 웹 재배포, 워커 주소 갱신, HTTPS/로그인/첨부 Range/OG 미리보기/YouTube 설명 주소를 확인합니다. 이전 URL의 redirect 정책과 쿠키·로그인 동작도 검증하세요.
+대표 주소는 `https://www.ssrrr.net`이며 `SITE_URL`과 사이트 메타데이터는 이 주소를 사용합니다. canonical은 www 호스트입니다. apex `ssrrr.net`도 함께 연결해 www로 영구 리디렉션하세요.
+
+DNS 연결 후: HTTPS 발급 완료 → 루트/로그인/첨부 Range/`robots.txt`/`sitemap.xml`/OG 미리보기 확인 → 상시 워커의 `WORKER_SITE_URL=https://www.ssrrr.net` 전환 → Search Console 속성과 sitemap 등록 순서로 점검합니다. 이전 Sites 주소는 운영 중 공유하지 않습니다.
 사이트를 공개로 전환하는 것은 별도 소유자 결정이며 이번 작업에서 공개 범위를 바꾸지 않았습니다.
 
 최신 재검수, Gmail 완료/실패/검토 라벨 처리 및 메뉴 설명은 [PRODUCTION_READINESS.md](PRODUCTION_READINESS.md)를 참고하세요.

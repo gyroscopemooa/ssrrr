@@ -1,4 +1,4 @@
-# 미정 · 커뮤니티 V3 통합
+# SSRRR 스르륵 · 커뮤니티 V3 통합
 
 기존 커뮤니티에 자동수집, 쇼츠 제작 워커, Gmail 경제 게시판, 운영 대시보드를 통합한 프로젝트입니다.
 
@@ -14,7 +14,7 @@ npm run db:migrate:local
 npm start
 ```
 
-긴 작업은 별도 프로세스에서 `npm run worker`로 실행합니다. 환경변수 이름은 `.env.example`에 있습니다. 실제 credential은 제공하지 않으며 Google 계정/도메인/상시 워커 연결은 별도 설정이 필요합니다.
+대표 도메인은 `https://www.ssrrr.net`입니다. 긴 작업은 별도 프로세스에서 `npm run worker`로 실행합니다. 환경변수 이름은 `.env.example`에 있습니다. 실제 credential은 제공하지 않으며 Google 계정/상시 워커 연결은 별도 설정이 필요합니다.
 
 ```sh
 npm run typecheck
