@@ -34,7 +34,7 @@ export async function markChatGptLoginRequired(sourceUrl=''){
  let first=false;try{await access(marker)}catch{first=true}
  await writeFile(marker,JSON.stringify({status:'ChatGPT 재로그인 필요',detectedAt:new Date().toISOString(),sourceUrl},null,2),'utf8');
  if(first&&process.platform==='win32'){
-  const child=spawn('msg.exe',['*','ChatGPT 재로그인 필요'],{detached:true,stdio:'ignore',windowsHide:true});child.unref();
+  const child=spawn('msg.exe',['*','ChatGPT 재로그인 필요'],{detached:true,stdio:'ignore',windowsHide:true});child.on('error',()=>{});child.unref();
  }
 }
 
