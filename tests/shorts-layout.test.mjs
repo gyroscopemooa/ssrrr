@@ -12,6 +12,7 @@ test('text pages preserve Korean text and explicit line breaks within card bound
 test('opening selects the post cover and keeps real comment reactions and domain',()=>{
  const plan=buildPlan([{title:'테스트 제목',blocks:[{type:'image',id:'i'}],media:[{id:'i',type:'image/png',src:'image.png'}],comments:[{body:'ㅋㅋㅋㅋ 진짜 웃겨요'}]}],{maxPosts:1,intro:true,outro:true,cta:true,includeComments:true,maxComments:3,speed:1,targetDuration:10,minDuration:5,maxDuration:60});
  assert.equal(plan.scenes[0].type,'feed_open');
+ assert.equal(plan.scenes[0].frames,3*FPS);
  assert.equal(plan.scenes[1].type,'post_title');
  assert.equal(plan.scenes[1].payload.src,'image.png');
  assert.equal(plan.scenes.find(s=>s.type==='comments').payload.reaction,'ㅋㅋㅋㅋ');
