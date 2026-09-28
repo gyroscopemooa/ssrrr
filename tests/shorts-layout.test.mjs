@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildPlan,textPages} from '../worker/planner.mjs';
+import {FPS,buildPlan,textPages} from '../worker/planner.mjs';
+import {mayAutoCombine} from '../lib/automation/shorts-policy.ts';
 test('text pages preserve Korean text and explicit line breaks within card bounds',()=>{
  const text=('뷁 쀍 ㅋㅋㅋ 제목과 자막\n').repeat(40);
  const pages=textPages(text);
@@ -15,4 +16,17 @@ test('opening selects the post cover and keeps real comment reactions and domain
  assert.equal(plan.scenes[1].payload.src,'image.png');
  assert.equal(plan.scenes.find(s=>s.type==='comments').payload.reaction,'ㅋㅋㅋㅋ');
  assert.equal(plan.brand.url,'https://www.ssrrr.net');
+});
+test('a single image short stays concise even when the configured target is 40 seconds',()=>{
+ const plan=buildPlan([{title:'',blocks:[{type:'image',id:'i'}],media:[{id:'i',type:'image/png',src:'image.png'}],comments:[]}],{maxPosts:2,intro:true,outro:true,cta:true,includeComments:true,maxComments:3,speed:1,targetDuration:40,minDuration:25,maxDuration:60});
+ assert.equal(plan.fullDurationFrames/FPS,12);
+ assert.deepEqual(plan.scenes.map(scene=>scene.type),['feed_open','post_title','image_hold','outro']);
+ assert.equal(plan.scenes[0].payload.text,'오늘의 스르륵');
+ assert.equal(plan.scenes[1].payload.text,'오늘의 스르륵');
+ assert.equal(plan.warnings.length,0);
+});
+test('auto combine is limited to text-only non-economy posts',()=>{
+ assert.equal(mayAutoCombine([{type:'text',text:'짧은 유머'}],'유머'),true);
+ assert.equal(mayAutoCombine([{type:'image',id:'i'}],'유머'),false);
+ assert.equal(mayAutoCombine([{type:'text',text:'짧은 글'}],'경제'),false);
 });
