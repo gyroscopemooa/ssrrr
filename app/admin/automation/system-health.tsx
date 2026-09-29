@@ -37,8 +37,8 @@ const labels:Record<Health,string>={online:'정상',delayed:'응답 지연',offl
 
 export function SystemHealth({rows,now=Date.now()}:{rows:Row[];now?:number}){
  const workers=workerRows(rows);
- const vm=newest(workers.filter(row=>/oracle|vm/i.test(String(row.id||''))));
  const collector=newest(workers.filter(row=>capabilities(row).collect===true));
+ const vm=collector||newest(workers);
  const vmHealth=health(vm,now),workerHealth=health(collector,now);
  return <section className="ops-health" aria-label="자동 운영 상태">
   <article className={`ops-health-card is-${vmHealth}`}>
