@@ -1,5 +1,6 @@
 import {contentReviewScan} from '@/lib/automation/policy';
 import {wrap,db,guard,json,cleanText,quota,HttpError} from '@/lib/server';
+import {settings} from '@/lib/settings';
 
 export const POST=wrap(async req=>{
  const u=await guard(req),d=await json(req),id=new URL(req.url).pathname.split('/').at(-2)!;
@@ -12,7 +13,7 @@ export const POST=wrap(async req=>{
    const post=await db().prepare('SELECT title,body,category FROM posts WHERE id=?').bind(id).first<{title:string;body:string;category:string}>();
    if(post?.category==='스르륵 유머'){
     const count=await db().prepare('SELECT COUNT(*) AS count FROM likes WHERE post_id=?').bind(id).first<{count:number}>();
-    if((count?.count||0)>=10){
+    if((count?.count||0)>=(await settings()).settings.srrrPromotionLikes){
      const scan=contentReviewScan(post.title+'\n'+post.body);
      if(scan.status==='passed')await db().prepare("UPDATE posts SET category='유머',topic='' WHERE id=? AND category='스르륵 유머'").bind(id).run();
      else if(!await db().prepare("SELECT id FROM reports WHERE post_id=? AND owner='system:promotion'").bind(id).first())await db().prepare('INSERT INTO reports(id,post_id,owner,reason,created_at) VALUES(?,?,?,?,?)').bind(crypto.randomUUID(),id,'system:promotion','오늘의 유머 승격 검토: '+scan.reasons.join(', '),Date.now()).run();
