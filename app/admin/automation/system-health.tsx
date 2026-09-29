@@ -33,12 +33,16 @@ function newest(rows:Row[]){
  return [...rows].sort((a,b)=>Number(b.last_seen_at||0)-Number(a.last_seen_at||0))[0];
 }
 
+function withActivity(row:Row|undefined,activityAt:number){
+ return row?{...row,last_seen_at:Math.max(Number(row.last_seen_at||0),activityAt)}:undefined;
+}
+
 const labels:Record<Health,string>={online:'정상',delayed:'응답 지연',offline:'꺼짐 · 확인 필요'};
 
-export function SystemHealth({rows,now=Date.now()}:{rows:Row[];now?:number}){
+export function SystemHealth({rows,now=Date.now(),activityAt=0}:{rows:Row[];now?:number;activityAt?:number}){
  const workers=workerRows(rows);
- const collector=newest(workers.filter(row=>capabilities(row).collect===true));
- const vm=collector||newest(workers);
+ const collector=withActivity(newest(workers.filter(row=>capabilities(row).collect===true)),activityAt);
+ const vm=collector||withActivity(newest(workers),activityAt);
  const vmHealth=health(vm,now),workerHealth=health(collector,now);
  return <section className="ops-health" aria-label="자동 운영 상태">
   <article className={`ops-health-card is-${vmHealth}`}>
