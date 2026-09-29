@@ -149,48 +149,66 @@ header {
 .account-menu {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 0;
   min-width: 0;
-}
-.account {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
+  padding: 5px;
+  border: 1px solid #e3e4ec;
+  border-radius: 12px;
+  background: #f8f8fb;
   white-space: nowrap;
 }
-.account > svg {
+.account-identity,
+.account-login {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 6px 9px;
+}
+.account-identity > svg,
+.account-login > svg {
+  width: 18px;
+  height: 18px;
   color: #625be2;
 }
-.account span {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-.account small {
-  color: #777b90;
-  font-size: 11px;
-  font-weight: 700;
-}
-.account b {
-  max-width: 150px;
+.account-identity b {
+  max-width: 105px;
   overflow: hidden;
-  color: #2f3142;
+  color: #272938;
   font-size: 13px;
   text-overflow: ellipsis;
 }
-.account-logout {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border: 1px solid #e2e4ee;
-  border-radius: 8px;
-  color: #74788e;
+.account-identity small {
+  color: #777b90;
+  font-size: 11px;
+  font-weight: 600;
 }
-.account-logout:hover {
-  border-color: #c9c6f7;
-  background: #f2f1ff;
+.account-action {
+  padding: 7px 9px;
+  border-left: 1px solid #e2e3eb;
+  border-radius: 7px;
+  color: #686b7d;
+  font-size: 12px;
+  font-weight: 700;
+}
+.account-action:hover {
+  background: #fff;
+  color: #514be8;
+}
+.account-action.admin {
+  color: #514be8;
+}
+.account-action.logout {
+  color: #8a6170;
+}
+.account-login {
+  border-radius: 8px;
+  color: #37394a;
+  font-size: 13px;
+  font-weight: 800;
+}
+.account-login:hover {
+  background: #fff;
   color: #514be8;
 }
 .layout {
@@ -737,6 +755,7 @@ footer {
 }
 @media (max-width: 700px) {
   .header-inner {
+    flex-wrap: wrap;
     padding: 14px 18px;
     gap: 16px;
   }
@@ -758,15 +777,17 @@ footer {
   .header-search input {
     font-size: 13px;
   }
-  .account span {
+  .account-menu {
+    width: 100%;
+    order: 3;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .account-menu::-webkit-scrollbar {
     display: none;
   }
-  .account-menu {
-    gap: 4px;
-  }
-  .account-logout {
-    width: 34px;
-    height: 34px;
+  .account-identity {
+    margin-right: auto;
   }
   .layout {
     display: block;

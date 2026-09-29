@@ -22,7 +22,6 @@ import {
   Newspaper,
   Star,
   TrendingUp,
-  LogOut,
   UserCircle,
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -242,60 +241,28 @@ export function Shell({
               onChange={(e) => setSearch(e.target.value)}
             />
           </form>
-          <div className="account-menu" aria-label="로그인 상태">
-            <a
-              className="account"
-              href={
-                me.signedIn
-                  ? "/account"
-                  : "/signin-with-chatgpt?return_to=/account"
-              }
-              target="_top"
-            >
-              <UserCircle aria-hidden="true" />
-              <span>
-                <small>
-                  {me.isAdmin
-                    ? "관리자"
-                    : me.member
-                      ? "일반회원"
-                      : me.signedIn
-                        ? "로그인됨 · 가입 전"
-                        : "익명 방문자"}
-                </small>
-                <b>
-                  {me.member
-                    ? `${me.member.nickname} · ${me.member.points.toLocaleString()}P`
-                    : me.signedIn
-                      ? "회원가입"
-                      : "로그인"}
-                </b>
-              </span>
-            </a>
-            {me.signedIn && (
-              <a
-                className="account-logout"
-                href="/signout-with-chatgpt?return_to=/"
-                target="_top"
-                aria-label="로그아웃"
-                title="로그아웃"
-              >
-                <LogOut aria-hidden="true" />
+          <nav className="account-menu" aria-label="계정 메뉴">
+            {me.signedIn ? (
+              <>
+                <span className="account-identity" title={me.member?.nickname || "가입 전 계정"}>
+                  <UserCircle aria-hidden="true" />
+                  <b>{me.member?.nickname || "가입 전"}</b>
+                  {me.member && <small>{me.member.points.toLocaleString()}P</small>}
+                </span>
+                <a className="account-action" href="/account">마이페이지</a>
+                {me.isAdmin && <a className="account-action admin" href="/admin">관리자</a>}
+                <a className="account-action logout" href="/signout-with-chatgpt?return_to=/" target="_top">
+                  로그아웃
+                </a>
+              </>
+            ) : (
+              <a className="account-login" href="/signin-with-chatgpt?return_to=/account" target="_top">
+                <UserCircle aria-hidden="true" /> 로그인
               </a>
             )}
-          </div>
+          </nav>
         </div>
       </header>
-      {me.isAdmin && (
-        <nav className="admin-shortcuts" aria-label="관리자 전용 메뉴">
-          <span>
-            <ShieldCheck />
-            관리자 전용
-          </span>
-          <a href="/admin">대시보드</a>
-          <a href="/admin/automation">자동수집 · 쇼츠 · 메일</a>
-        </nav>
-      )}
       <div className="layout">
         <aside className="left-nav">
           <p className="nav-label">COMMUNITY</p>
