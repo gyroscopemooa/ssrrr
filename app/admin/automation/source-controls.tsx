@@ -18,6 +18,7 @@ const failureGuides=[
  {pattern:/UNSAFE_URL/,title:'주소 확인 필요 · URL 보안 검사 거절',text:'주소 형식, 프로토콜 또는 이동되는 서버 주소를 확인하세요. 잘못된 주소는 수정하되 보안 검사를 해제하지는 않습니다.'}
 ];
 export function SourceVerification({row}:{row:Record<string,unknown>}){
+ const [collecting,setCollecting]=useState(false),[collectMessage,setCollectMessage]=useState('');
  let counts:Record<string,number>={};try{counts=JSON.parse(String(row.validation_counts||'{}')).validation||{}}catch{}
  const reason=String(row.validation_error||''),status=String(row.validation_status||'미검증'),pending=['검사 대기','검사 중'].includes(status);
  let source:Record<string,unknown>={};try{source=JSON.parse(String(row.config||'{}'))}catch{}
@@ -33,6 +34,7 @@ export function SourceVerification({row}:{row:Record<string,unknown>}){
  {!guides.length&&!pending&&<p>{status==='미검증'?'아직 검사하지 않았습니다. 수집 테스트를 먼저 실행하세요.':'실패 원인을 확정할 수 없습니다. 주소와 아래 오류 내용을 확인한 뒤 다시 검사하세요.'}</p>}
  {reason&&reason!=='미검증 소스'&&<details><summary>{pending?'이전 오류 원문':'오류 원문 보기'}</summary><pre>{reason}</pre></details>}
  </div>}
+ {!!row.enabled&&status==='통과'&&<div className="ops-actions"><button type="button" className="secondary" disabled={collecting} onClick={async()=>{setCollecting(true);setCollectMessage('');try{await api('/api/ops',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'sourceCollectOne',id:row.id})});setCollectMessage('수집 중입니다. 완료되면 가져온 글 검토에 표시됩니다.')}catch(e){setCollectMessage((e as Error).message)}finally{setCollecting(false)}}}>{collecting?'수집 요청 중…':'다음 글 1건 수집·검토 대기'}</button>{collectMessage&&<span>{collectMessage}</span>}</div>}
  </div>
 }
 
