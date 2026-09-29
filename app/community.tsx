@@ -23,6 +23,7 @@ import {
   Star,
   TrendingUp,
   UserCircle,
+  Sparkles,
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RotatingLogo } from "@/components/rotating-logo";
@@ -49,6 +50,7 @@ export type Post = {
   source?: string;
   mine?: boolean;
   liked?: boolean;
+  promotionReview?: number;
 };
 type ApiResult = {
   signedIn: boolean;
@@ -88,11 +90,11 @@ function PopularSidebar({
     [error, setError] = useState(false),
     [retry, setRetry] = useState(0);
   const site = kind === "site",
-    title = site ? "스르륵 인기글" : "유머 인기글",
-    href = site ? "/?scope=site&sort=popular" : "/?board=유머&sort=popular",
+    title = site ? "스르륵 인기글" : "오늘의 유머",
+    href = site ? "/?scope=site&sort=popular" : "/?board=유머&sort=latest",
     query = site
       ? "/api/posts?scope=site&sort=popular&preview=sidebar"
-      : "/api/posts?board=유머&sort=popular&preview=sidebar";
+      : "/api/posts?board=유머&sort=latest&preview=sidebar";
   useEffect(() => {
     let live = true;
     setLoading(true);
@@ -199,6 +201,7 @@ export function Shell({
   const icons = [
     LayoutGrid,
     Smile,
+    Sparkles,
     ImageIcon,
     Video,
     Share2,
@@ -222,7 +225,7 @@ export function Shell({
           <nav className="top-nav">
             <a href="/">커뮤니티</a>
             <a href="/?scope=site&sort=popular">스르륵 인기글</a>
-            <a href="/?board=%EC%9C%A0%EB%A8%B8&sort=popular">유머 인기글</a>
+            <a href="/?board=%EC%9C%A0%EB%A8%B8&sort=latest">오늘의 유머</a>
             <a href="/?board=%EA%B2%BD%EC%A0%9C&sort=latest">경제속보</a>
           </nav>
           <form
@@ -256,7 +259,7 @@ export function Shell({
                 </a>
               </>
             ) : (
-              <a className="account-login" href="/signin-with-chatgpt?return_to=/account" target="_top">
+              <a className="account-login" href="/signin-with-chatgpt?return_to=/" target="_top">
                 <UserCircle aria-hidden="true" /> 로그인
               </a>
             )}
@@ -534,6 +537,7 @@ function FeedPost({ post: p }: { post: Post }) {
   );
   const adminTools = isAdmin && (
     <div className="admin-inline-tools">
+      {!!p.promotionReview && <span className="tag">오늘의 유머 승격 검토 대기</span>}
       <select
         aria-label="이동할 게시판"
         value={category}
@@ -542,7 +546,7 @@ function FeedPost({ post: p }: { post: Post }) {
         {boards
           .filter((b) => b !== "전체")
           .map((b) => (
-            <option key={b}>{b}</option>
+            <option key={b} value={b}>{boardLabel(b)}</option>
           ))}
       </select>
       <button onClick={() => moderate("hide")}>
