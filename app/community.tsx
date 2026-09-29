@@ -23,7 +23,7 @@ import {
   Star,
   TrendingUp,
   UserCircle,
-  Sparkles,
+  Laugh,
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RotatingLogo } from "@/components/rotating-logo";
@@ -201,7 +201,7 @@ export function Shell({
   const icons = [
     LayoutGrid,
     Smile,
-    Sparkles,
+    Laugh,
     ImageIcon,
     Video,
     Share2,
