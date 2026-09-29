@@ -33,7 +33,7 @@ function newest(rows:Row[]){
  return [...rows].sort((a,b)=>Number(b.last_seen_at||0)-Number(a.last_seen_at||0))[0];
 }
 
-function withActivity(row:Row|undefined,activityAt:number){
+function withActivity(row:Row|undefined,activityAt:number):Row|undefined{
  return row?{...row,last_seen_at:Math.max(Number(row.last_seen_at||0),activityAt)}:undefined;
 }
 
