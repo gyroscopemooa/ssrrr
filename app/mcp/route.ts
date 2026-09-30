@@ -15,7 +15,7 @@ const submitInput={
 const submitOutput={accepted:z.boolean(),status:z.string(),duplicate:z.boolean(),id:z.string().optional()};
 
 function serverFor(user:ChatGPTUser){
- const server=new McpServer({name:'SSRRR 경제 원고 전송',version:'1.0.0'},{instructions:'실제 경제 알림이 생성된 경우에만 submit_economy_report를 한 번 호출하세요. 알림이 없는 실행에서는 호출하지 마세요. 원고는 공개되지 않고 관리자 검수함에 저장됩니다.'});
+ const server=new McpServer({name:'SSRRR 경제 원고 전송',version:'1.0.0'},{instructions:'실제 경제 알림이 생성된 경우에만 submit_economy_report를 한 번 호출하세요. 알림이 없는 실행에서는 호출하지 마세요. 전송된 원고는 개인정보 검사를 통과하면 경제 게시판에 즉시 게시됩니다.'});
  server.registerTool('get_profile',{
   title:'SSRRR 연결 계정 확인',
   description:'현재 SSRRR 사이트에 연결된 관리자 계정을 확인합니다.',
@@ -27,8 +27,8 @@ function serverFor(user:ChatGPTUser){
   structuredContent:{id:user.userId,name:user.displayName,email:user.email,nickname:user.displayName},
  }));
  server.registerTool('submit_economy_report',{
-  title:'SSRRR 경제 원고 검수함 전송',
-  description:'완성된 SSRRR_ECONOMY 경제 알림의 제목과 전체 본문을 SSRRR 관리자 검수함에 저장합니다. 실제 알림이 없으면 호출하지 않습니다.',
+  title:'SSRRR 경제 게시판 즉시 게시',
+  description:'완성된 SSRRR_ECONOMY 경제 알림의 제목과 전체 본문을 개인정보 검사 후 SSRRR 경제 게시판에 즉시 게시합니다. 실제 알림이 없으면 호출하지 않습니다.',
   inputSchema:submitInput,
   outputSchema:submitOutput,
   annotations:{readOnlyHint:false,destructiveHint:false,idempotentHint:true,openWorldHint:false},
@@ -36,10 +36,10 @@ function serverFor(user:ChatGPTUser){
   const normalizedBody=body.replace(/\r\n?/g,'\n').trim();
   if(normalizedBody.split('\n',1)[0].trim()!=='SSRRR_ECONOMY')return {isError:true,content:[{type:'text',text:'전송하지 않았습니다. 본문 첫 줄은 정확히 SSRRR_ECONOMY여야 합니다.'}]};
   const key=idempotencyKey||await contentKey(normalizedBody);
-  const saved=await ingestDirect({idempotencyKey:key,title,body:normalizedBody,mode:'review',receivedAt:Date.now()}) as {id?:string;status?:string;duplicate?:boolean};
+  const saved=await ingestDirect({idempotencyKey:key,title,body:normalizedBody,mode:'publish',receivedAt:Date.now()}) as {id?:string;status?:string;duplicate?:boolean};
   const duplicate=saved.duplicate===true,status=saved.status||'review_required';
   return {
-   content:[{type:'text',text:duplicate?'이미 같은 경제 원고가 있어 중복 저장하지 않았습니다.':'경제 원고 전체를 관리자 검수함에 저장했습니다.'}],
+   content:[{type:'text',text:duplicate?'이미 같은 경제 원고가 있어 중복 게시하지 않았습니다.':status==='published'?'경제 원고 전체를 경제 게시판에 즉시 게시했습니다.':'개인정보 검사에서 보류되어 관리자 검토 대기에 저장했습니다.'}],
    structuredContent:{accepted:true,status,duplicate,...(saved.id?{id:saved.id}:{})},
   };
  });

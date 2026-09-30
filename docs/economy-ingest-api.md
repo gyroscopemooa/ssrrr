@@ -2,7 +2,7 @@
 
 ## ChatGPT 예약 작업용 MCP 도구
 
-배포된 사이트의 `/mcp` 엔드포인트는 ChatGPT에 연결된 SSRRR 관리자만 사용할 수 있다. `submit_economy_report`는 전체 경제 알림을 자동 공개하지 않고 검수함에 저장한다. 본문 첫 줄은 반드시 `SSRRR_ECONOMY`여야 하며, 같은 본문은 SHA-256 기반 키로 중복 방지된다. 이 경로에는 `WORKER_TOKEN`이나 OpenAI 개발자 API 키를 입력하지 않는다.
+배포된 사이트의 `/mcp` 엔드포인트는 ChatGPT에 연결된 SSRRR 관리자만 사용할 수 있다. `submit_economy_report`는 전체 경제 알림을 개인정보 검사 후 경제 게시판에 즉시 게시한다. 개인정보 검사에 걸린 원고만 관리자 검토 대기에 저장한다. 본문 첫 줄은 반드시 `SSRRR_ECONOMY`여야 하며, 같은 본문은 SHA-256 기반 키로 중복 방지된다. 이 경로에는 `WORKER_TOKEN`이나 OpenAI 개발자 API 키를 입력하지 않는다.
 
 예약 작업에 추가할 정확한 지시문은 [economy-scheduled-task-addon.md](./economy-scheduled-task-addon.md)를 참고한다.
 
