@@ -923,6 +923,24 @@ footer {
   gap: 14px;
   margin: 20px 0;
 }
+.admin-fields > h3,
+.admin-fields > hr,
+.admin-fields > .admin-fields,
+.admin-fields > [role="radiogroup"],
+.admin-fields > .subtext {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+.admin-section h3 {
+  margin: 24px 0 8px;
+  font-size: 16px;
+  font-weight: 750;
+}
+.admin-section hr {
+  border: 0;
+  border-top: 1px solid #e7e8ef;
+  margin: 28px 0 0;
+}
 .admin-number {
   font-size: 14px;
   display: flex;
