@@ -22,9 +22,9 @@
     "db:migrate:local": "node scripts/migrate-local.mjs",
     "test:integration": "node scripts/test-integration.mjs",
     "test:sources": "node scripts/source-audit.mjs",
-    "worker:windows:start": "pwsh -NoProfile -File scripts/worker-windows.ps1",
-    "worker:windows:stop": "pwsh -NoProfile -File scripts/worker-windows.ps1 -Stop",
-    "worker:windows:status": "pwsh -NoProfile -File scripts/worker-windows.ps1 -Status",
+    "worker:windows:start": "powershell -NoProfile -File scripts/worker-windows.ps1",
+    "worker:windows:stop": "powershell -NoProfile -File scripts/worker-windows.ps1 -Stop",
+    "worker:windows:status": "powershell -NoProfile -File scripts/worker-windows.ps1 -Status",
     "chatgpt:login": "node scripts/chatgpt-login.mjs",
     "chatgpt:test": "node scripts/chatgpt-relay-test.mjs"
   },

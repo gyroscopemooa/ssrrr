@@ -22,12 +22,10 @@ import {
   Newspaper,
   Star,
   TrendingUp,
-  ExternalLink,
   UserCircle,
   Laugh,
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { splitSources } from "@/lib/content-text";
 import { RotatingLogo } from "@/components/rotating-logo";
 import { boards, boardLabel, boardDescription } from "@/lib/board-label";
 export type Post = {
@@ -51,6 +49,7 @@ export type Post = {
   body?: string;
   source?: string;
   mine?: boolean;
+  canEdit?: boolean;
   liked?: boolean;
   promotionReview?: number;
 };
@@ -562,7 +561,6 @@ function FeedPost({ post: p }: { post: Post }) {
     </div>
   );
   const economy = category === "경제" && p.content?.trim();
-  const sourceParts = economy ? splitSources(economy) : null;
   return (
     <article className="post-row-wrap">
       {economy ? (
@@ -578,23 +576,9 @@ function FeedPost({ post: p }: { post: Post }) {
           )}
           {gallery}
           <div className="economy-feed-body">
-            {(sourceParts ? sourceParts.main : economy).split(/\n{2,}/).map((paragraph, i) => (
+            {economy.split(/\n{2,}/).map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
-            {sourceParts && (
-              <details className="source-fold">
-                <summary>출처 {sourceParts.items.length}건</summary>
-                <ul>
-                  {sourceParts.items.map((item) => (
-                    <li key={item.url}>
-                      <a href={item.url} target="_blank" rel="noopener noreferrer">
-                        {item.label}<ExternalLink size={12} aria-hidden="true" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            )}
           </div>
           <div className="economy-feed-footer">
             {metrics}
