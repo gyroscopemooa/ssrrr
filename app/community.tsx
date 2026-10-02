@@ -30,6 +30,7 @@ import { RotatingLogo } from "@/components/rotating-logo";
 import { boards, boardLabel, boardDescription } from "@/lib/board-label";
 export type Post = {
   adminSourceName?: string;
+  adminSourceUrl?: string;
   id: string;
   title: string;
   category: string;

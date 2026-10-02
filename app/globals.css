@@ -1681,6 +1681,18 @@ footer {
   margin: 6px 0 12px;
   overflow-wrap: anywhere;
 }
+.admin-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 14px;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+.admin-source-link svg {
+  width: 14px;
+  height: 14px;
+}
 .post-gallery-main {
   position: relative;
   display: block;
