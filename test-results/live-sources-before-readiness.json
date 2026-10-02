@@ -1,0 +1,220 @@
+[
+  {
+    "id": "source-0",
+    "name": "엠봉",
+    "url": "https://mbong.kr/best",
+    "at": "2026-09-21T09:56:50.036Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: robots.txt"
+  },
+  {
+    "id": "source-2",
+    "name": "개집넷",
+    "url": "https://gezip.net/bbs/board.php?bo_table=best",
+    "at": "2026-09-21T09:56:50.041Z",
+    "listCount": 20,
+    "blocks": 1,
+    "comments": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "source-1",
+    "name": "개드립",
+    "url": "https://www.dogdrip.net/dogdrip",
+    "at": "2026-09-21T09:56:50.041Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: robots.txt"
+  },
+  {
+    "id": "source-5",
+    "name": "보배드림",
+    "url": "https://www.bobaedream.co.kr/list?code=best",
+    "at": "2026-09-21T09:56:50.620Z",
+    "status": "NETWORK_ERROR",
+    "error": "HTTP 406"
+  },
+  {
+    "id": "source-4",
+    "name": "FM코리아",
+    "url": "https://www.fmkorea.com/best",
+    "at": "2026-09-21T09:56:50.620Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: robots.txt"
+  },
+  {
+    "id": "source-3",
+    "name": "오늘의유머",
+    "url": "https://www.todayhumor.co.kr/board/list.php?table=bestofbest",
+    "at": "2026-09-21T09:56:50.620Z",
+    "listCount": 30,
+    "blocks": 4,
+    "comments": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "source-6",
+    "name": "뽐뿌",
+    "url": "https://www.ppomppu.co.kr/zboard/zboard.php?id=humor",
+    "at": "2026-09-21T09:56:50.818Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: HTTP 403"
+  },
+  {
+    "id": "source-8",
+    "name": "클리앙",
+    "url": "https://www.clien.net/service/recommend",
+    "at": "2026-09-21T09:56:50.818Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: robots.txt"
+  },
+  {
+    "id": "source-7",
+    "name": "인스티즈",
+    "url": "https://www.instiz.net/pt",
+    "at": "2026-09-21T09:56:50.818Z",
+    "listCount": 30,
+    "blocks": 4,
+    "comments": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "source-10",
+    "name": "MLBPARK",
+    "url": "https://mlbpark.donga.com/mp/b.php?b=bullpen",
+    "at": "2026-09-21T09:56:51.196Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: robots.txt"
+  },
+  {
+    "id": "source-9",
+    "name": "와이고수",
+    "url": "https://www.ygosu.com/community/real_article",
+    "at": "2026-09-21T09:56:51.196Z",
+    "status": "NETWORK_ERROR",
+    "error": "MEDIA_HOST_NOT_ALLOWED"
+  },
+  {
+    "id": "source-11",
+    "name": "더쿠",
+    "url": "https://theqoo.net/hot",
+    "at": "2026-09-21T09:56:51.196Z",
+    "listCount": 20,
+    "blocks": 1,
+    "comments": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "source-12",
+    "name": "루리웹",
+    "url": "https://bbs.ruliweb.com/best",
+    "at": "2026-09-21T09:56:51.424Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: robots.txt"
+  },
+  {
+    "id": "source-14",
+    "name": "아카라이브",
+    "url": "https://arca.live/b/singbung",
+    "at": "2026-09-21T09:56:51.424Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: robots.txt"
+  },
+  {
+    "id": "source-13",
+    "name": "인벤",
+    "url": "https://www.inven.co.kr/board/webzine/2097",
+    "at": "2026-09-21T09:56:51.424Z",
+    "listCount": 30,
+    "blocks": 3,
+    "comments": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "dc-makjang",
+    "name": "막갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=makjang&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.481Z",
+    "status": "NETWORK_ERROR",
+    "error": "HTTP 404"
+  },
+  {
+    "id": "source-15",
+    "name": "이토랜드",
+    "url": "https://www.etoland.co.kr/bbs/board.php?bo_table=etohumor",
+    "at": "2026-09-21T09:56:52.481Z",
+    "status": "NETWORK_ERROR",
+    "error": "UNSAFE_URL"
+  },
+  {
+    "id": "dc-korea",
+    "name": "코갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=korea&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.481Z",
+    "status": "SELECTOR_MISMATCH",
+    "error": "SELECTOR_MISMATCH: list"
+  },
+  {
+    "id": "dc-ib_new2",
+    "name": "인방갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=ib_new2&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.602Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: login/captcha"
+  },
+  {
+    "id": "dc-depression",
+    "name": "우울갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=depression&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.602Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: login/captcha"
+  },
+  {
+    "id": "dc-baseball_new11",
+    "name": "야갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=baseball_new11&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.602Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: login/captcha"
+  },
+  {
+    "id": "dc-singlebungle1472",
+    "name": "싱글벙글",
+    "url": "https://gall.dcinside.com/board/lists/?id=singlebungle1472&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.845Z",
+    "status": "SELECTOR_MISMATCH",
+    "error": "SELECTOR_MISMATCH: list"
+  },
+  {
+    "id": "dc-chzzk",
+    "name": "치지직",
+    "url": "https://gall.dcinside.com/board/lists/?id=chzzk&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.845Z",
+    "status": "SELECTOR_MISMATCH",
+    "error": "SELECTOR_MISMATCH: list"
+  },
+  {
+    "id": "dc-leagueoflegends6",
+    "name": "롤갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=leagueoflegends6&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.845Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: login/captcha"
+  },
+  {
+    "id": "dc-neostock",
+    "name": "주갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=neostock&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.972Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: login/captcha"
+  },
+  {
+    "id": "dc-football_new9",
+    "name": "해축갤",
+    "url": "https://gall.dcinside.com/board/lists/?id=football_new9&exception_mode=recommend",
+    "at": "2026-09-21T09:56:52.972Z",
+    "status": "BLOCKED",
+    "error": "BLOCKED: login/captcha"
+  }
+]

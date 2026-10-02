@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-21T13:55:35.521Z",
+  "passed": true,
+  "workerId": "secretagit-windows-main",
+  "capabilities": {
+    "render": true,
+    "collect": true,
+    "gmail": false,
+    "youtube": false
+  },
+  "checks": [
+    "Production worker authentication accepted",
+    "Production claim returned successfully",
+    "Background Node process remains running",
+    "Credentials stored with Windows current-user DPAPI",
+    "Credential directory ignored by Git"
+  ],
+  "collectionJobCompleted": false,
+  "note": "Connection verified; waiting for an eligible queued task. PC must remain on. No reboot autostart configured."
+}

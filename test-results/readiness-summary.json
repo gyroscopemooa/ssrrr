@@ -1,0 +1,91 @@
+{
+  "at": "2026-09-21T12:46:13.097Z",
+  "unit": {
+    "passed": 16,
+    "failed": 0
+  },
+  "typecheck": "PASS",
+  "build": "PASS",
+  "lint": {
+    "errors": 0,
+    "warnings": 20
+  },
+  "api": "PASS",
+  "automationApi": {
+    "passed": true,
+    "at": "2026-09-21T12:42:13.626Z",
+    "results": [
+      "admin and worker authentication",
+      "live audit evidence application: PASS can enable, blocked cannot",
+      "test scan while paused, validation gate",
+      "daily cap, scheduled publication, imported comments, private provenance",
+      "repeated scan and cross-candidate hash dedup",
+      "Gmail dedicated mailbox, privacy hold, edit approval, dedup, economy feed",
+      "shorts duplicate lock, heartbeat, QC approval gate, cancellation",
+      "parser changes and failed revalidation revoke ON eligibility"
+    ]
+  },
+  "worker": {
+    "passed": true,
+    "at": "2026-09-21T12:42:42.920Z",
+    "jobId": "a332aa10-eb28-47f9-af6c-e19713058311",
+    "stages": [
+      "queued",
+      "analyzing",
+      "ready_to_render",
+      "rendering",
+      "qc",
+      "ready",
+      "approved"
+    ],
+    "output": {
+      "width": 1080,
+      "height": 1920,
+      "fps": 30,
+      "durationMs": 12200,
+      "bytes": 113378
+    },
+    "checks": [
+      "Node RPC claim",
+      "heartbeat",
+      "actual Remotion render",
+      "R2 stream upload",
+      "QC metadata",
+      "admin approval",
+      "range download"
+    ]
+  },
+  "sources": {
+    "total": 26,
+    "statuses": {
+      "PASS": 5,
+      "BLOCKED": 17,
+      "NETWORK_ERROR": 1,
+      "PARSING_UNVERIFIED": 3
+    },
+    "passed": [
+      "엠봉",
+      "개드립",
+      "더쿠",
+      "루리웹",
+      "인벤"
+    ],
+    "newPass": [
+      "엠봉",
+      "개드립",
+      "루리웹"
+    ],
+    "revokedPass": [
+      "개집넷",
+      "오늘의유머",
+      "인스티즈"
+    ]
+  },
+  "gmail": {
+    "mock": "PASS",
+    "localD1": "PASS",
+    "live": "WAITING_FOR_USER: dedicated Gmail OAuth gmail.modify"
+  },
+  "databaseMigrationsAdded": [],
+  "dependenciesAdded": []
+}

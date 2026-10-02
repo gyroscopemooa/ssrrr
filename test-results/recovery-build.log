@@ -1,0 +1,75 @@
+
+  vinext build  (Vite 8.0.13)
+
+[1/5] analyze client references...
+[2K
+transforming...✓ 280 modules transformed.
+rendering chunks...
+✓ built in 1.61s
+[2/5] analyze server references...
+[2K
+transforming...✓ 248 modules transformed.
+rendering chunks...
+✓ built in 489ms
+[3/5] build rsc environment...
+[2K
+transforming...✓ 277 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 857ms
+[4/5] build client environment...
+[2K
+transforming...✓ 2079 modules transformed.
+rendering chunks...
+computing gzip size...
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - vinext:css-data-url (47%)
+  - vinext:og-inline-fetch-assets (42%)
+  - alias (3%)
+  - rsc:virtual-client-package (3%)
+  - vinext:middleware-server-only (2%)
+See https://rolldown.rs/options/checks#plugintimings for more details.
+
+✓ built in 3.16s
+[5/5] build ssr environment...
+[2K
+transforming...✓ 254 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 634ms
+[0m
+  Route (app)
+  ┌ ? /                      
+  ├ ? /account               
+  ├ ? /admin                 
+  ├ ? /admin/automation      
+  ├ λ /api/account           
+  ├ λ /api/admin             
+  ├ λ /api/brand             
+  ├ λ /api/downloads         
+  ├ λ /api/downloads/:id     
+  ├ λ /api/me                
+  ├ λ /api/media             
+  ├ λ /api/media/:id         
+  ├ λ /api/ops               
+  ├ λ /api/ops/assets        
+  ├ λ /api/posts             
+  ├ λ /api/posts/:id         
+  ├ λ /api/posts/:id/actions 
+  ├ λ /api/posts/:id/view    
+  ├ λ /api/previews          
+  ├ λ /api/previews/:id/image
+  ├ λ /api/settings          
+  ├ λ /api/worker            
+  ├ λ /api/worker/files      
+  ├ ƒ /post/:id              
+  └ ? /write                 
+
+  λ API  ƒ Dynamic  ? Unknown
+
+  ? Some routes could not be classified. vinext currently uses static analysis
+    and cannot detect dynamic API usage (headers(), cookies(), etc.) at build time.
+    Automatic classification will be improved in a future release.
+
+  Build complete. Run `vinext start` to start the production server.
+

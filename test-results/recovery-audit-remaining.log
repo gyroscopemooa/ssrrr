@@ -1,0 +1,11 @@
+source-4 BLOCKED list 24 detail 0 comments 0 media 0 BLOCKED: robots.txt /
+source-5 BLOCKED list 0 detail 0 comments 0 media 0 HTTP 406
+source-6 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: HTTP 403
+source-7 PASS list 35 detail 1 comments 0 media 1 
+source-8 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: robots.txt /service/recommend
+source-9 BLOCKED list 27 detail 0 comments 0 media 0 BLOCKED: robots.txt /*?*list_context=
+source-10 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: robots.txt /
+source-15 NETWORK_ERROR list 0 detail 0 comments 0 media 0 UNSAFE_REDIRECT: HTTPS to HTTP
+dc-ib_new2 BLOCKED list 0 detail 0 comments 0 media 0 BLOCKED: robots.txt /board/lists/?id=ib_new
+dc-football_new9 BLOCKED list 49 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: body, image; REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403
+dc-neostock BLOCKED list 50 detail 5 comments 0 media 0 REQUIRED_FIELDS_MISSING: image; BLOCKED: HTTP 403

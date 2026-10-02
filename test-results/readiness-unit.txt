@@ -1,0 +1,24 @@
+✔ new best candidates beat old high score; fallback and used exclusion (0.8677ms)
+✔ KST schedule interleaves sources at three-minute intervals (5.1679ms)
+✔ privacy rejects email phone resident ID account secret address and denylist (1.9652ms)
+✔ first page parser limits rows and preserves text/image/video order and five comments (25.7923ms)
+✔ network blocks local/IP/file targets before requests (3.1513ms)
+✔ shorts plan handles image GIF video comments safe minimum and split continuity (0.9603ms)
+✔ MIME HTML removes quoted mail (1.2998ms)
+✔ dedicated Gmail profile mismatch fails before listing messages (3.1858ms)
+✔ Gmail allow-label payload and YouTube statistics contract with mocked APIs (2.2177ms)
+✔ YouTube scheduled resumable upload checkpoints and resume prevent duplicate insert (24.3688ms)
+✔ robots wildcard, end anchor, longest allow and query rules (1.7365ms)
+✔ source gate rejects old, partial and changed evidence (0.8287ms)
+✔ Gmail snapshots pages, creates labels, routes done review failure, and removes source (8.0119ms)
+✔ Gmail failed label mutation surfaces retry; manual approval relabels review to done (3.3592ms)
+✔ DC normal login footer is not a block; public comment rejection stops without fallback (17.7747ms)
+✔ public AJAX comments preserve IDs and strip executable markup (3.6177ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1291.7455
