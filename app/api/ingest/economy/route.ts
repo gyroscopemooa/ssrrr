@@ -1,12 +1,13 @@
 import {env} from 'cloudflare:workers';
 import {wrap,json} from '@/lib/server';
 import {workerAuth} from '@/lib/automation/server';
-import {ingestDirect} from '@/lib/automation/mail';
+import {submitEconomyReport} from '@/lib/automation/mail';
 
 export const POST=wrap(async req=>{
   await economyIngestAuth(req);
-  const result=await ingestDirect(await json(req));
-  return Response.json(result,{status:'duplicate' in result?200:201,headers:{'Cache-Control':'no-store'}});
+  const result=await submitEconomyReport(await json(req),'http');
+  const status=result.status==='rejected_format'?400:result.status==='blocked_privacy'?422:result.duplicate?200:201;
+  return Response.json(result,{status,headers:{'Cache-Control':'no-store'}});
 });
 
 async function economyIngestAuth(req:Request){

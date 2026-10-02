@@ -62,7 +62,15 @@ export function normalizeAutomationMail(subject: string, rawBody: string) {
   return { title, body: cleanBody(body, [originalSubject, privateTaskLabel, title]) };
 }
 
+// Display path: economy posts are shown exactly as stored (no title/label/duplicate-line stripping).
 export function normalizeStoredEconomyPost(title: string, storedBody: string) {
+  let text = '';
+  try { const value = JSON.parse(storedBody); if (Array.isArray(value)) text = value.filter(block => block?.type === 'text' && typeof block.text === 'string').map(block => block.text).join('\n\n') } catch { text = storedBody }
+  return {title, body:storedBody, text};
+}
+
+// Legacy cleanup (admin "기존 메일 내용 정리" button only): rewrites stored mail-derived posts.
+export function cleanStoredEconomyPost(title: string, storedBody: string) {
   let blocks: Array<{type:string;text?:string;[key:string]:unknown}> = [];
   try { const value = JSON.parse(storedBody); if (Array.isArray(value)) blocks = value } catch {}
   if (!blocks.length) blocks = [{type:'text', text:storedBody}];
