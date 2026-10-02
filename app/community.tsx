@@ -49,7 +49,6 @@ export type Post = {
   body?: string;
   source?: string;
   mine?: boolean;
-  canEdit?: boolean;
   liked?: boolean;
   promotionReview?: number;
 };

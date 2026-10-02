@@ -31,13 +31,3 @@ for(const item of sourceCatalog){if(item.id==='source-0'){Object.assign(item.sel
 for(const item of sourceCatalog)if(item.id==='source-11')item.mediaHosts.push('pbs.twimg.com');
 
 sourceCatalog.push(sourceSchema.parse({id:'source-16',name:'웃긴대학',url:'https://web.humoruniv.com/board/humor/board_best.html',mediaHosts:['down.humoruniv.com'],selectors:{item:'tr[id^="li_chk_"]',title:'.li_sbj [id^="title_chk_"]',link:'.li_sbj a[href*="read.html"]',body:'#wrap_copy',comment:'tr[id^="comment_span_"] .comment_more',views:'td.li_und:nth-last-child(3)',likes:'td.li_und .o',comments:'.list_comment_num',date:'.li_date'}}));
-
-// Image hosts that forbid all crawling in robots.txt (thimg.todayhumor.co.kr, image.fmkorea.com) are never fetched.
-// These sources collect list + detail text only; posts without a body are skipped one by one.
-export const catalogOverrides:Record<string,Partial<(typeof sourceCatalog)[number]>>={
-'source-2':{collectionMode:'DETAIL_TEXT_ONLY',images:false,videos:false,gifs:false,commentLimit:0},
-'source-3':{collectionMode:'DETAIL_TEXT_ONLY',images:false,videos:false,gifs:false,commentLimit:0}};
-for(const item of sourceCatalog)Object.assign(item,catalogOverrides[item.id!]);
-
-// Quasarzone humor: comment endpoints are disallowed by robots.txt, so comments are never requested.
-sourceCatalog.push(sourceSchema.parse({id:'source-17',name:'퀘이사존 유머',url:'https://quasarzone.com/bbs/qb_humor',mediaHosts:['quasarzone.com'],commentLimit:0,selectors:{item:'.v2-list-row',title:'a.subject-link',link:'a.subject-link',body:'#new_contents',comment:'.none-comment',views:'.qc-count-hit',likes:'.v2-list-row__num',comments:'.qc-count-comment',date:'.v2-list-row__time'}}));
