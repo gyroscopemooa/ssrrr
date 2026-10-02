@@ -1,6 +1,6 @@
 import {GenericHtmlAdapter,DcinsideAdapter} from './adapters.mjs';
 import {fetchPage} from './network.mjs';
-import {mediaType} from './media-type.mjs';
+import {mediaType,followViewerPage} from './media-type.mjs';
 import {sourceIdentity} from '../lib/automation/validation.mjs';
 import {requiredFields,chooseMode,stagesFor,fieldsFor,missingFields} from '../lib/automation/modes.mjs';
 const blocked=e=>/BLOCKED|HTTP (401|403|406|429|430)/.test(String(e));
@@ -39,7 +39,7 @@ export async function collectSource(source,{test=false,fetcher:fetchImpl=fetchPa
  try{if(b.type==='youtube'){verifiedBlocks.push({...b,verified:true});v.media++;continue}
  const host=new URL(b.url).hostname;if(rateLimitedHosts.has(host))throw Error('BLOCKED: HTTP 429; media host rate limited');
  if(deniedUrls.has(b.url))throw Error(deniedUrls.get(b.url));
- const r=await fetcher(b.url,{hosts:[new URL(source.url).hostname,...source.mediaHosts],max:b.type==='video'?100*1024*1024:30*1024*1024,referer:item.url});const type=mediaType(r.bytes,r.type);
+ const opts={hosts:[new URL(source.url).hostname,...source.mediaHosts],max:b.type==='video'?100*1024*1024:30*1024*1024,referer:item.url};const r=await followViewerPage(await fetcher(b.url,opts),b.url,fetcher,opts);const type=mediaType(r.bytes,r.type);
  if(type==='image/gif'&&!source.gifs)continue;if(b.type==='image'&&type.startsWith('video/')){if(!source.videos)continue;verifiedBlocks.push({...b,type:'video',verified:true});v.media++;continue}if(b.type==='image'&&!type.startsWith('image/')||b.type==='video'&&!type.startsWith('video/'))throw Error('MEDIA_INVALID_CONTENT_TYPE: '+type);
  verifiedBlocks.push({...b,verified:true});v.media++;
  }catch(e){sampleErrors.push(e.message);warnings.push(e.message);if(blocked(e)&&b.url)deniedUrls.set(b.url,e.message);if(/HTTP 429/.test(e.message)&&b.url)rateLimitedHosts.add(new URL(b.url).hostname)}
