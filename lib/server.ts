@@ -12,7 +12,7 @@ export async function json(req:Request){const raw=await bounded(req.body,160000)
 export async function bounded(stream:ReadableStream<Uint8Array>|null,max:number){if(!stream)throw new HttpError(400,'내용이 없습니다.');const reader=stream.getReader();const parts:Uint8Array[]=[];let size=0;try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>max)throw new HttpError(413,'파일 또는 본문이 너무 큽니다.');parts.push(value)}}finally{await reader.cancel().catch(()=>{})}const out=new Uint8Array(size);let pos=0;for(const v of parts){out.set(v,pos);pos+=v.length}return out}
 export function cleanText(v:unknown,max:number,min=1){if(typeof v!=='string'||v.trim().length<min||v.length>max)throw new HttpError(400,'입력 길이를 확인해 주세요.');return v.trim()}
 export type {Block} from './models';
-export async function content(value:unknown,owner:string){
+export async function content(value:unknown,ownerInput:string|string[]){const owners=[...new Set(Array.isArray(ownerInput)?ownerInput:[ownerInput])];
  if(!Array.isArray(value)||value.length>200)throw new HttpError(400,'본문 형식을 확인해 주세요.');
  const blocks:Block[]=[];let chars=0;
  for(const b of value){if(!b||typeof b!=='object')throw new HttpError(400,'본문 형식을 확인해 주세요.');
@@ -25,7 +25,7 @@ export async function content(value:unknown,owner:string){
  if(chars>30000||!blocks.length||blocks.length>250)throw new HttpError(400,'본문은 30,000자 이내로 작성해 주세요.');
  const attachments=blocks.filter((b):b is Extract<Block,{type:'image'|'video'}>=>b.type==='image'||b.type==='video');const ids=[...new Set(attachments.map(b=>b.id))];
  if(ids.length>20||blocks.filter(b=>b.type==='link'||b.type==='youtube').length>10)throw new HttpError(400,'첨부는 20개, 링크는 10개까지 가능합니다.');
- if(ids.length){const r=await db().prepare('SELECT id,type FROM media WHERE owner=? AND id IN ('+ids.map(()=>'?').join(',')+')').bind(owner,...ids).all<{id:string;type:string}>();
+ if(ids.length){const r=await db().prepare('SELECT id,type FROM media WHERE owner IN ('+owners.map(()=>'?').join(',')+') AND id IN ('+ids.map(()=>'?').join(',')+')').bind(...owners,...ids).all<{id:string;type:string}>();
  if(r.results.length!==ids.length||attachments.some(b=>!r.results.some(m=>m.id===b.id&&m.type.startsWith(b.type+'/'))))throw new HttpError(400,'첨부파일 소유권과 종류를 확인해 주세요.');}
  return blocks;
 }
