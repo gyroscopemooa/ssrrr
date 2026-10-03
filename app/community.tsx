@@ -91,11 +91,11 @@ function PopularSidebar({
     [error, setError] = useState(false),
     [retry, setRetry] = useState(0);
   const site = kind === "site",
-    title = site ? "스르륵 인기글" : "오늘의 유머",
-    href = site ? "/?scope=site&sort=popular" : "/?board=유머&sort=latest",
+    title = site ? "스르륵 인기글" : "오늘의 유머 인기글",
+    href = site ? "/?scope=site&sort=popular" : "/?board=유머&sort=popular",
     query = site
       ? "/api/posts?scope=site&sort=popular&preview=sidebar"
-      : "/api/posts?board=유머&sort=latest&preview=sidebar";
+      : "/api/posts?board=유머&sort=popular&preview=sidebar";
   useEffect(() => {
     let live = true;
     setLoading(true);
