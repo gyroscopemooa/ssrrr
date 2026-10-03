@@ -2181,3 +2181,5 @@ footer a:hover {
     align-self: flex-end;
   }
 }
+
+.economy-vip-card{display:flex;align-items:center;gap:14px;margin:24px 0 8px;padding:20px;border:1px solid #dedbff;border-radius:12px;background:#f6f5ff;white-space:normal}.economy-vip-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;flex-shrink:0;border-radius:12px;background:#eae7ff;color:#5446d9}.economy-vip-card strong{display:block;color:#302957;font-size:16px;line-height:1.6}.economy-vip-label{display:block;margin-bottom:3px;color:#6557ca;font-size:12px;font-weight:700;letter-spacing:.08em}

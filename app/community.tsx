@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RotatingLogo } from "@/components/rotating-logo";
+import { EconomyContent } from './economy-content';
 import { boards, boardLabel, boardDescription } from "@/lib/board-label";
 export type Post = {
   adminSourceName?: string;
@@ -576,9 +577,7 @@ function FeedPost({ post: p }: { post: Post }) {
           )}
           {gallery}
           <div className="economy-feed-body">
-            {economy.split(/\n{2,}/).map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
+            <EconomyContent text={economy}/>
           </div>
           <div className="economy-feed-footer">
             {metrics}

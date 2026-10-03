@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {economyDisplay} from '../lib/economy-display.ts';
+test('legacy duplicated excerpt displays once without footer or marker',()=>{const result=economyDisplay('SSRRR_ECONOMY 미리보기…\n \n \n포트폴리오 전용 알림\n제목\nSSRRR_ECONOMY 실제 본문…\n\n※ ChatGPT 알림 메일에 수신된 내용입니다. 본문 일부가 생략되어 있을 수 있습니다.');assert.deepEqual(result,{text:'실제 본문…',excerpt:true})});
+test('new excerpt becomes a VIP card flag',()=>assert.deepEqual(economyDisplay('SSRRR_ECONOMY\n실제 내용…\n\n원문은 VIP 회원에게 제공됩니다'),{text:'실제 내용…',excerpt:true}));
+test('complete reports retain all content without a VIP claim',()=>assert.deepEqual(economyDisplay('SSRRR_ECONOMY\n보고서\n\n상세 내용'),{text:'보고서\n\n상세 내용',excerpt:false}));
