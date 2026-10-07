@@ -694,7 +694,10 @@ export default function Operations() {
       part = Number(cfg.partIndex || 0);
     return { posts, tone, mode, part: part ? ` · 분할 ${part + 1}편` : "" };
   };
-  async function shortAction(action: "shortCancel" | "shortRetry", r: Row) {
+  async function shortAction(
+    action: "shortCancel" | "shortRetry" | "shortDismiss",
+    r: Row,
+  ) {
     const id = str(r, "id"),
       summary = shortSummary(r),
       titles = summary.posts.map((p) => str(p, "title")).join("\n");
@@ -702,6 +705,13 @@ export default function Operations() {
       action === "shortCancel" &&
       !window.confirm(
         `아래 작업 1건만 취소·반려합니다.\n\n${titles || id}\n\n확정할까요?`,
+      )
+    )
+      return;
+    if (
+      action === "shortDismiss" &&
+      !window.confirm(
+        `아래 작업을 제작 현황에서 정리합니다.\n\n${titles || id}\n\n제작·업로드 기록과 MP4 파일은 삭제하지 않습니다. 정리할까요?`,
       )
     )
       return;
@@ -1433,6 +1443,9 @@ export default function Operations() {
                 const retryable = ["failed", "rejected"].includes(
                   str(r, "status"),
                 );
+                const dismissible = ["ready", "failed", "rejected"].includes(
+                  str(r, "status"),
+                );
                 return (
                   <article
                     className={"ops-job ops-short-job " + state.tone}
@@ -1541,6 +1554,15 @@ export default function Operations() {
                           onClick={() => void shortAction("shortCancel", r)}
                         >
                           이 작업 취소·반려 확정
+                        </button>
+                      )}
+                      {dismissible && (
+                        <button
+                          className="secondary"
+                          disabled={busy}
+                          onClick={() => void shortAction("shortDismiss", r)}
+                        >
+                          현황에서 정리
                         </button>
                       )}
                       {publication && (
