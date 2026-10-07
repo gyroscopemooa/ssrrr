@@ -1,0 +1,15 @@
+{
+ "$schema":"./node_modules/wrangler/config-schema.json",
+ "name":"ssrrr-community",
+ "account_id":"e93835463abc21b1f443176fab885921",
+ "main":"vinext/server/fetch-handler",
+ "compatibility_date":"2026-05-15",
+ "compatibility_flags":["nodejs_compat"],
+ "workers_dev":false,
+ "routes":[{"pattern":"ssrrr.net","custom_domain":true},{"pattern":"www.ssrrr.net","custom_domain":true}],
+ "d1_databases":[{"binding":"DB","database_name":"ssrrr-community","database_id":"19ee0ca8-e113-4ab8-98e6-edf3baf6590a","migrations_dir":"drizzle"}],
+ "r2_buckets":[{"binding":"BUCKET","bucket_name":"ssrrr-media"}],
+ "vars":{"SITE_NAME":"SSRRR 스르륵","SITE_URL":"https://ssrrr.net","ADMIN_EMAIL":"mooacst@gmail.com,jeonmeensoo@gmail.com","GOOGLE_CLIENT_ID":"584759552210-6vo18hk1hs7r32tu30g5attnnq07mojj.apps.googleusercontent.com"},
+ "observability":{"enabled":true,"traces":{"enabled":true}},
+ "limits":{"cpu_ms":30000}
+}

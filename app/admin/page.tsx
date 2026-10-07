@@ -198,7 +198,7 @@ export default function Admin() {
           {error && (
             <a
               className="primary"
-              href="/signin-with-chatgpt?return_to=/admin"
+              href="/auth/google?return_to=/admin"
               target="_top"
             >
               관리자 계정으로 로그인

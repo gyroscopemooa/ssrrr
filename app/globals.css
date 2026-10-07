@@ -439,7 +439,7 @@ header {
   padding: 56px 24px;
   text-align: center;
 }
-.empty svg {
+.empty > svg {
   width: 34px;
   height: 34px;
   margin: 0 auto 17px;

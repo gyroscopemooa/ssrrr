@@ -1,6 +1,6 @@
 import {z} from 'zod';import {wrap,db,bounded,HttpError} from '@/lib/server';import {workerAuth,claim,lease,failTask,event,type Row} from '@/lib/automation/server';import {acceptScan,publishCandidate,tick} from '@/lib/automation/collect';import {taskStatement} from '@/lib/automation/server';import {ingestMail} from '@/lib/automation/mail';import {autoPublish} from '@/lib/automation/shorts';
 export const POST=wrap(async req=>{await workerAuth(req);const d=z.record(z.string(),z.unknown()).parse(JSON.parse(new TextDecoder().decode(await bounded(req.body,2500000))));const action=z.string().parse(d.action);
-if(action==='claim'){await tick();return Response.json({task:await claim(z.string().max(100).parse(d.workerId),d.capabilities||{})})}
+if(action==='claim'){await tick();return Response.json({task:await claim(z.string().max(100).parse(d.workerId),d.capabilities||{},z.enum(['all','mail','delivery']).default('all').parse(d.role))})}
 const id=z.string().uuid().parse(d.id),token=z.string().uuid().parse(d.token),task=await lease(id,token);
 if(action==='heartbeat'){await db().prepare("UPDATE worker_tasks SET lease_until=?,updated_at=? WHERE id=? AND lease_token=? AND status='running'").bind(Date.now()+180000,Date.now(),id,token).run();return Response.json({ok:true})}
 if(action==='fail'){await failTask(task,z.string().max(1000).parse(d.error),d.blocked===true);return Response.json({ok:true})}

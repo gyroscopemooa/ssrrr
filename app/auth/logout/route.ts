@@ -1,0 +1,3 @@
+import {env} from 'cloudflare:workers';
+import {cookie,digest,readCookie,sessionCookie} from '@/lib/auth/core.mjs';
+export async function POST(req:Request){const origin=env.SITE_URL||'https://ssrrr.net';if(req.headers.get('origin')!==origin)return new Response('Forbidden',{status:403});const token=readCookie(req.headers.get('cookie'),sessionCookie);if(token&&env.DB)await env.DB.prepare('DELETE FROM auth_sessions WHERE token_hash=?').bind(await digest(token)).run();return new Response(null,{status:303,headers:{Location:origin+'/','Set-Cookie':cookie(sessionCookie,'',0),'Cache-Control':'no-store'}})}

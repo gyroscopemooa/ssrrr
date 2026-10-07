@@ -3,32 +3,60 @@
   "plan": {
     "scenes": [
       {
-        "type": "feed_open",
+        "type": "intro",
         "from": 0,
-        "frames": 60,
+        "frames": 33,
         "payload": {
-          "text": "함께 웃는 아지트",
-          "src": "http://127.0.0.1:9030/image.png",
+          "text": "하루 1유머!\n스르륵!",
           "startFrame": 0,
-          "totalFrames": 60
+          "totalFrames": 33
+        }
+      },
+      {
+        "type": "feed_open",
+        "from": 33,
+        "frames": 90,
+        "payload": {
+          "title": "함께 웃는 아지트",
+          "category": "유머",
+          "nickname": "꿀잼픽",
+          "views": 0,
+          "feed": [],
+          "targetId": "",
+          "text": "함께 웃는 아지트",
+          "src": "http://127.0.0.1:8711/image.png",
+          "startFrame": 0,
+          "totalFrames": 90
         }
       },
       {
         "type": "post_title",
-        "from": 60,
+        "from": 123,
         "frames": 90,
         "payload": {
+          "title": "함께 웃는 아지트",
+          "category": "유머",
+          "nickname": "꿀잼픽",
+          "views": 0,
+          "feed": [],
+          "targetId": "",
           "text": "함께 웃는 아지트",
-          "src": "http://127.0.0.1:9030/image.png",
+          "src": "http://127.0.0.1:8711/image.png",
           "startFrame": 0,
           "totalFrames": 90
         }
       },
       {
         "type": "post_body_scroll",
-        "from": 150,
+        "from": 213,
         "frames": 189,
         "payload": {
+          "title": "함께 웃는 아지트",
+          "category": "유머",
+          "nickname": "꿀잼픽",
+          "views": 0,
+          "feed": [],
+          "targetId": "",
           "text": "오늘도 웃음 하나 나누고 가세요. \n사진과 움직이는 짤, 소리 있는 영\n상이 차례대로 나옵니다.",
           "startFrame": 0,
           "totalFrames": 189
@@ -36,12 +64,19 @@
       },
       {
         "type": "image_hold",
-        "from": 339,
+        "from": 402,
         "frames": 180,
         "payload": {
-          "src": "http://127.0.0.1:9030/image.png",
           "title": "함께 웃는 아지트",
+          "category": "유머",
+          "nickname": "꿀잼픽",
+          "views": 0,
+          "feed": [],
+          "targetId": "",
+          "src": "http://127.0.0.1:8711/image.png",
           "mediaIndex": 1,
+          "imageWidth": 640,
+          "imageHeight": 480,
           "hasAudio": false,
           "originalVolume": 1,
           "startFrame": 0,
@@ -50,12 +85,19 @@
       },
       {
         "type": "gif_play",
-        "from": 519,
+        "from": 582,
         "frames": 180,
         "payload": {
-          "src": "http://127.0.0.1:9030/gif.gif",
           "title": "함께 웃는 아지트",
+          "category": "유머",
+          "nickname": "꿀잼픽",
+          "views": 0,
+          "feed": [],
+          "targetId": "",
+          "src": "http://127.0.0.1:8711/gif.gif",
           "mediaIndex": 2,
+          "imageWidth": 320,
+          "imageHeight": 240,
           "hasAudio": false,
           "originalVolume": 1,
           "startFrame": 0,
@@ -64,12 +106,19 @@
       },
       {
         "type": "video_play",
-        "from": 699,
+        "from": 762,
         "frames": 60,
         "payload": {
-          "src": "http://127.0.0.1:9030/video.mp4",
           "title": "함께 웃는 아지트",
+          "category": "유머",
+          "nickname": "꿀잼픽",
+          "views": 0,
+          "feed": [],
+          "targetId": "",
+          "src": "http://127.0.0.1:8711/video.mp4",
           "mediaIndex": 3,
+          "imageWidth": 320,
+          "imageHeight": 240,
           "hasAudio": true,
           "originalVolume": 1,
           "startFrame": 0,
@@ -78,9 +127,15 @@
       },
       {
         "type": "comments",
-        "from": 759,
+        "from": 822,
         "frames": 60,
         "payload": {
+          "title": "함께 웃는 아지트",
+          "category": "유머",
+          "nickname": "꿀잼픽",
+          "views": 0,
+          "feed": [],
+          "targetId": "",
           "text": "작은 웃음이 하루를 바꾸네요!",
           "startFrame": 0,
           "totalFrames": 60
@@ -88,48 +143,76 @@
       },
       {
         "type": "outro",
-        "from": 819,
+        "from": 882,
         "frames": 90,
         "payload": {
-          "text": "이 글의 다음 이야기는?\n스르륵에서 같이 봐요",
+          "text": "더 많은 유머는!\n스르륵에서 같이 봐요",
           "startFrame": 0,
           "totalFrames": 90
         }
       }
     ],
-    "durationFrames": 909,
-    "fullDurationFrames": 909,
+    "durationFrames": 972,
+    "fullDurationFrames": 972,
     "partCount": 1,
     "parts": [
       {
         "scenes": [
           {
-            "type": "feed_open",
+            "type": "intro",
             "from": 0,
-            "frames": 60,
+            "frames": 33,
             "payload": {
-              "text": "함께 웃는 아지트",
-              "src": "http://127.0.0.1:9030/image.png",
+              "text": "하루 1유머!\n스르륵!",
               "startFrame": 0,
-              "totalFrames": 60
+              "totalFrames": 33
+            }
+          },
+          {
+            "type": "feed_open",
+            "from": 33,
+            "frames": 90,
+            "payload": {
+              "title": "함께 웃는 아지트",
+              "category": "유머",
+              "nickname": "꿀잼픽",
+              "views": 0,
+              "feed": [],
+              "targetId": "",
+              "text": "함께 웃는 아지트",
+              "src": "http://127.0.0.1:8711/image.png",
+              "startFrame": 0,
+              "totalFrames": 90
             }
           },
           {
             "type": "post_title",
-            "from": 60,
+            "from": 123,
             "frames": 90,
             "payload": {
+              "title": "함께 웃는 아지트",
+              "category": "유머",
+              "nickname": "꿀잼픽",
+              "views": 0,
+              "feed": [],
+              "targetId": "",
               "text": "함께 웃는 아지트",
-              "src": "http://127.0.0.1:9030/image.png",
+              "src": "http://127.0.0.1:8711/image.png",
               "startFrame": 0,
               "totalFrames": 90
             }
           },
           {
             "type": "post_body_scroll",
-            "from": 150,
+            "from": 213,
             "frames": 189,
             "payload": {
+              "title": "함께 웃는 아지트",
+              "category": "유머",
+              "nickname": "꿀잼픽",
+              "views": 0,
+              "feed": [],
+              "targetId": "",
               "text": "오늘도 웃음 하나 나누고 가세요. \n사진과 움직이는 짤, 소리 있는 영\n상이 차례대로 나옵니다.",
               "startFrame": 0,
               "totalFrames": 189
@@ -137,12 +220,19 @@
           },
           {
             "type": "image_hold",
-            "from": 339,
+            "from": 402,
             "frames": 180,
             "payload": {
-              "src": "http://127.0.0.1:9030/image.png",
               "title": "함께 웃는 아지트",
+              "category": "유머",
+              "nickname": "꿀잼픽",
+              "views": 0,
+              "feed": [],
+              "targetId": "",
+              "src": "http://127.0.0.1:8711/image.png",
               "mediaIndex": 1,
+              "imageWidth": 640,
+              "imageHeight": 480,
               "hasAudio": false,
               "originalVolume": 1,
               "startFrame": 0,
@@ -151,12 +241,19 @@
           },
           {
             "type": "gif_play",
-            "from": 519,
+            "from": 582,
             "frames": 180,
             "payload": {
-              "src": "http://127.0.0.1:9030/gif.gif",
               "title": "함께 웃는 아지트",
+              "category": "유머",
+              "nickname": "꿀잼픽",
+              "views": 0,
+              "feed": [],
+              "targetId": "",
+              "src": "http://127.0.0.1:8711/gif.gif",
               "mediaIndex": 2,
+              "imageWidth": 320,
+              "imageHeight": 240,
               "hasAudio": false,
               "originalVolume": 1,
               "startFrame": 0,
@@ -165,12 +262,19 @@
           },
           {
             "type": "video_play",
-            "from": 699,
+            "from": 762,
             "frames": 60,
             "payload": {
-              "src": "http://127.0.0.1:9030/video.mp4",
               "title": "함께 웃는 아지트",
+              "category": "유머",
+              "nickname": "꿀잼픽",
+              "views": 0,
+              "feed": [],
+              "targetId": "",
+              "src": "http://127.0.0.1:8711/video.mp4",
               "mediaIndex": 3,
+              "imageWidth": 320,
+              "imageHeight": 240,
               "hasAudio": true,
               "originalVolume": 1,
               "startFrame": 0,
@@ -179,9 +283,15 @@
           },
           {
             "type": "comments",
-            "from": 759,
+            "from": 822,
             "frames": 60,
             "payload": {
+              "title": "함께 웃는 아지트",
+              "category": "유머",
+              "nickname": "꿀잼픽",
+              "views": 0,
+              "feed": [],
+              "targetId": "",
               "text": "작은 웃음이 하루를 바꾸네요!",
               "startFrame": 0,
               "totalFrames": 60
@@ -189,16 +299,16 @@
           },
           {
             "type": "outro",
-            "from": 819,
+            "from": 882,
             "frames": 90,
             "payload": {
-              "text": "이 글의 다음 이야기는?\n스르륵에서 같이 봐요",
+              "text": "더 많은 유머는!\n스르륵에서 같이 봐요",
               "startFrame": 0,
               "totalFrames": 90
             }
           }
         ],
-        "durationFrames": 909
+        "durationFrames": 972
       }
     ],
     "settings": {
@@ -216,14 +326,30 @@
       "audioPolicy": "duck",
       "effects": "low",
       "intro": true,
+      "introStyle": "classic",
       "outro": true,
       "watermark": true,
       "cta": true,
       "backgroundId": "",
       "bgmId": "bgm",
+      "issueBgmId": "",
       "logoId": "",
       "sfxId": "",
       "defaultPrivacy": "private",
+      "bgmRandom": true,
+      "captionTone": "humor",
+      "laughCaptions": "normal",
+      "laughIntervalSeconds": 7,
+      "autoUpload": false,
+      "autoUploadPrivacy": "public",
+      "titlePrefix": "[스르륵 유머] ",
+      "titleMaxLength": 40,
+      "tags": [
+        "shorts",
+        "쇼츠",
+        "유머",
+        "스르륵"
+      ],
       "speed": 1,
       "maxRetries": 2
     },
@@ -235,7 +361,7 @@
     "requiresSplit": false,
     "audioMode": "duck",
     "lastScene": "outro",
-    "bgm": "http://127.0.0.1:9030/bgm.wav"
+    "bgm": "http://127.0.0.1:8711/bgm.wav"
   },
   "qc": {
     "passed": true,
@@ -243,8 +369,8 @@
     "warnings": [],
     "blackSegments": [],
     "sceneComplete": true,
-    "size": 2214706,
-    "duration": 30.357333,
+    "size": 2355543,
+    "duration": 32.448,
     "width": 1080,
     "height": 1920,
     "fps": 30,
@@ -254,7 +380,7 @@
   "width": 1080,
   "height": 1920,
   "fps": 30,
-  "durationMs": 30357,
-  "size": 2214706,
+  "durationMs": 32448,
+  "size": 2355543,
   "audioMode": "duck"
 }

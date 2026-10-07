@@ -48,3 +48,10 @@ test('auto combine is limited to text-only non-economy posts',()=>{
  assert.equal(mayAutoCombine([{type:'image',id:'i'}],'유머'),false);
  assert.equal(mayAutoCombine([{type:'text',text:'짧은 글'}],'경제'),false);
 });
+
+test('tall images scroll at readable width and outro never pads the target duration',()=>{
+ const settings={maxPosts:1,intro:true,outro:true,cta:true,includeComments:false,speed:1,targetDuration:40,minDuration:25,maxDuration:60};
+ const plan=buildPlan([{title:'긴 이미지',blocks:[{type:'image',id:'long'}],media:[{id:'long',type:'image/jpeg',src:'long.jpg',width:600,height:16000}],comments:[]}],settings);
+ const scroll=plan.scenes.find(s=>s.type==='image_scroll');assert(scroll);assert.equal(scroll.payload.imageHeight,16000);assert(scroll.frames>=240);assert.equal(plan.scenes.at(-1).frames,90);
+ assert.equal(plan.scenes.reduce((sum,s)=>sum+s.frames,0),plan.durationFrames);
+});

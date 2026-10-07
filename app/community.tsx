@@ -92,11 +92,11 @@ function PopularSidebar({
     [error, setError] = useState(false),
     [retry, setRetry] = useState(0);
   const site = kind === "site",
-    title = site ? "스르륵 인기글" : "오늘의 유머",
-    href = site ? "/?scope=site&sort=popular" : "/?board=유머&sort=latest",
+    title = site ? "스르륵 인기글" : "오늘의 유머 인기글",
+    href = site ? "/?scope=site&sort=popular" : "/?board=유머&sort=popular",
     query = site
       ? "/api/posts?scope=site&sort=popular&preview=sidebar"
-      : "/api/posts?board=유머&sort=latest&preview=sidebar";
+      : "/api/posts?board=유머&sort=popular&preview=sidebar";
   useEffect(() => {
     let live = true;
     setLoading(true);
@@ -256,12 +256,12 @@ export function Shell({
                 </span>
                 <a className="account-action" href="/account">마이페이지</a>
                 {me.isAdmin && <a className="account-action admin" href="/admin">관리자</a>}
-                <a className="account-action logout" href="/signout-with-chatgpt?return_to=/" target="_top">
+                <form action="/auth/logout" method="post"><button className="account-action logout" type="submit">
                   로그아웃
-                </a>
+                </button></form>
               </>
             ) : (
-              <a className="account-login" href="/signin-with-chatgpt?return_to=/" target="_top">
+              <a className="account-login" href="/auth/google?return_to=/" target="_top">
                 <UserCircle aria-hidden="true" /> 로그인
               </a>
             )}

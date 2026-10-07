@@ -1,0 +1,13 @@
+import {readFile,mkdir,copyFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {renderJob} from '../worker/render.mjs';
+import {shortsSchema} from '../lib/automation/config.ts';
+const backup=path.resolve('../migration-data/full');
+const objects=JSON.parse(await readFile(path.join(backup,'objects.json'),'utf8'));
+const id='74718073-fd31-4786-9c7c-6b0d23db79d2',bgm='32856dfa-3bc6-4111-b674-eb6d8b9f31fd';
+const directory=path.resolve('test-results/long-image-fixed');await mkdir(directory,{recursive:true});
+const payload={posts:[{id:'preview',title:'영주권을 얻게된 불법체류자',category:'유머',blocks:[{type:'image',id}],media:[{id,type:'image/jpeg'}],comments:[]}],assets:[{id:bgm,type:'bgm',storage_key:'assets/'+bgm,mime_type:'audio/mpeg',license_note:'Existing registered user BGM'}],settings:shortsSchema.parse({bgmId:bgm,bgmEnabled:true,bgmRandom:false,autoUpload:false,includeComments:false,maxPosts:1}),brand:{name:'스르륵',url:'https://ssrrr.net'}};
+const result=await renderJob(payload,{directory,download:async(key,dest)=>{const obj=objects.find(x=>x.key===key);assert(obj,'missing backup media');await copyFile(path.join(backup,'media',obj.localFile),dest)},stage:async(stage,progress,plan)=>{console.log(stage,progress);if(plan)await writeFile(path.join(directory,'plan.json'),JSON.stringify(plan,null,2));}});
+assert(result.qc.passed);assert(result.qc.hasAudio);assert(result.plan.scenes.some(s=>s.type==='image_scroll'));assert.equal(result.plan.scenes.at(-1).frames,90);
+await writeFile(path.join(directory,'result.json'),JSON.stringify(result,null,2));console.log('PASS',result.file,result.qc);

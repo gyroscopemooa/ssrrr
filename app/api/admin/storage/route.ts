@@ -12,12 +12,21 @@ type Candidate = {
   reason: string;
   kind: "media" | "shorts";
 };
+type StoredShort = {
+  jobId: string;
+  key: string;
+  size: number;
+  createdAt: number;
+  uploaded: boolean;
+  status: string;
+};
 type Inventory = {
   capturedAt: number;
   totalBytes: number;
   objectCount: number;
   categories: Record<string, { bytes: number; count: number }>;
   cleanup: { bytes: number; count: number; items: Candidate[] };
+  shorts: StoredShort[];
   previous: StoredSnapshot | null;
 };
 const DAY = 86_400_000,
@@ -55,12 +64,14 @@ async function references() {
     ),
     rows<{ storage_key: string }>("SELECT storage_key FROM shorts_assets"),
     rows<{
+      job_id: string;
       storage_key: string;
+      file_size: number;
       created_at: number;
       external_id: string | null;
       status: string | null;
     }>(
-      "SELECT o.storage_key,o.created_at,p.external_id,p.status FROM shorts_outputs o LEFT JOIN shorts_publications p ON p.job_id=o.job_id",
+      "SELECT o.job_id,o.storage_key,o.file_size,o.created_at,p.external_id,p.status FROM shorts_outputs o LEFT JOIN shorts_publications p ON p.job_id=o.job_id",
     ),
   ]);
   const now = Date.now(),
@@ -95,7 +106,7 @@ async function references() {
       successfulShorts.add(out.storage_key);
     else protectedKeys.add(out.storage_key);
   }
-  return { protectedKeys, hiddenExpired, mediaCreated, mediaTypes, successfulShorts };
+  return { protectedKeys, hiddenExpired, mediaCreated, mediaTypes, successfulShorts, outputs };
 }
 
 async function inventory(): Promise<Inventory> {
@@ -110,12 +121,14 @@ async function inventory(): Promise<Inventory> {
       other: { bytes: 0, count: 0 },
     },
     items: Candidate[] = [];
+  const storedKeys = new Set<string>();
   let cursor: string | undefined,
     totalBytes = 0,
     objectCount = 0;
   do {
     const page = await bucket().list({ cursor, limit: 1000 });
     for (const object of page.objects) {
+      storedKeys.add(object.key);
       totalBytes += object.size;
       objectCount++;
       const mime = ref.mediaTypes.get(object.key) || "",
@@ -182,6 +195,21 @@ async function inventory(): Promise<Inventory> {
       count: items.length,
       items: items.slice(0, 500),
     },
+    shorts: ref.outputs
+      .filter((output) => storedKeys.has(output.storage_key))
+      .map((output) => ({
+        jobId: output.job_id,
+        key: output.storage_key,
+        size: output.file_size,
+        createdAt: output.created_at,
+        uploaded:
+          !!output.external_id &&
+          ["private", "unlisted", "scheduled", "published"].includes(
+            output.status || "",
+          ),
+        status: output.status || "미업로드",
+      }))
+      .sort((a, b) => b.createdAt - a.createdAt),
     previous,
   };
 }
@@ -213,6 +241,74 @@ export const POST = wrap(async (req) => {
     const result = await inventory();
     await save(result);
     return Response.json(result, { headers: { "Cache-Control": "no-store" } });
+  }
+  if (body.action === "deleteShort") {
+    const jobId = typeof body.jobId === "string" ? body.jobId : "";
+    if (!/^[a-f0-9-]{36}$/.test(jobId))
+      throw new HttpError(400, "쇼츠 작업 번호가 올바르지 않습니다.");
+    const output = await db()
+      .prepare(
+        "SELECT o.storage_key,o.file_size,p.id publication_id,p.external_id,p.status publication_status FROM shorts_outputs o LEFT JOIN shorts_publications p ON p.job_id=o.job_id WHERE o.job_id=?",
+      )
+      .bind(jobId)
+      .first<{
+        storage_key: string;
+        file_size: number;
+        publication_id: string | null;
+        external_id: string | null;
+        publication_status: string | null;
+      }>();
+    if (!output) throw new HttpError(404, "완성된 쇼츠 원본이 없습니다.");
+    if (!/^shorts\/[a-f0-9-]+\.mp4$/.test(output.storage_key))
+      throw new HttpError(409, "쇼츠 원본 경로를 확인할 수 없습니다.");
+    if (
+      output.publication_id &&
+      (await db()
+        .prepare(
+          "SELECT id FROM worker_tasks WHERE kind='upload' AND ref_id=? AND status IN ('queued','running')",
+        )
+        .bind(output.publication_id)
+        .first())
+    )
+      throw new HttpError(409, "YouTube 업로드가 진행 중입니다. 완료 후 삭제해 주세요.");
+    const uploaded =
+        !!output.external_id &&
+        ["private", "unlisted", "scheduled", "published"].includes(
+          output.publication_status || "",
+        ),
+      confirmation = uploaded ? "쇼츠 원본 삭제" : "미업로드 쇼츠 원본 삭제";
+    if (body.confirm !== confirmation)
+      throw new HttpError(
+        400,
+        uploaded
+          ? "쇼츠 원본 삭제 확인이 필요합니다."
+          : "YouTube에 업로드되지 않은 원본 삭제 확인이 필요합니다.",
+      );
+    await bucket().delete(output.storage_key);
+    const changed = await db().batch([
+      db()
+        .prepare("DELETE FROM shorts_outputs WHERE job_id=? AND storage_key=?")
+        .bind(jobId, output.storage_key),
+      db()
+        .prepare("DELETE FROM shorts_assets WHERE storage_key=? AND type='output'")
+        .bind(output.storage_key),
+      db()
+        .prepare("INSERT INTO audit(id,actor,action,created_at) VALUES(?,?,?,?)")
+        .bind(
+          crypto.randomUUID(),
+          user.userId,
+          `쇼츠 사이트 원본 삭제: ${jobId} / ${output.file_size} bytes`,
+          Date.now(),
+        ),
+    ]);
+    if (!changed[0].meta.changes)
+      throw new HttpError(409, "다른 요청에서 이미 삭제했습니다.");
+    const after = await inventory();
+    await save(after);
+    return Response.json({
+      ...after,
+      deleted: { count: 1, bytes: output.file_size },
+    });
   }
   if (body.action === "cleanup") {
     if (body.confirm !== "안전 청소")

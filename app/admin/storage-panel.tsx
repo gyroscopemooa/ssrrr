@@ -3,6 +3,14 @@ import { useState } from "react";
 import { api } from "../community";
 import { Database, RefreshCw, ShieldCheck, Trash2 } from "lucide-react";
 type Snapshot = { capturedAt: number; totalBytes: number; objectCount: number };
+type StoredShort = {
+  jobId: string;
+  key: string;
+  size: number;
+  createdAt: number;
+  uploaded: boolean;
+  status: string;
+};
 type Inventory = Snapshot & {
   categories: Record<string, { bytes: number; count: number }>;
   cleanup: {
@@ -10,6 +18,7 @@ type Inventory = Snapshot & {
     count: number;
     items: { key: string; size: number; reason: string }[];
   };
+  shorts: StoredShort[];
   previous: Snapshot | null;
   deleted?: { count: number; bytes: number };
 };
@@ -66,6 +75,35 @@ export default function StoragePanel({
           ? `${next.deleted?.count || 0}개 파일을 안전하게 정리했습니다.`
           : "저장공간을 새로 계산했습니다.",
       );
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function deleteShort(item: StoredShort) {
+    const warning = item.uploaded
+      ? "사이트에 저장된 MP4 원본을 삭제합니다. YouTube 영상과 제작·업로드·성과 기록은 유지됩니다. 계속할까요?"
+      : "아직 YouTube 업로드가 확인되지 않았습니다. 삭제하면 이 파일로 업로드하거나 다운로드할 수 없습니다. 그래도 삭제할까요?";
+    if (!window.confirm(warning)) return;
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const next = await api<Inventory>("/api/admin/storage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "deleteShort",
+          jobId: item.jobId,
+          confirm: item.uploaded
+            ? "쇼츠 원본 삭제"
+            : "미업로드 쇼츠 원본 삭제",
+        }),
+      });
+      setData(next);
+      setSnapshot(next);
+      setMessage(`쇼츠 원본 ${size(item.size)}를 삭제했습니다.`);
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -134,6 +172,39 @@ export default function StoragePanel({
                   <small>{value.count.toLocaleString()}개</small>
                 </div>
               ))}
+            </div>
+          )}
+          {data && data.shorts.length > 0 && (
+            <div className="cleanup-box">
+              <div>
+                <h3>쇼츠 원본 관리</h3>
+                <p>
+                  사이트에 보관 중인 MP4만 삭제합니다. YouTube 영상과 제작·업로드·성과
+                  기록은 유지됩니다.
+                </p>
+              </div>
+              <details>
+                <summary>보관 중인 쇼츠 {data.shorts.length}개 보기</summary>
+                <div className="cleanup-list">
+                  {data.shorts.map((item) => (
+                    <div key={item.jobId}>
+                      <span>
+                        {item.uploaded ? "YouTube 전송 완료" : "미업로드"} · {item.status} ·{" "}
+                        {new Date(item.createdAt).toLocaleString("ko-KR")}
+                      </span>
+                      <code>{item.key}</code>
+                      <b>{size(item.size)}</b>
+                      <button
+                        className="danger-button"
+                        disabled={busy}
+                        onClick={() => deleteShort(item)}
+                      >
+                        사이트 원본 삭제
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </details>
             </div>
           )}
         </>
