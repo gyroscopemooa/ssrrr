@@ -3,6 +3,7 @@ import { sourceSchema } from "@/lib/automation/config";
 import { moderationBoards, boardLabel } from "@/lib/board-label";
 import { FIELD_NAMES, MODE_LABELS } from "@/lib/automation/modes.mjs";
 import { sourceEditorFields } from "@/lib/automation/source-editor.mjs";
+import { isYouTubeReauthRequired } from "@/lib/automation/youtube-errors.mjs";
 import { SourceNote } from "./source-note";
 import { sourceCatalog } from "@/lib/automation/catalog";
 import { BulkControls } from "./bulk-controls";
@@ -20,6 +21,10 @@ import "./ops.css";
 import { FieldHelp } from "./field-help";
 import { AddSource, SourceVerification } from "./source-controls";
 type Row = Record<string, unknown>;
+type UploadFeedback = {
+  phase: "requesting" | "accepted" | "error";
+  message: string;
+};
 type Data = { config: Row; revision: number; [key: string]: unknown };
 const labels: Record<string, string> = {
   paused: "자동 게시 긴급정지",
@@ -222,7 +227,7 @@ function Fields({
                               {
                                 classic: "기본 인트로",
                                 impact: "임팩트 3컷",
-                                motion: "냥이 모션 1.1초",
+                                motion: "냥이 모션 1.73초",
                               } as Record<string, string>
                             )[x]
                           : k === "captionTone"
@@ -342,6 +347,14 @@ export default function Operations() {
     [publishBoards, setPublishBoards] = useState<Record<string, string>>({}),
     [shortActionId, setShortActionId] = useState("");
   const [sourceSelection, setSourceSelection] = useState<string[]>([]);
+  const [uploadFeedback, setUploadFeedback] = useState<Record<string, UploadFeedback>>({});
+  const uploadRequest = useRef(false);
+  const uploadEditor = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (!upload?.id) return;
+    uploadEditor.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    uploadEditor.current?.querySelector("input")?.focus({ preventScroll: true });
+  }, [upload?.id]);
   const sourceReturn = useRef<string | null>(null);
   function closeSource() {
     sourceReturn.current = source?.id ? String(source.id) : null;
@@ -443,6 +456,55 @@ export default function Operations() {
       setMessage((e as Error).message);
       return false;
     } finally {
+      setBusy(false);
+    }
+  }
+  async function requestUpload() {
+    if (!upload || busy || uploadRequest.current) return;
+    const id = str(upload, "id");
+    const scheduledAt = upload.privacy === "scheduled"
+      ? new Date(str(upload, "scheduledAt")).getTime()
+      : null;
+    if (upload.privacy === "scheduled" && (!scheduledAt || scheduledAt < Date.now() + 600000)) {
+      setUploadFeedback((current) => ({ ...current, [id]: {
+        phase: "error", message: "예약 시간은 지금부터 10분 이후로 설정해 주세요.",
+      } }));
+      return;
+    }
+    uploadRequest.current = true;
+    setBusy(true);
+    setUploadFeedback((current) => ({ ...current, [id]: {
+      phase: "requesting", message: "YouTube 업로드 요청을 접수하고 있습니다…",
+    } }));
+    try {
+      const result = await api<{ id: string }>("/api/ops", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "upload", ...upload, scheduledAt }),
+        signal: AbortSignal.timeout(30000),
+      });
+      setData((current) => {
+        if (!current) return current;
+        const publications = (current.publications || []) as Row[];
+        const existing = publications.find((p) => p.job_id === id);
+        const queued = { ...existing, id: result.id, job_id: id, status: "upload_queued", upload_task_status: "queued", upload_task_updated_at: Date.now(), error: "" };
+        return { ...current, publications: [queued, ...publications.filter((p) => p.job_id !== id)] };
+      });
+      setUploadFeedback((current) => ({ ...current, [id]: {
+        phase: "accepted", message: "업로드 요청이 접수되었습니다. 작업자 대기·진행 상태를 이 카드에서 확인할 수 있습니다.",
+      } }));
+      setUpload(null);
+      await refresh();
+    } catch (e) {
+      const error = e as Error;
+      setUploadFeedback((current) => ({ ...current, [id]: {
+        phase: "error",
+        message: error.name === "TimeoutError"
+          ? "요청 결과를 확인하지 못했습니다. 새로고침으로 업로드 상태를 확인한 뒤 다시 시도해 주세요."
+          : "업로드 요청 실패: " + error.message,
+      } }));
+    } finally {
+      uploadRequest.current = false;
       setBusy(false);
     }
   }
@@ -662,13 +724,25 @@ export default function Operations() {
         label: status === "queued" ? "제작 대기" : "제작 중",
         tone: "running",
       };
-    if (publication)
+    if (publication && isYouTubeReauthRequired(publication.error))
+      return { label: "이전 업로드 실패 · 인증 오류", tone: "failed" };
+    if (publication?.status === "failed")
+      return { label: "업로드 실패", tone: "failed" };
+    if (publication) {
+      const status = str(publication, "status");
+      const completed = ["published", "scheduled", "private", "unlisted"].includes(status);
+      if (!completed && ["failed", "cancelled"].includes(str(publication, "upload_task_status")))
+        return { label: "업로드 작업 중단 · 상태 확인 필요", tone: "failed" };
+      const activeLabel = publication.upload_task_status === "running"
+        ? "YouTube 업로드 처리 중 · 파일 준비·전송"
+        : publication.upload_task_status === "queued"
+          ? "업로드 접수 완료 · 작업자 대기"
+          : "업로드 접수 완료 · 결과 대기";
       return {
-        label: ["published", "scheduled"].includes(str(publication, "status"))
-          ? "업로드 완료·예약 확정"
-          : "업로드 처리 중",
-        tone: "done",
+        label: ({ upload_queued: activeLabel, uploading: "YouTube 업로드 중", published: "업로드 완료 · 전체 공개", scheduled: "업로드 완료 · 예약 확정", private: "업로드 완료 · 비공개", unlisted: "업로드 완료 · 일부 공개" } as Record<string, string>)[status] || "업로드 상태 확인 중",
+        tone: completed ? "done" : "running",
       };
+    }
     if (status === "ready")
       return {
         label: r.approved_at ? "검수 승인 확정" : "제작 완료 · 검수 대기",
@@ -1430,6 +1504,8 @@ export default function Operations() {
                 const state = shortState(r, publication);
                 const summary = shortSummary(r);
                 const isActing = shortActionId === r.id;
+                const feedback = uploadFeedback[str(r, "id")];
+                const isUploading = feedback?.phase === "requesting";
                 const cancellable =
                   !publication &&
                   [
@@ -1453,9 +1529,9 @@ export default function Operations() {
                   >
                     <div className="ops-short-heading">
                       <span className={"ops-short-status " + state.tone}>
-                        {isActing ? "요청 처리 중…" : state.label}
+                        {isUploading ? "업로드 요청 접수 중…" : isActing ? "요청 처리 중…" : state.label}
                       </span>
-                      <strong>{str(r, "progress")}%</strong>
+                      <strong>영상 제작 {str(r, "progress")}%</strong>
                     </div>
                     <div className="ops-short-session">
                       <b>
@@ -1511,6 +1587,12 @@ export default function Operations() {
                         </a>
                       </>
                     )}
+                    {feedback && (feedback.phase !== "accepted" || publication?.status === "upload_queued") && (
+                      <p className={feedback.phase === "error" ? "ops-short-error" : "ops-message"}
+                        role={feedback.phase === "error" ? "alert" : "status"} aria-live="polite">
+                        {feedback.message}
+                      </p>
+                    )}
                     <div className="ops-actions">
                       {r.status === "ready" &&
                         !!!r.approved_at &&
@@ -1519,23 +1601,29 @@ export default function Operations() {
                         (!publication || publication.status === "failed") && (
                           <button
                             className="primary"
-                            onClick={() =>
+                            disabled={busy || upload?.id === r.id}
+                            aria-expanded={upload?.id === r.id}
+                            aria-controls={"youtube-upload-" + str(r, "id")}
+                            onClick={() => {
+                              const metadata = publication ? parsed(publication.metadata) as Row : {};
+                              const scheduled = Number(publication?.scheduled_at);
                               setUpload({
                                 id: r.id,
-                                title: data.config.siteName + " 오늘의 웃음",
-                                description: "",
+                                title: str(metadata, "title") || summary.posts.map((post) => str(post, "title")).join(" / ").slice(0, 100) || data.config.siteName + " 오늘의 웃음",
+                                description: str(metadata, "description"),
+                                ...(Array.isArray(metadata.tags) ? { tags: metadata.tags } : {}),
                                 privacy:
-                                  (data.config.shorts as Row).defaultPrivacy ===
+                                  publication?.privacy || ((data.config.shorts as Row).defaultPrivacy ===
                                   "file"
                                     ? "private"
                                     : (data.config.shorts as Row)
-                                        .defaultPrivacy,
-                                scheduledAt: "",
+                                        .defaultPrivacy),
+                                scheduledAt: scheduled ? new Date(scheduled - new Date(scheduled).getTimezoneOffset() * 60000).toISOString().slice(0, 16) : "",
                                 confirmPublic: false,
-                              })
-                            }
+                              });
+                            }}
                           >
-                            YouTube 업로드
+                            {upload?.id === r.id ? "아래에서 업로드 설정 중" : "YouTube 업로드"}
                           </button>
                         )}
                       {retryable && (
@@ -1565,11 +1653,20 @@ export default function Operations() {
                           현황에서 정리
                         </button>
                       )}
-                      {publication && (
+                      {publication && !isUploading && (
                         <>
                           <span>
-                            {str(publication, "status")}{" "}
-                            {str(publication, "error")}
+                            {isYouTubeReauthRequired(publication.error) ? (
+                              <>
+                                <strong>마지막 업로드 당시 인증 오류</strong>{" "}
+                                마지막 업로드 당시 인증이 만료되었거나 취소되었습니다. 채널을 이미 재연결했다면 YouTube 업로드를 다시 요청하세요. 아직 연결하지 않았다면 업로드 채널을 다시 인증해 주세요. (invalid_grant)
+                              </>
+                            ) : (
+                              <>
+                                {state.label}{" "}
+                                {str(publication, "error")}
+                              </>
+                            )}
                           </span>
                           {publication.status === "failed" &&
                             !!publication.upload_session && (
@@ -1609,92 +1706,56 @@ export default function Operations() {
                         </>
                       )}
                     </div>
+                    {upload && upload.id === r.id && (
+                      <form id={"youtube-upload-" + str(r, "id")} className="ops-editor"
+                        ref={uploadEditor} aria-label="YouTube 업로드 설정" aria-busy={isUploading}
+                        onSubmit={(event) => { event.preventDefault(); void requestUpload(); }}>
+                        <h3>YouTube 업로드 설정</h3>
+                        <p>아래 내용을 확인하고 ‘업로드 요청’을 누르면 접수됩니다. 영상은 다시 제작하지 않습니다.</p>
+                        <label>
+                          제목
+                          <input required maxLength={100} value={str(upload, "title")} disabled={isUploading}
+                            onChange={(e) => setUpload({ ...upload, title: e.target.value })} />
+                        </label>
+                        <label>
+                          설명
+                          <textarea maxLength={5000} value={str(upload, "description")} disabled={isUploading}
+                            onChange={(e) => setUpload({ ...upload, description: e.target.value })} />
+                        </label>
+                        <label>
+                          공개 설정
+                          <select value={str(upload, "privacy")} disabled={isUploading}
+                            onChange={(e) => setUpload({ ...upload, privacy: e.target.value, confirmPublic: false })}>
+                            <option value="private">비공개</option>
+                            <option value="unlisted">일부 공개</option>
+                            <option value="scheduled">예약 공개</option>
+                            <option value="public">전체 공개</option>
+                          </select>
+                        </label>
+                        {upload.privacy === "scheduled" && (
+                          <label>
+                            예약 시간 (현재 기기 시간 기준)
+                            <input required type="datetime-local" value={str(upload, "scheduledAt")} disabled={isUploading}
+                              onChange={(e) => setUpload({ ...upload, scheduledAt: e.target.value })} />
+                          </label>
+                        )}
+                        {upload.privacy === "public" && (
+                          <label>
+                            <input required type="checkbox" checked={!!upload.confirmPublic} disabled={isUploading}
+                              onChange={(e) => setUpload({ ...upload, confirmPublic: e.target.checked })} />
+                            지금 전체 공개
+                          </label>
+                        )}
+                        <button type="submit" className="primary" disabled={busy}>
+                          {isUploading ? "업로드 요청 접수 중…" : "업로드 요청"}
+                        </button>
+                        <button type="button" disabled={isUploading} onClick={() => setUpload(null)}>닫기</button>
+                      </form>
+                    )}
                   </article>
                 );
               })}
               {pager(shortOffset, 5, !!data.shortsHasNext, setShortOffset)}
-              {upload && (
-                <div className="ops-editor">
-                  <h2>YouTube 발행</h2>
-                  <label>
-                    제목
-                    <input
-                      value={str(upload, "title")}
-                      onChange={(e) =>
-                        setUpload({ ...upload, title: e.target.value })
-                      }
-                    />
-                  </label>
-                  <label>
-                    설명
-                    <textarea
-                      value={str(upload, "description")}
-                      onChange={(e) =>
-                        setUpload({ ...upload, description: e.target.value })
-                      }
-                    />
-                  </label>
-                  <label>
-                    공개 설정
-                    <select
-                      value={str(upload, "privacy")}
-                      onChange={(e) =>
-                        setUpload({ ...upload, privacy: e.target.value })
-                      }
-                    >
-                      {["private", "unlisted", "scheduled", "public"].map(
-                        (v) => (
-                          <option key={v}>{v}</option>
-                        ),
-                      )}
-                    </select>
-                  </label>
-                  {upload.privacy === "scheduled" && (
-                    <input
-                      aria-label="예약 시간"
-                      type="datetime-local"
-                      value={str(upload, "scheduledAt")}
-                      onChange={(e) =>
-                        setUpload({ ...upload, scheduledAt: e.target.value })
-                      }
-                    />
-                  )}
-                  {upload.privacy === "public" && (
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={!!upload.confirmPublic}
-                        onChange={(e) =>
-                          setUpload({
-                            ...upload,
-                            confirmPublic: e.target.checked,
-                          })
-                        }
-                      />
-                      지금 전체 공개
-                    </label>
-                  )}
-                  <button
-                    className="primary"
-                    disabled={busy}
-                    onClick={async () => {
-                      if (
-                        await act("upload", {
-                          ...upload,
-                          scheduledAt:
-                            upload.privacy === "scheduled"
-                              ? new Date(str(upload, "scheduledAt")).getTime()
-                              : null,
-                        })
-                      )
-                        setUpload(null);
-                    }}
-                  >
-                    업로드 요청
-                  </button>
-                  <button onClick={() => setUpload(null)}>닫기</button>
-                </div>
-              )}
               <h2>성과</h2>
               {rows("metrics").map((r) => (
                 <p key={str(r, "id")}>

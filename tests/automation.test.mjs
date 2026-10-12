@@ -1,6 +1,8 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {selectCandidates,scheduleSlots,privacyScan,economyPrivacyScan,contentReviewScan,stripMail,normalizedTitle} from '../lib/automation/policy.ts';import {sourceSchema,shortsSchema} from '../lib/automation/config.ts';import {parseList,parseDetail} from '../worker/adapters.mjs';import {buildPlan,easeScroll} from '../worker/planner.mjs';import {mailBody,pollGmail,syncYouTube,taskMessageLink} from '../worker/google.mjs';import {fetchPublic} from '../worker/network.mjs';
 import {validateChatGptUrl} from '../worker/chatgpt.mjs';
 import {isTaskUpdatePreview,normalizeAutomationMail,normalizeStoredEconomyPost,cleanStoredEconomyPost} from '../lib/automation/mail-normalize.ts';
+import {accessToken,uploadYouTube} from '../worker/google.mjs';
+import {isYouTubeReauthRequired,YOUTUBE_REAUTH_MESSAGE} from '../lib/automation/youtube-errors.mjs';
 const now=Date.now(),candidate=(id,run,score=1)=>({id,source_id:'a',first_seen_at:now,first_seen_run_id:run,used_at:null,selected_at:null,score,status:'eligible'}),config={maxAgeDays:7,preferNew:true,fallback:true,dailyLimit:1,selection:'hybrid'};
 test('new best candidates beat old high score; fallback and used exclusion',()=>{const fresh=candidate('new','today'),old=candidate('old','yesterday',999);assert.equal(selectCandidates([old,fresh],config,'today',now)[0].id,'new');fresh.used_at=now;assert.equal(selectCandidates([old,fresh],config,'today',now)[0].id,'old');assert.equal(selectCandidates([old],{...config,fallback:false},'today',now).length,0);assert.equal(selectCandidates([old],config,'today',now,1).length,0);assert.equal(selectCandidates([{...old,first_seen_at:now-8*86400000}],config,'today',now).length,0)});
 test('KST schedule interleaves sources at three-minute intervals',()=>{const slots=scheduleSlots([{source_id:'a'},{source_id:'a'},{source_id:'b'}],'19:00',3,Date.parse('2026-09-21T09:00:00Z'));assert.deepEqual(slots.map(x=>x.item.source_id),['a','b','a']);assert.equal(slots[0].at,Date.parse('2026-09-21T10:00:00Z'));assert.equal(slots[1].at-slots[0].at,180000)});
@@ -20,3 +22,34 @@ test('Gmail allow-label payload and YouTube statistics contract with mocked APIs
 
 test('YouTube scheduled resumable upload checkpoints and resume prevent duplicate insert',async()=>{const {uploadYouTube}=await import('../worker/google.mjs');const {mkdtemp,writeFile,rm}=await import('node:fs/promises');const {tmpdir}=await import('node:os');const dir=await mkdtemp(tmpdir()+'/secretagit-youtube-test-');const file=dir+'/fixture.mp4';await writeFile(file,Buffer.alloc(1024));let stored='',insertions=0;const scheduledAt=Date.now()+86400000;const publication={metadata:JSON.stringify({title:'검증',description:'test',tags:['shorts']}),privacy:'scheduled',scheduled_at:scheduledAt,upload_session:''};const done={id:'abcdefghijk',snippet:{channelId:'test-channel'},status:{privacyStatus:'private',publishAt:new Date(scheduledAt).toISOString()}};try{const result=await uploadYouTube(publication,file,{session:async url=>{stored=url},fetcher:async(url,options)=>{if(url.includes('oauth2'))return Response.json({access_token:'fixture'});if(options.method==='POST'){insertions++;const body=JSON.parse(options.body);assert.equal(body.status.privacyStatus,'private');assert.equal(body.status.publishAt,new Date(scheduledAt).toISOString());return new Response(null,{headers:{location:'https://www.googleapis.com/upload/session-test'}})}assert.equal(stored,url);return Response.json(done)}});assert.equal(result.status,'scheduled');assert.equal(insertions,1);const resumed=await uploadYouTube({...publication,upload_session:stored},file,{fetcher:async(url,options)=>{if(url.includes('oauth2'))return Response.json({access_token:'fixture'});assert.equal(options.headers['Content-Range'],'bytes */1024');return Response.json(done)}});assert.equal(resumed.videoId,result.videoId);assert.equal(insertions,1)}finally{await rm(dir,{recursive:true,force:true})}});
 test('economy privacy blocks only clearly sensitive personal data',()=>{const ok=['삼성전자 71,500원 시총 4120000000000원 거래대금 1234567890123원 GDP 2,000,345,678 달러 1020345678주','서울특별시 중구 남대문로 39 한국은행 02-759-4114 1588-1234 press@bok.or.kr','https://www.mk.co.kr/news/1?a=1 출처 금융위원회 대통령실','token: 2.5% 상승, 계좌 수 1,000만개'];for(const text of ok)assert.deepEqual(economyPrivacyScan(text).reasons,[],text);const bad={'휴대폰 010-1234-5678':'personal_phone','+82 10-1234-5678':'personal_phone','me@gmail.com':'personal_email','주민 900101-1234567':'resident_id','계좌번호 110-123-456789':'bank_account','신한은행 110-123-456789':'bank_account','password: abc12345xyz':'secret','sk-abcdefghijklmnopqrstuvwxyz':'secret'};for(const [text,reason] of Object.entries(bad))assert.ok(economyPrivacyScan(text).reasons.includes(reason),text)});
+
+test('expired YouTube authorization pauses before any upload and gives safe recovery guidance',async()=>{
+  const names=['YOUTUBE_CLIENT_ID','YOUTUBE_CLIENT_SECRET','YOUTUBE_REFRESH_TOKEN'];
+  const previous=names.map(name=>process.env[name]);
+  names.forEach(name=>{process.env[name]='private-fixture'});
+  const requests=[];
+  try{
+    await assert.rejects(()=>uploadYouTube({},'not-read-before-auth.mp4',{fetcher:async url=>{
+      requests.push(url);
+      return Response.json({error:'invalid_grant',error_description:'private-provider-description'},{status:400});
+    }}),error=>{
+      assert.match(error.message,/^WAITING_FOR_USER: YOUTUBE_REAUTH_REQUIRED:/);
+      assert.match(error.message,/invalid_grant/);
+      assert.match(error.message,/기존 MP4/);
+      assert.equal(error.message.includes('private-provider-description'),false);
+      assert.equal(error.message.includes('private-fixture'),false);
+      assert.equal(isYouTubeReauthRequired(error.message),true);
+      return true;
+    });
+    assert.deepEqual(requests,['https://oauth2.googleapis.com/token']);
+    await assert.rejects(()=>accessToken('youtube',async()=>Response.json({error:'temporarily_unavailable'},{status:503})),/^Error: YOUTUBE_OAUTH_FAILED: temporarily_unavailable$/);
+  }finally{
+    names.forEach((name,index)=>{if(previous[index]===undefined)delete process.env[name];else process.env[name]=previous[index]});
+  }
+});
+
+test('YouTube reauthorization guidance recognizes stored legacy failures without mislabeling other errors',()=>{
+  assert.equal(isYouTubeReauthRequired('YOUTUBE_OAUTH_FAILED: invalid_grant'),true);
+  assert.equal(isYouTubeReauthRequired('WAITING_FOR_USER: YOUTUBE_REAUTH_REQUIRED: '+YOUTUBE_REAUTH_MESSAGE),true);
+  for(const error of [null,'','GMAIL_OAUTH_FAILED: invalid_grant','YOUTUBE_OAUTH_FAILED: invalid_client','YOUTUBE_NETWORK_RETRY_REQUIRED'])assert.equal(isYouTubeReauthRequired(error),false);
+});

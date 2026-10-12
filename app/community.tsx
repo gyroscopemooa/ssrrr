@@ -330,6 +330,7 @@ export function Shell({
         <span>{brand.name} &nbsp; · &nbsp; 오늘의 웃음을 모으는 곳</span>
         <nav aria-label="사이트 정보">
           <a href="/about">SSRRR 소개</a>
+          <a href="/privacy">개인정보처리방침</a>
         </nav>
       </footer>
     </>
