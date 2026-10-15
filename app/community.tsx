@@ -44,7 +44,7 @@ export type Post = {
   thumbnail?: string;
   images?: string[];
   imageCount?: number;
-  media?: { type: "image" | "video"; src: string; youtube?: boolean }[];
+  media?: { type: "image" | "video"; src: string; videoThumbnail?: boolean }[];
   mediaCount?: number;
   excerpt?: string;
   content?: string;
@@ -412,7 +412,7 @@ function FeedMedia({
   small = false,
   index,
 }: {
-  item: { type: "image" | "video"; src: string; youtube?: boolean };
+  item: { type: "image" | "video"; src: string; videoThumbnail?: boolean };
   small?: boolean;
   index: number;
 }) {
@@ -429,13 +429,13 @@ function FeedMedia({
       ) : (
         <img
           src={item.src}
-          alt={item.youtube ? "유튜브 영상 썸네일" : "첨부 사진 " + (index + 1)}
+          alt={item.videoThumbnail ? "외부 영상 썸네일" : "첨부 사진 " + (index + 1)}
           loading="lazy"
           draggable={false}
         />
       )}
       <span className="video-thumb-play" aria-hidden="true">
-        {item.type === "video" || item.youtube ? "▶" : ""}
+        {item.type === "video" || item.videoThumbnail ? "▶" : ""}
       </span>
     </span>
   );
