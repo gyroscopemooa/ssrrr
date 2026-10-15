@@ -39,7 +39,7 @@ function withActivity(row:Row|undefined,activityAt:number):Row|undefined{
 
 const labels:Record<Health,string>={online:'정상',delayed:'응답 지연',offline:'꺼짐 · 확인 필요'};
 
-export function SystemHealth({rows,now=Date.now(),activityAt=0}:{rows:Row[];now?:number;activityAt?:number}){
+export function SystemHealth({rows,now,activityAt=0}:{rows:Row[];now:number;activityAt?:number}){
  const workers=workerRows(rows);
  const collector=withActivity(newest(workers.filter(row=>capabilities(row).collect===true)),activityAt);
  const vm=collector||withActivity(newest(workers),activityAt);

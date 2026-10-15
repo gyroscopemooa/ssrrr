@@ -27,7 +27,7 @@ export default function Privacy() {
           </p>
           <p>
             개인정보 및 Google 연동 관련 문의·삭제 요청: SSRRR 운영자{" "}
-            <a href="mailto:jeonmeensoo@gmail.com">jeonmeensoo@gmail.com</a>
+            <a href="mailto:support@live-sub.com">support@live-sub.com</a>
           </p>
         </section>
 
@@ -137,7 +137,7 @@ export default function Privacy() {
             권한 해제나 로그아웃만으로 사이트에 이미 저장된 정보, 공개된 게시글 또는
             YouTube 영상이 자동 삭제되지는 않습니다. 사이트 저장 정보와 연결 토큰의
             삭제를 요청하려면{" "}
-            <a href="mailto:jeonmeensoo@gmail.com">jeonmeensoo@gmail.com</a>
+            <a href="mailto:support@live-sub.com">support@live-sub.com</a>
             으로 해당 계정 및 삭제할 정보의 범위를 알려 주세요. 비밀번호나 인증
             토큰을 메일에 포함하지 마세요. YouTube에 게시된 영상은 해당 채널의
             YouTube Studio에서도 직접 관리할 수 있습니다.

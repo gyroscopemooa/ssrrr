@@ -25,8 +25,7 @@ export async function collectSource(source,{test=false,fetcher:fetchImpl=fetchPa
  try{
  if(stages.detail){try{item=await adapter.loadDetail(entry,{...source,commentLimit:stages.comments?source.commentLimit:0,ignoreCommentErrors:true});v.details++;v.stages.detail={status:'passed',needed:true,count:v.details}}catch(e){v.stages.detail={status:'failed',needed:true,error:e.message};throw e}}
  if(item.commentError){sampleErrors.push(item.commentError);v.stages.comments={status:'failed',needed:true,error:item.commentError};if(!required.includes('comments'))warnings.push(item.commentError)}else if(stages.comments){v.comments+=item.comments.length;v.stages.comments={status:item.comments.length?'passed':'empty',needed:true,count:v.comments}}
- const auto=(source.collectionMode||'AUTO')==='AUTO';
- item.blocks=item.blocks.filter(b=>b.type==='text'||b.type==='link'||stages.media&&(b.type==='image'&&source.images&&(!auto||required.some(f=>['image','thumbnail'].includes(f)))||['video','youtube'].includes(b.type)&&source.videos&&(!auto||required.includes('video'))));
+ item.blocks=item.blocks.filter(b=>b.type==='text'||b.type==='link'||stages.media&&(b.type==='image'&&source.images||['video','youtube'].includes(b.type)&&source.videos));
  if(!stages.comments)item.comments=[];
  // Link aggregation never loads a detail page. Short summaries are capped to prevent full-content replication.
  if(v.mode==='LINK_AGGREGATION')item.blocks=item.blocks.map(b=>b.type==='text'?{...b,text:b.text.slice(0,500)}:b);

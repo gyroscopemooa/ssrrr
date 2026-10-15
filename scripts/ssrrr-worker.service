@@ -10,6 +10,8 @@ WorkingDirectory=/home/ubuntu/ssrrr-worker
 ExecStart=/usr/bin/node /home/ubuntu/ssrrr-worker/worker/index.mjs
 Restart=always
 RestartSec=10
+TimeoutStopSec=20
+KillMode=control-group
 Environment=NODE_ENV=production
 NoNewPrivileges=true
 PrivateTmp=true

@@ -73,7 +73,7 @@ const labels: Record<string, string> = {
   bgmVolume: "배경음악 볼륨",
   originalVolume: "원본 오디오 볼륨",
   intro: "인트로",
-  introStyle: "인트로 스타일",
+  introStyle: "인증 스탬프 스타일",
   outro: "아웃트로",
   watermark: "워터마크",
   cta: "마지막 안내",
@@ -225,7 +225,7 @@ function Fields({
                         : k === "introStyle"
                           ? (
                               {
-                                classic: "기본 인트로",
+                                classic: "기본 인증 스탬프",
                                 impact: "임팩트 3컷",
                                 motion: "냥이 모션 1.73초",
                               } as Record<string, string>
@@ -419,6 +419,7 @@ export default function Operations() {
         resumeAfterTest?: boolean;
         manualRun?: boolean;
         reviewRun?: boolean;
+        retestReviewRun?: boolean;
         sourceRun?: boolean;
         sourceCollectOne?: boolean;
         publishQueued?: boolean;
@@ -434,6 +435,8 @@ export default function Operations() {
           ? `선택한 글${result.addedCount ? ` + 인기글 ${result.addedCount}개` : ""}, 총 ${result.postCount}개로 제작을 시작했습니다. 검수 통과 후 설정된 공개 범위로 유튜브에 자동 업로드합니다.`
           : result.publishQueued
             ? "즉시 게시를 시작했습니다."
+            : result.retestReviewRun
+              ? `전체 사이트 ${result.queued || 0}개를 다시 검사합니다. 통과한 곳만 자동으로 켜고, 새 글을 검토함에 여러 건씩 가져옵니다.${result.skipped ? ` 실행 중인 ${result.skipped}개는 건너뛰었습니다.` : ""}`
             : result.reviewRun
               ? `전체 검토 수집을 시작했습니다. ${result.queued || 0}개 사이트에서 다음 미수집 글 1건씩 가져옵니다.${result.skipped ? ` ${result.skipped}개는 실행 중이거나 재검증이 필요해 건너뛰었습니다.` : ""}`
               : result.sourceCollectOne
@@ -778,7 +781,7 @@ export default function Operations() {
     if (
       action === "shortCancel" &&
       !window.confirm(
-        `아래 작업 1건만 취소·반려합니다.\n\n${titles || id}\n\n확정할까요?`,
+        `아래 쇼츠 작업을 중단하고 대기열에서 삭제합니다. 진행 중인 렌더링도 함께 종료됩니다.\n\n${titles || id}\n\n확정할까요?`,
       )
     )
       return;
@@ -809,6 +812,18 @@ export default function Operations() {
         <button className="secondary" onClick={() => void refresh()}>
           새로고침
         </button>
+        {data && (
+          <button
+            className="secondary"
+            disabled={busy || !!data.config.paused}
+            title="기본 사이트를 다시 등록하고 전체 재검사합니다. 통과한 사이트만 ON으로 전환한 뒤, 새 후보를 게시하지 않고 검토함에 수집합니다."
+            onClick={() => {
+              if (window.confirm("전체 사이트를 다시 검사할까요? 검사 중에는 각 사이트가 잠시 OFF가 되고, 통과한 사이트만 다시 ON되어 새 글을 검토함에 수집합니다. 게시글은 자동 게시하지 않습니다.")) void act("retestEnableCollectReview");
+            }}
+          >
+            전체 재검사·켜기·검토 수집
+          </button>
+        )}
         {data && (
           <button
             className="primary"
@@ -849,6 +864,7 @@ export default function Operations() {
       {data && (
         <SystemHealth
           rows={rows("workers")}
+          now={Number(data.serverNow || 0)}
           activityAt={Number(data.workerActivityAt || 0)}
         />
       )}
@@ -1305,15 +1321,15 @@ export default function Operations() {
               <section className="ops-row">
                 <h2>풀패키지 (자동 제작 + 유튜브 업로드)</h2>
                 <p>
-                  인트로 3종 랜덤 · 현재 1위(추천·댓글·조회 점수) 글 1개 ·
-                  배경음악 랜덤 · 경제글 제외 · 완성 후 자동 업로드(저장한 이번
+                  재미 구간 → 인증 스탬프 → 본문 · 현재 1위(추천·댓글·조회 점수) 글 1개 ·
+                  분위기별 배경음악 랜덤 · 경제글 제외 · 완성 후 자동 업로드(저장한 이번
                   영상 설정 적용)
                 </p>
                 {button("풀패키지", "fullPackage", {
                   config: { ...(shortConfig || {}), captionTone: shortTone },
                 })}
                 {button(
-                  "풀패키지 40초+ (글 2~3개 합쳐 인트로·아웃트로 포함 40초 이상)",
+                  "풀패키지 40초+ (글 2~3개 합쳐 재미 구간·인증 스탬프·본문·아웃트로 40초 이상)",
                   "fullPackage40",
                   {
                     config: { ...(shortConfig || {}), captionTone: shortTone },
@@ -1484,7 +1500,7 @@ export default function Operations() {
               <p>
                 선택 {selected.length}/2개 · 선택한 순서로 구성합니다. 인기글
                 추가는 총 3개 이내에서 영상 길이에 맞춰 채웁니다.
-                인트로·아웃트로·랜덤 BGM 포함, 검수 통과 후{" "}
+                재미 구간·인증 스탬프·본문·아웃트로와 분위기별 BGM 포함, 검수 통과 후{" "}
                 {(shortConfig?.autoUploadPrivacy ||
                   (data.config.shorts as Row).autoUploadPrivacy) === "private"
                   ? "비공개"
@@ -1641,7 +1657,7 @@ export default function Operations() {
                           disabled={busy}
                           onClick={() => void shortAction("shortCancel", r)}
                         >
-                          이 작업 취소·반려 확정
+                          이 작업 중단·삭제
                         </button>
                       )}
                       {dismissible && (

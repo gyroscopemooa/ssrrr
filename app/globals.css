@@ -1095,6 +1095,19 @@ footer {
 .youtube-frame {
   margin: 20px 0;
 }
+.tiktok-frame {
+  width: min(100%, 420px);
+  margin: 20px auto;
+}
+.tiktok-frame iframe,
+.tiktok-editor-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9/16;
+  min-height: 560px;
+  border: 0;
+  border-radius: 12px;
+}
 .youtube-frame iframe,
 .editor-embed iframe {
   width: 100%;
@@ -1102,6 +1115,16 @@ footer {
   min-height: 200px;
   border: 0;
   border-radius: 8px;
+}
+.editor-embed.tiktok-editor-embed {
+  width: min(100%, 420px);
+  margin-left: auto;
+  margin-right: auto;
+}
+.editor-embed.tiktok-editor-embed iframe {
+  aspect-ratio: 9/16;
+  min-height: 560px;
+  border-radius: 12px;
 }
 .editor video,
 .post-body video {

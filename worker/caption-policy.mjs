@@ -19,3 +19,14 @@ export function accentBursts(plan){
  }
  return bursts;
 }
+
+export function textTeaserExcerpt(value,maxChars=46){
+ const lines=String(value||'').split(/\n+/).map(line=>line.trim()).filter(Boolean);
+ if(!lines.length)return '잠깐, 이 이야기…';
+ const scored=lines.map((line,index)=>({line,index,score:(/[?!？！]{2,}|[ㅋㅎ]{2,}/.test(line)?6:0)+(line.length>=7&&line.length<=38?2:0)+index/Math.max(1,lines.length)}));
+ scored.sort((a,b)=>b.score-a.score);
+ const selected=scored[0],parts=[selected.line];
+ const previous=lines[selected.index-1];
+ if(previous&&Array.from(selected.line).length<18&&Array.from(previous+' '+selected.line).length<=maxChars)parts.unshift(previous);
+ return Array.from(parts.join('\n')).slice(0,maxChars).join('').trim();
+}
