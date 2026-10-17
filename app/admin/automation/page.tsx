@@ -1415,18 +1415,18 @@ export default function Operations() {
                     { id: r.id, excluded: !r.short_excluded },
                   )}
                   {refs.length > 0 && <details className="ops-editor">
-                    <summary>외부 영상 원본 {registered.length}/{refs.length}개 등록</summary>
+                    <summary>{registered.length === refs.length ? `실제 영상·음성 확보 완료 ${registered.length}/${refs.length}` : `링크 자동 확보 대기 ${registered.length}/${refs.length}`}</summary>
                     {refs.map((ref) => {
                       const source = registered.find((item) => item.source_key === ref.sourceKey);
                       return <div className="ops-row" key={ref.sourceKey}>
                         <p><b>{ref.provider === "youtube" ? "YouTube" : "TikTok"}</b> · <a href={ref.sourceUrl} target="_blank" rel="noreferrer">원본 링크</a></p>
-                        {source ? <><p>실제 영상·음성 확보 완료 · 원작자 {str(source, "creator")} · 권한 근거 {str(source, "rights_basis")}</p><button type="button" className="secondary" disabled={busy} onClick={() => void removeExternalVideo(str(source, "id"))}>원본 등록 삭제</button></> : <details><summary>자동 확보 불가 시 직접 원본 등록</summary><form onSubmit={(event) => void registerExternalVideo(event, str(r, "id"), ref.sourceUrl)}>
+                        {source ? <><p>실제 영상·음성 확보 완료 · 원작자 {str(source, "creator")} · 권한 근거 {str(source, "rights_basis")}</p><button type="button" className="secondary" disabled={busy} onClick={() => void removeExternalVideo(str(source, "id"))}>원본 등록 삭제</button></> : <><p>제작 시작 전 · 게시글을 선택하고 아래 제작 버튼을 누르면 자동 확보를 시도합니다.</p><details><summary>수동 원본 업로드 (선택사항)</summary><form onSubmit={(event) => void registerExternalVideo(event, str(r, "id"), ref.sourceUrl)}>
                           <label>원작자·채널명<input name="creator" required maxLength={120} defaultValue={externalVideoCreator(ref.sourceUrl)} placeholder="틱톡 링크의 @계정명을 자동 입력합니다" /></label>
                           <label>재사용 권한 근거<input name="rightsBasis" required minLength={5} maxLength={1000} placeholder="본인 소유, 원작자 서면 허가, 라이선스 등" /></label>
                           <label>사용 허가된 원본 MP4/WebM<input name="file" type="file" required accept="video/mp4,video/webm" /></label>
                           <label><input name="rightsConfirmed" type="checkbox" required /> 이 영상을 편집·재게시할 권한이 있음을 확인합니다.</label>
                           <button className="primary" disabled={busy}>권한 확인 후 원본 등록</button>
-                        </form></details>}
+                        </form></details></>}
                       </div>;
                     })}
                   </details>}
