@@ -6,9 +6,8 @@ export function notificationPayload(message, config) {
   if (!config.gmailSenders.some(x => x.toLowerCase() === message.sender.toLowerCase()) ||
       !config.gmailSubjects.some(x => message.subject.toLowerCase().includes(x.toLowerCase())) ||
       !message.labels.includes(config.gmailLabel)) throw Error('MAIL_FILTER_MISMATCH');
-  const match = /^\s*\[Task Update\]\s*([^:\r\n]+):\s*(.+)$/i.exec(message.subject);
+  const match = /^\s*\[Task Update\]\s*([^:\r\n]+)(?::\s*(.+))?$/i.exec(message.subject);
   if (!match) throw Error('NOT_TASK_NOTIFICATION');
-  const title = match[2].trim().slice(0, 120);
   let body = message.body.replace(/\r\n?/g, '\n');
   // Keep only notification text, never publish private action/tracking links.
   body = body.split(/\n\s*(?:(?:View|Open|Read)(?: the)? message|메시지 보기|Unsubscribe|수신거부)\b/i)[0];
@@ -18,6 +17,8 @@ export function notificationPayload(message, config) {
   body = body.split(/\n\s*OpenAI\s*\n/i)[0].trim();
   body = body.split('\n').map(line => line.trim()).join('\n').replace(/\n{3,}/g, '\n\n').trim();
   if (body.length < 30) throw Error('EMPTY_NOTIFICATION');
+  const headline = body.replace(/^SSRRR_ECONOMY\s*/i, '').match(/(?:^|\s)[—–-]\s*([^\n]{8,})/)?.[1]?.trim();
+  const title = (match[2]?.trim() || headline || match[1].trim()).replace(/\s+/g, ' ').slice(0, 120);
   return {idempotencyKey: 'gmail-' + message.providerId, title,
     body: body.slice(0, 29000) + '\n\n원문은 VIP 회원에게 제공됩니다',
     mode: 'publish', receivedAt: message.receivedAt};
