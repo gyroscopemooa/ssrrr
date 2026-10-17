@@ -1,7 +1,7 @@
 import {env} from 'cloudflare:workers';
 import {db,bucket,HttpError,wrap} from '@/lib/server';
 const expires=Date.parse('2026-10-05T15:00:00Z');
-const tables=['audit','auto_candidates','auto_post_jobs','auto_sources','comments','crawl_runs','email_ingest_messages','grants','job_events','ledger','likes','media','members','ops_settings','post_views','posts','previews','purchases','quotas','reports','settings','shorts_assets','shorts_job_posts','shorts_jobs','shorts_locks','shorts_metrics','shorts_outputs','shorts_publications','system_profiles','worker_health','worker_tasks'];
+const tables=['audit','auto_candidates','auto_post_jobs','auto_sources','comments','crawl_runs','email_ingest_messages','external_video_sources','grants','job_events','ledger','likes','media','members','ops_settings','post_views','posts','previews','purchases','quotas','reports','settings','shorts_assets','shorts_job_posts','shorts_jobs','shorts_locks','shorts_metrics','shorts_outputs','shorts_publications','system_profiles','worker_health','worker_tasks'];
 export const GET=wrap(async req=>{
  const key=env.MIGRATION_EXPORT_TOKEN;
  if(!key||Date.now()>expires)throw new HttpError(404,'Not found');

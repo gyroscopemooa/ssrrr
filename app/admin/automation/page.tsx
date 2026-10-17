@@ -4,6 +4,7 @@ import { moderationBoards, boardLabel } from "@/lib/board-label";
 import { FIELD_NAMES, MODE_LABELS } from "@/lib/automation/modes.mjs";
 import { sourceEditorFields } from "@/lib/automation/source-editor.mjs";
 import { isYouTubeReauthRequired } from "@/lib/automation/youtube-errors.mjs";
+import { externalVideoCreator, externalVideoRefs } from "@/lib/automation/external-video";
 import { SourceNote } from "./source-note";
 import { sourceCatalog } from "@/lib/automation/catalog";
 import { BulkControls } from "./bulk-controls";
@@ -150,7 +151,7 @@ function Fields({
       {Object.entries(scope === "source" ? sourceEditorFields(value) : value)
         .filter(
           ([k]) =>
-            !["id", "partIndex", "resolvedMode", "issueBgmId"].includes(k),
+            !["id", "partIndex", "resolvedMode", "issueBgmId", "externalAutoDownload"].includes(k),
         )
         .map(([k, v], index) => {
           const number = numberPrefix + (index + 1),
@@ -335,6 +336,8 @@ export default function Operations() {
       "no_economy",
     ),
     [selected, setSelected] = useState<string[]>([]),
+    [externalRightsConfirmed, setExternalRightsConfirmed] = useState(false),
+    [externalRightsBasis, setExternalRightsBasis] = useState(''),
     [force, setForce] = useState(false),
     [mail, setMail] = useState<Row | null>(null),
     [upload, setUpload] = useState<Row | null>(null),
@@ -511,7 +514,28 @@ export default function Operations() {
       setBusy(false);
     }
   }
+  async function registerExternalVideo(event: React.FormEvent<HTMLFormElement>, postId: string, sourceUrl: string) {
+    event.preventDefault();
+    if (busy) return;
+    const form = event.currentTarget, values = new FormData(form), file = values.get("file");
+    if (!(file instanceof File) || !file.size) { setMessage("사용 허가된 원본 MP4 또는 WebM 파일을 선택해 주세요."); return; }
+    const params = new URLSearchParams({ postId, sourceUrl, creator: String(values.get("creator") || ""), rightsBasis: String(values.get("rightsBasis") || ""), rightsConfirmed: String(values.get("rightsConfirmed") === "on") });
+    setBusy(true); setMessage("외부 영상 원본과 권한 정보를 등록하고 있습니다…");
+    try {
+      const response = await fetch("/api/ops/external-video?" + params, { method: "POST", headers: { "Content-Type": file.type || "application/octet-stream" }, body: file });
+      const result = await response.json() as { error?: string };
+      if (!response.ok) throw new Error(result.error || "외부 영상 등록 실패");
+      form.reset(); setMessage("사용 허가된 외부 영상 원본을 등록했습니다. 이제 실제 영상과 음성으로 쇼츠를 제작할 수 있습니다."); await refresh();
+    } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+  async function removeExternalVideo(id: string) {
+    if (busy || !confirm("등록된 외부 영상 원본과 권한 정보를 삭제할까요?")) return;
+    setBusy(true); setMessage("");
+    try { const response = await fetch("/api/ops/external-video?id=" + encodeURIComponent(id), { method: "DELETE" }); const result = await response.json() as { error?: string }; if (!response.ok) throw new Error(result.error || "삭제 실패"); setMessage("외부 영상 원본 등록을 삭제했습니다."); await refresh(); }
+    catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
   const rows = (key: string) => (data?.[key] || []) as Row[];
+  const selectedNeedsExternalDownload = rows("posts").some((post) => selected.includes(str(post, "id")) && externalVideoRefs(Array.isArray(parsed(post.body)) ? parsed(post.body) : []).some((ref) => !rows("externalVideos").some((source) => source.post_id === post.id && source.source_key === ref.sourceKey && source.status === "ready")));
   const pager = (
     value: number,
     size: number,
@@ -552,7 +576,7 @@ export default function Operations() {
   const sourceRows = sourceGroups.flatMap((group) => group.items);
   const button = (text: string, action: string, body: Row = {}) => (
     <button
-      disabled={busy || (action === "shortCreate" && selected.length === 0)}
+      disabled={busy || (action === "shortCreate" && (selected.length === 0 || (selectedNeedsExternalDownload && (!externalRightsConfirmed || externalRightsBasis.trim().length < 5))))}
       className="secondary"
       onClick={() => void act(action, body)}
     >
@@ -1363,8 +1387,9 @@ export default function Operations() {
                   </label>
                 ))}
               </div>
-              {rows("posts").map((r) => (
-                <article className="ops-row" key={str(r, "id")}>
+              {rows("posts").map((r) => {
+                const refs = externalVideoRefs(Array.isArray(parsed(r.body)) ? parsed(r.body) : []), registered = rows("externalVideos").filter((source) => source.post_id === r.id && source.status === "ready" && refs.some((ref) => ref.sourceKey === source.source_key));
+                return <article className="ops-row" key={str(r, "id")}>
                   <label>
                     <input
                       type="checkbox"
@@ -1389,8 +1414,24 @@ export default function Operations() {
                     "postExclude",
                     { id: r.id, excluded: !r.short_excluded },
                   )}
+                  {refs.length > 0 && <details className="ops-editor">
+                    <summary>외부 영상 원본 {registered.length}/{refs.length}개 등록</summary>
+                    {refs.map((ref) => {
+                      const source = registered.find((item) => item.source_key === ref.sourceKey);
+                      return <div className="ops-row" key={ref.sourceKey}>
+                        <p><b>{ref.provider === "youtube" ? "YouTube" : "TikTok"}</b> · <a href={ref.sourceUrl} target="_blank" rel="noreferrer">원본 링크</a></p>
+                        {source ? <><p>실제 영상·음성 확보 완료 · 원작자 {str(source, "creator")} · 권한 근거 {str(source, "rights_basis")}</p><button type="button" className="secondary" disabled={busy} onClick={() => void removeExternalVideo(str(source, "id"))}>원본 등록 삭제</button></> : <details><summary>자동 확보 불가 시 직접 원본 등록</summary><form onSubmit={(event) => void registerExternalVideo(event, str(r, "id"), ref.sourceUrl)}>
+                          <label>원작자·채널명<input name="creator" required maxLength={120} defaultValue={externalVideoCreator(ref.sourceUrl)} placeholder="틱톡 링크의 @계정명을 자동 입력합니다" /></label>
+                          <label>재사용 권한 근거<input name="rightsBasis" required minLength={5} maxLength={1000} placeholder="본인 소유, 원작자 서면 허가, 라이선스 등" /></label>
+                          <label>사용 허가된 원본 MP4/WebM<input name="file" type="file" required accept="video/mp4,video/webm" /></label>
+                          <label><input name="rightsConfirmed" type="checkbox" required /> 이 영상을 편집·재게시할 권한이 있음을 확인합니다.</label>
+                          <button className="primary" disabled={busy}>권한 확인 후 원본 등록</button>
+                        </form></details>}
+                      </div>;
+                    })}
+                  </details>}
                 </article>
-              ))}
+              })}
               {pager(postOffset, 20, !!data.postsHasNext, setPostOffset)}
               <label>
                 <input
@@ -1456,15 +1497,16 @@ export default function Operations() {
                   </p>
                 )}
               </details>
+              {selectedNeedsExternalDownload && <div className="ops-editor"><p><b>외부 영상 감지 완료</b> · 제작을 시작하면 원본과 출처를 분석하고 실제 영상·음성을 먼저 확보합니다.</p><label>권리 근거<input value={externalRightsBasis} onChange={(event) => setExternalRightsBasis(event.target.value)} minLength={5} maxLength={1000} placeholder="예: 원작자의 서면 허가를 받음 (증빙 보관 위치)" /></label><label><input type="checkbox" checked={externalRightsConfirmed} onChange={(event) => setExternalRightsConfirmed(event.target.checked)} /> 위 권리 근거와 플랫폼 이용 조건을 확인했습니다.</label></div>}
               {button("선택한 글로 제작", "shortCreate", {
                 postIds: selected,
                 force,
-                config: { ...(shortConfig || {}), captionTone: shortTone },
+                config: { ...(shortConfig || {}), captionTone: shortTone, externalAutoDownload: externalRightsConfirmed, externalRightsBasis },
               })}
               <div className="ops-actions">
                 <button
                   className="primary"
-                  disabled={busy || selected.length === 0}
+                  disabled={busy || selected.length === 0 || (selectedNeedsExternalDownload && (!externalRightsConfirmed || externalRightsBasis.trim().length < 5))}
                   onClick={() =>
                     void act("selectedPackage", {
                       postIds: selected,
@@ -1472,6 +1514,8 @@ export default function Operations() {
                       config: {
                         ...(shortConfig || {}),
                         captionTone: shortTone,
+                        externalAutoDownload: externalRightsConfirmed,
+                        externalRightsBasis,
                       },
                       addPopular: false,
                     })
@@ -1481,7 +1525,7 @@ export default function Operations() {
                 </button>
                 <button
                   className="primary"
-                  disabled={busy || selected.length === 0}
+                  disabled={busy || selected.length === 0 || (selectedNeedsExternalDownload && (!externalRightsConfirmed || externalRightsBasis.trim().length < 5))}
                   onClick={() =>
                     void act("selectedPackage", {
                       postIds: selected,
@@ -1489,6 +1533,8 @@ export default function Operations() {
                       config: {
                         ...(shortConfig || {}),
                         captionTone: shortTone,
+                        externalAutoDownload: externalRightsConfirmed,
+                        externalRightsBasis,
                       },
                       addPopular: true,
                     })

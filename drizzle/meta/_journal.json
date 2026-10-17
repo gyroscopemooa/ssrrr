@@ -43,6 +43,13 @@
       "when": 1790783912982,
       "tag": "0005_dark_randall_flagg",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1792235890438,
+      "tag": "0006_robust_junta",
+      "breakpoints": true
     }
   ]
 }

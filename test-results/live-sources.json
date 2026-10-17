@@ -4364,5 +4364,127 @@
       "commentsRequired": false,
       "mediaRequired": true
     }
+  },
+  {
+    "id": "source-17",
+    "name": "유머픽",
+    "url": "https://www.humorpick.com/bbs/board.php?bo_table=humor",
+    "at": "2026-10-14T22:31:01.056Z",
+    "status": "PASS",
+    "listCount": 20,
+    "details": 1,
+    "comments": 0,
+    "media": 1,
+    "error": "",
+    "validation": {
+      "version": 3,
+      "identity": "{\"version\":2,\"url\":\"https://www.humorpick.com/bbs/board.php?bo_table=humor\",\"adapter\":\"generic\",\"selectors\":{\"item\":\"li.list-item\",\"title\":\"a.item-subject\",\"link\":\"a.item-subject\",\"body\":\".view-content\",\"comment\":\"#viewcomment .comment-content\",\"views\":\".wr-hit\",\"likes\":\".wr-good\",\"comments\":\".wr-comment\",\"date\":\".wr-date\"},\"mediaHosts\":[\"humorpick.com\",\"www.humorpick.com\"],\"commentLimit\":0,\"images\":true,\"videos\":true,\"gifs\":true}",
+      "mode": "DETAIL_NO_COMMENTS",
+      "listPage": 1,
+      "fullPage": true,
+      "listCount": 20,
+      "details": 1,
+      "comments": 0,
+      "media": 1,
+      "eligibleCount": 1,
+      "passed": true,
+      "requiredFields": [
+        "title",
+        "sourceUrl",
+        "sourcePostId",
+        "body",
+        "image"
+      ],
+      "availableFields": [
+        "views",
+        "title",
+        "sourceUrl",
+        "sourcePostId",
+        "body",
+        "image"
+      ],
+      "missingFields": [],
+      "stages": {
+        "list": {
+          "status": "passed",
+          "count": 20
+        },
+        "detail": {
+          "status": "passed",
+          "needed": true,
+          "count": 1
+        },
+        "comments": {
+          "status": "unused",
+          "needed": false
+        },
+        "media": {
+          "status": "passed",
+          "needed": true,
+          "count": 1,
+          "origin": "detail"
+        }
+      },
+      "checkedAt": "2026-10-14T22:31:01.056Z",
+      "samples": [
+        {
+          "url": "https://www.humorpick.com/bbs/board.php?bo_table=humor&wr_id=415349",
+          "availableFields": [
+            "views",
+            "title",
+            "sourceUrl",
+            "sourcePostId",
+            "body",
+            "image"
+          ],
+          "missingFields": [],
+          "eligible": true,
+          "errors": [],
+          "blocks": 1,
+          "comments": 0
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://www.humorpick.com/bbs/board.php?bo_table=humor",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 112973
+        },
+        {
+          "url": "https://www.humorpick.com/bbs/board.php?bo_table=humor&wr_id=415349",
+          "method": "GET",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "bytes": 141464
+        },
+        {
+          "url": "https://humorpick.com/data/file/bt2/bt4eaa461eaadbcec56be5cb33a580e8a9.gif",
+          "method": "GET",
+          "status": 200,
+          "type": "image/gif",
+          "bytes": 2075
+        }
+      ],
+      "errors": [],
+      "warnings": [],
+      "alternatives": [
+        {
+          "mode": "LINK_AGGREGATION",
+          "available": true,
+          "listCount": 20,
+          "availableFields": [
+            "title",
+            "sourceUrl",
+            "sourcePostId"
+          ],
+          "note": "제목·원문 링크만 사용하는 별도 설정. 본문·이미지 확보 성공을 뜻하지 않습니다."
+        }
+      ],
+      "detailRequired": true,
+      "commentsRequired": false,
+      "mediaRequired": true
+    }
   }
 ]

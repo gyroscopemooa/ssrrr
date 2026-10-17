@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {FPS,INTRO_INSERT_SECONDS,INTRO_SECONDS,buildPlan,textPages} from '../worker/planner.mjs';
 import {mayAutoCombine} from '../lib/automation/shorts-policy.ts';
+import {readFileSync} from 'node:fs';
 test('text pages preserve Korean text and explicit line breaks within card bounds',()=>{
  const text=('뷁 쀍 ㅋㅋㅋ 제목과 자막\n').repeat(40);
  const pages=textPages(text);
@@ -54,6 +55,13 @@ test('motion intro follows a 2.5 second teaser before the full story restarts',(
  assert.equal(plan.scenes[1].from,Math.round(2.5*FPS));
  assert.equal(plan.scenes[1].frames,Math.ceil(1.712*FPS));
  assert.equal(plan.scenes[2].type,'feed_open');
+});
+test('opening teaser preserves the complete still image and GIF instead of cropping them',()=>{
+ const source=readFileSync(new URL('../worker/remotion/site-flow.jsx',import.meta.url),'utf8');
+ const teaser=source.slice(source.indexOf('function TeaserScene'),source.indexOf('function Scene(',source.indexOf('function TeaserScene')));
+ assert.match(teaser,/objectFit:'contain'/);
+ assert.match(teaser,/fit="contain"/);
+ assert.doesNotMatch(teaser,/objectPosition:'center 35%'/);
 });
 test('auto combine is limited to text-only non-economy posts',()=>{
  assert.equal(mayAutoCombine([{type:'text',text:'짧은 유머'}],'유머'),true);
