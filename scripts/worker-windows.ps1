@@ -21,8 +21,11 @@ try {
  foreach ($entry in $workerConfig.PSObject.Properties) { if ($entry.Name -notmatch '^(WORKER_|SITES_DISPATCHER_TOKEN$|GMAIL_|YOUTUBE_|CHATGPT_|MAIL_|SUBTITLE_)') { throw 'Unexpected credential key.' }; $previousWorkerEnv[$entry.Name]=[Environment]::GetEnvironmentVariable($entry.Name,'Process'); [Environment]::SetEnvironmentVariable($entry.Name,[string]$entry.Value,'Process') }
  if ($Studio) {
   foreach ($key in @('WORKER_ROLE','SUBTITLE_PYTHON')) { if (-not $previousWorkerEnv.ContainsKey($key)) { $previousWorkerEnv[$key]=[Environment]::GetEnvironmentVariable($key,'Process') } }
-  $env:WORKER_ROLE='studio'
-  $env:SUBTITLE_PYTHON=Join-Path $workerRoot '.worker-tmp\subtitle-venv\Scripts\python.exe'
+ $env:WORKER_ROLE='studio'
+ $env:SUBTITLE_PYTHON=Join-Path $workerRoot '.worker-tmp\subtitle-venv\Scripts\python.exe'
+  $env:SUBTITLE_TRANSLATION_PYTHON=$env:SUBTITLE_PYTHON
+  $env:SUBTITLE_MODEL=Join-Path $workerRoot '.worker-tmp\whisper-models\large-v3-turbo'
+  $env:SUBTITLE_TRANSLATION_LOCAL_MODEL=Join-Path $workerRoot '.worker-tmp\translation-models\models--facebook--m2m100_418M'
   if (-not (Test-Path -LiteralPath $env:SUBTITLE_PYTHON)) { throw 'Subtitle Python environment is missing.' }
  }
  $workerProcess = Start-Process -FilePath (Get-Command node.exe).Source -ArgumentList @('"'+$workerScript+'"') -WorkingDirectory $workerRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $workerRuntime 'stdout.log') -RedirectStandardError (Join-Path $workerRuntime 'stderr.log') -PassThru

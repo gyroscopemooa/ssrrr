@@ -115,7 +115,7 @@ Object.assign(labels, {
   mediaFailure: "사진·영상 수집 실패 시 처리",
 });
 const choices: Record<string, string[]> = {
-  speechSubtitles: ["off", "original", "original-en"],
+  speechSubtitles: ["off", "original", "original-ko", "original-en", "original-ko-en"],
   collectionMode: Object.keys(MODE_LABELS),
   adapter: ["generic", "dcinside"],
   board: [

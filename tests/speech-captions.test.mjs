@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {transcriptCues,speechCaptions,translateCuesToKorean} from '../worker/speech-captions.mjs';
+import {transcriptCues,speechCaptions,translateCuesLocally,translateCuesToKorean} from '../worker/speech-captions.mjs';
 test('speech cues are timed and retain original and translated text',()=>{
  const cues=transcriptCues({language:'ko',segments:[{start:0,end:1,text:'안녕하세요'}],english:[{start:0,end:1,text:'Hello'}]});
  assert.deepEqual(cues,[{start:0,end:1,original:'안녕하세요',ko:'안녕하세요',en:'Hello'}]);
@@ -21,4 +21,9 @@ test('foreign speech can retain original and add Korean plus English',async()=>{
 });
 test('Korean translation API rejects missing configuration explicitly',async()=>{
  await assert.rejects(translateCuesToKorean([{original:'Hola'}],'es',{url:'',key:''}),/SUBTITLE_TRANSLATION_UNAVAILABLE/);
+});
+test('local Korean translator receives source language and preserves cue timing',async()=>{
+ const cues=[{start:1,end:2,original:'Hola',ko:'',en:''}];
+ await translateCuesLocally(cues,'es',{python:'python',execute:async(_python,args)=>{const payload=JSON.parse(Buffer.from(args[args.indexOf('--payload')+1],'base64url'));assert.equal(payload.language,'es');return {stdout:'[{"id":0,"text":"안녕하세요"}]'}}});
+ assert.equal(cues[0].ko,'안녕하세요');assert.deepEqual(cues[0],{start:1,end:2,original:'Hola',ko:'안녕하세요',en:''});
 });

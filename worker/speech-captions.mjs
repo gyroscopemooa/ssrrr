@@ -41,7 +41,17 @@ export async function translateCuesToKorean(cues,language,{fetcher=fetch,url=pro
  for(let id=0;id<cues.length;id++){const ko=byId.get(id);if(!ko)throw Error('SUBTITLE_TRANSLATION_FAILED: 일부 한글 자막이 누락되었습니다.');cues[id].ko=ko}
  return cues;
 }
-export async function speechCaptions(file,mode,{execute=run,python=process.env.SUBTITLE_PYTHON,signal,translate=translateCuesToKorean}={}){
+export async function translateCuesLocally(cues,language,{execute=run,python=process.env.SUBTITLE_TRANSLATION_PYTHON||process.env.SUBTITLE_PYTHON,model=process.env.SUBTITLE_TRANSLATION_LOCAL_MODEL||'facebook/m2m100_418M',signal}={}){
+ if(language==='ko')return cues;
+ if(!python)throw Error('SUBTITLE_TRANSLATION_UNAVAILABLE: 로컬 번역 엔진이 설정되지 않았습니다.');
+ const payload=Buffer.from(JSON.stringify({language,subtitles:cues.map((cue,id)=>({id,text:cue.original}))}),'utf8').toString('base64url');
+ let stdout;try{({stdout}=await execute(python,[path.resolve('scripts/translate-local.py'),'--model',model,'--payload',payload],{signal,timeout:900000,maxBuffer:4000000,windowsHide:true,encoding:'utf8',env:{...process.env,PYTHONUTF8:'1'}}))}catch(error){throw Error('SUBTITLE_TRANSLATION_FAILED: 로컬 번역에 실패했습니다. '+String(error?.stderr||error?.message||error).slice(0,180))}
+ let translated;try{translated=JSON.parse(stdout)}catch{throw Error('SUBTITLE_TRANSLATION_FAILED: 로컬 번역 결과 형식 오류')}
+ const byId=new Map(translated.map(item=>[Number(item.id),String(item.text||'').trim()]));
+ for(let id=0;id<cues.length;id++){const ko=byId.get(id);if(!ko)throw Error('SUBTITLE_TRANSLATION_FAILED: 일부 한글 자막이 누락되었습니다.');cues[id].ko=ko}
+ return cues;
+}
+export async function speechCaptions(file,mode,{execute=run,python=process.env.SUBTITLE_PYTHON,signal,translate}={}){
  if(!python)throw Error('SUBTITLE_SERVER_UNAVAILABLE: 작업 서버에 음성인식 엔진이 설정되지 않았습니다.');
  const args=[path.resolve('scripts/transcribe-local.py'),file,'--model',process.env.SUBTITLE_MODEL||'small'];
  const wantsKorean=mode==='original-ko'||mode==='original-ko-en',wantsEnglish=mode==='original-en'||mode==='original-ko-en';
@@ -49,7 +59,7 @@ export async function speechCaptions(file,mode,{execute=run,python=process.env.S
  const {stdout}=await execute(python,args,{signal,timeout:900000,maxBuffer:4000000,windowsHide:true,encoding:'utf8'});
  const data=JSON.parse(stdout),cues=transcriptCues(data);
  if(!cues.length)throw Error('SUBTITLE_NO_SPEECH: 인식 가능한 음성이 없습니다. 자막을 끄고 다시 제작할 수 있습니다.');
- if(wantsKorean&&data.language!=='ko')await translate(cues,data.language||'unknown');
+ if(wantsKorean&&data.language!=='ko')await (translate||translateCuesLocally)(cues,data.language||'en',{execute,signal});
  if(!wantsEnglish)for(const cue of cues)cue.en='';
  return cues;
 }
