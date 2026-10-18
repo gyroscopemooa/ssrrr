@@ -66,9 +66,11 @@ test('opening teaser preserves the complete still image and GIF instead of cropp
 test('external vertical videos use the tall preserve-aspect layout without changing regular media scenes',()=>{
  const source=readFileSync(new URL('../worker/remotion/site-flow.jsx',import.meta.url),'utf8');
  const external=source.slice(source.indexOf('function ExternalVideoScene'),source.indexOf('function MediaScene'));
- assert.match(external,/top:246/);
- assert.match(external,/bottom:108/);
+ assert.match(external,/top:232/);
+ assert.match(external,/bottom:98/);
  assert.match(external,/objectFit:'contain'/);
+ assert.match(external,/objectPosition:'center bottom'/);
+ assert.match(external,/position:'absolute'.*top:8.*SpeechSubtitle/s);
  assert.match(source,/scene\.type==='video_play'&&scene\.payload\.sourceUrl/);
 });
 test('auto combine is limited to text-only non-economy posts',()=>{
