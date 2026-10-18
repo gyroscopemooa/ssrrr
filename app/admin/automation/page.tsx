@@ -87,7 +87,7 @@ const labels: Record<string, string> = {
 };
 Object.assign(labels, {
   bgmRandom: "배경음악 랜덤 선택",
-  speechSubtitles: "음성 자막 (off=끔, original=원문, original-en=원문+영어)",
+  speechSubtitles: "음성 자막 (원문 / 원문+한글 / 원문+한글+영어)",
   captionTone: "영상 분위기",
   humorBgmIds: "유머 전용 BGM ID 목록",
   issueBgmIds: "이슈·심각 전용 BGM ID 목록",
@@ -1428,9 +1428,9 @@ export default function Operations() {
                     }}>
                       <p>원본 소리 유지 · 추가 BGM 없음 · 완성 후 미리보기/다운로드 · 유튜브 자동 업로드 안 함</p>
                       {registered.length<refs.length&&<><label>이 영상의 편집·재게시 허가 근거<input name="rightsBasis" required minLength={10} maxLength={1000} placeholder="허가자·허가 내용·증빙 보관 위치" /></label><label><input type="checkbox" required /> 원작자 허가와 플랫폼의 원본 확보 이용 조건을 별도로 확인했습니다.</label></>}
-                      <label>음성 자막<select name="subtitles" defaultValue="off"><option value="off">자막 끔</option><option value="original" disabled={!shortWorkerReady.subtitles}>원문 자막 (한국어 음성 → 한글)</option><option value="original-en" disabled={!shortWorkerReady.subtitles}>원문 + 영어 번역</option></select></label>
+                      <label>음성 자막<select name="subtitles" defaultValue="off"><option value="off">자막 끔</option><option value="original" disabled={!shortWorkerReady.subtitles}>원문 자막</option><option value="original-ko" disabled={!shortWorkerReady.subtitles}>원문 + 한글 번역</option><option value="original-en" disabled={!shortWorkerReady.subtitles}>원문 + 영어 번역</option><option value="original-ko-en" disabled={!shortWorkerReady.subtitles}>원문 + 한글 + 영어</option></select></label>
                       {!shortWorkerReady.subtitles&&<p>자막 서버 연결 미확인 · 엔진 설치 후 활성화됩니다.</p>}
-                      <p>외국어 → 한국어 자동 번역은 아직 지원하지 않습니다. 자동 자막은 오인식 검수가 필요합니다.</p>
+                      <p>외국어는 원문을 유지하면서 한글·영어 번역을 함께 표시합니다. 자동 인식·번역은 검수가 필요합니다.</p>
                       <button type="submit" className="primary" disabled={busy||!!r.short_excluded||policyBlocked||!shortWorkerReady.render||(registered.length<refs.length&&!shortWorkerReady.acquire)}>이 글로 영상 제작 (파일 선택 없음)</button>
                       {policyBlocked&&<p role="status">YouTube 자동 확보는 지원하지 않습니다. 사용 허가된 원본이 등록된 뒤 제작할 수 있습니다.</p>}
                       {!shortWorkerReady.render&&<p role="status">제작 서버 연결 미확인</p>}

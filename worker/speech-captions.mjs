@@ -14,24 +14,42 @@ export function transcriptCues(data){
   let cue=null;
   for(const word of words){
    const text=String(word.text||'').trim();if(!text||!Number.isFinite(word.start)||!Number.isFinite(word.end)||word.end<=word.start)continue;
-   if(cue&&(cue.ko.length+text.length>38||word.end-cue.start>3.5)){cues.push(cue);cue=null}
-   if(!cue)cue={start:word.start,end:word.end,ko:text,en:''};else{cue.ko+=' '+text;cue.end=word.end}
+   if(cue&&(cue.original.length+text.length>38||word.end-cue.start>3.5)){cues.push(cue);cue=null}
+   if(!cue)cue={start:word.start,end:word.end,original:text,ko:'',en:''};else{cue.original+=' '+text;cue.end=word.end}
   }
   if(cue)cues.push(cue);
  }
  for(const cue of cues){
   const translations=(data.english||[]).filter(s=>s.start<cue.end&&s.end>cue.start);
   cue.en=translations.map(s=>String(s.text||'').trim()).join(' ');
-  if(cue.ko.length>100||cue.en.length>250)throw Error('SUBTITLE_REVIEW_REQUIRED: 자막 구간이 너무 깁니다. 분할 검수 후 제작하세요.');
+  if(data.language==='en'&&!cue.en)cue.en=cue.original;
+  if(data.language==='ko')cue.ko=cue.original;
+  if(cue.original.length>100||cue.ko.length>100||cue.en.length>250)throw Error('SUBTITLE_REVIEW_REQUIRED: 자막 구간이 너무 깁니다. 분할 검수 후 제작하세요.');
  }
  return cues;
 }
-export async function speechCaptions(file,mode,{execute=run,python=process.env.SUBTITLE_PYTHON,signal}={}){
+export async function translateCuesToKorean(cues,language,{fetcher=fetch,url=process.env.SUBTITLE_TRANSLATION_API_URL,key=process.env.SUBTITLE_TRANSLATION_API_KEY,model=process.env.SUBTITLE_TRANSLATION_MODEL||'gpt-4.1-mini'}={}){
+ if(language==='ko')return cues;
+ if(!url||!key)throw Error('SUBTITLE_TRANSLATION_UNAVAILABLE: 한글 번역 API가 설정되지 않았습니다. 원문 자막을 선택하거나 번역 서버를 설정해 주세요.');
+ const input=cues.map((cue,id)=>({id,text:cue.original}));
+ const response=await fetcher(url,{method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({model,temperature:0,messages:[{role:'system',content:'Translate every subtitle into natural Korean. Preserve names, tone, and meaning. Return only a JSON array of objects with id and text; never omit an id.'},{role:'user',content:JSON.stringify({sourceLanguage:language,subtitles:input})}]})});
+ if(!response.ok)throw Error('SUBTITLE_TRANSLATION_FAILED: 한글 번역 서버 응답 오류 '+response.status);
+ const payload=await response.json();
+ let content=payload?.choices?.[0]?.message?.content||'';content=content.replace(/^```(?:json)?\s*|\s*```$/g,'');
+ let translated;try{translated=JSON.parse(content)}catch{throw Error('SUBTITLE_TRANSLATION_FAILED: 한글 번역 결과 형식 오류')}
+ const byId=new Map(translated.map(item=>[Number(item.id),String(item.text||'').trim()]));
+ for(let id=0;id<cues.length;id++){const ko=byId.get(id);if(!ko)throw Error('SUBTITLE_TRANSLATION_FAILED: 일부 한글 자막이 누락되었습니다.');cues[id].ko=ko}
+ return cues;
+}
+export async function speechCaptions(file,mode,{execute=run,python=process.env.SUBTITLE_PYTHON,signal,translate=translateCuesToKorean}={}){
  if(!python)throw Error('SUBTITLE_SERVER_UNAVAILABLE: 작업 서버에 음성인식 엔진이 설정되지 않았습니다.');
  const args=[path.resolve('scripts/transcribe-local.py'),file,'--model',process.env.SUBTITLE_MODEL||'small'];
- if(mode==='original-en')args.push('--english');
+ const wantsKorean=mode==='original-ko'||mode==='original-ko-en',wantsEnglish=mode==='original-en'||mode==='original-ko-en';
+ if(wantsEnglish)args.push('--english');
  const {stdout}=await execute(python,args,{signal,timeout:900000,maxBuffer:4000000,windowsHide:true,encoding:'utf8'});
  const data=JSON.parse(stdout),cues=transcriptCues(data);
  if(!cues.length)throw Error('SUBTITLE_NO_SPEECH: 인식 가능한 음성이 없습니다. 자막을 끄고 다시 제작할 수 있습니다.');
+ if(wantsKorean&&data.language!=='ko')await translate(cues,data.language||'unknown');
+ if(!wantsEnglish)for(const cue of cues)cue.en='';
  return cues;
 }

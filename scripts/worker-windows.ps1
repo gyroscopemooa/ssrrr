@@ -18,7 +18,7 @@ $secretPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($protecte
 try { $workerConfig = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($secretPointer) | ConvertFrom-Json } finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($secretPointer) }
 $previousWorkerEnv = @{}
 try {
- foreach ($entry in $workerConfig.PSObject.Properties) { if ($entry.Name -notmatch '^(WORKER_|SITES_DISPATCHER_TOKEN$|GMAIL_|YOUTUBE_|CHATGPT_|MAIL_)') { throw 'Unexpected credential key.' }; $previousWorkerEnv[$entry.Name]=[Environment]::GetEnvironmentVariable($entry.Name,'Process'); [Environment]::SetEnvironmentVariable($entry.Name,[string]$entry.Value,'Process') }
+ foreach ($entry in $workerConfig.PSObject.Properties) { if ($entry.Name -notmatch '^(WORKER_|SITES_DISPATCHER_TOKEN$|GMAIL_|YOUTUBE_|CHATGPT_|MAIL_|SUBTITLE_)') { throw 'Unexpected credential key.' }; $previousWorkerEnv[$entry.Name]=[Environment]::GetEnvironmentVariable($entry.Name,'Process'); [Environment]::SetEnvironmentVariable($entry.Name,[string]$entry.Value,'Process') }
  if ($Studio) {
   foreach ($key in @('WORKER_ROLE','SUBTITLE_PYTHON')) { if (-not $previousWorkerEnv.ContainsKey($key)) { $previousWorkerEnv[$key]=[Environment]::GetEnvironmentVariable($key,'Process') } }
   $env:WORKER_ROLE='studio'
