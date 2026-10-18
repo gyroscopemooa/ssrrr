@@ -1,4 +1,5 @@
 "use client";
+import { shortsWorkerReadiness } from "@/lib/automation/worker-readiness";
 import { sourceSchema } from "@/lib/automation/config";
 import { moderationBoards, boardLabel } from "@/lib/board-label";
 import { FIELD_NAMES, MODE_LABELS } from "@/lib/automation/modes.mjs";
@@ -86,6 +87,7 @@ const labels: Record<string, string> = {
 };
 Object.assign(labels, {
   bgmRandom: "배경음악 랜덤 선택",
+  speechSubtitles: "음성 자막 (off=끔, original=원문, original-en=원문+영어)",
   captionTone: "영상 분위기",
   humorBgmIds: "유머 전용 BGM ID 목록",
   issueBgmIds: "이슈·심각 전용 BGM ID 목록",
@@ -113,6 +115,7 @@ Object.assign(labels, {
   mediaFailure: "사진·영상 수집 실패 시 처리",
 });
 const choices: Record<string, string[]> = {
+  speechSubtitles: ["off", "original", "original-en"],
   collectionMode: Object.keys(MODE_LABELS),
   adapter: ["generic", "dcinside"],
   board: [
@@ -733,6 +736,7 @@ export default function Operations() {
       metrics,
     };
   };
+  const shortWorkerReady = shortsWorkerReadiness(rows("workers"));
   const shortPosts = (jobId: string) =>
     rows("shortPostRows")
       .filter((r) => r.job_id === jobId)
@@ -743,12 +747,12 @@ export default function Operations() {
       return { label: "취소·반려 확정", tone: "cancelled" };
     if (status === "failed") return { label: "제작 실패", tone: "failed" };
     if (
-      ["queued", "analyzing", "ready_to_render", "rendering", "qc"].includes(
+      ["queued", "analyzing", "transcribing", "ready_to_render", "rendering", "qc"].includes(
         status,
       )
     )
       return {
-        label: status === "queued" ? "제작 대기" : "제작 중",
+        label: status === "queued" ? "제작 대기" : status === "transcribing" ? "음성 자막 생성 중" : "제작 중",
         tone: "running",
       };
     if (publication && isYouTubeReauthRequired(publication.error))
@@ -1389,6 +1393,7 @@ export default function Operations() {
               </div>
               {rows("posts").map((r) => {
                 const refs = externalVideoRefs(Array.isArray(parsed(r.body)) ? parsed(r.body) : []), registered = rows("externalVideos").filter((source) => source.post_id === r.id && source.status === "ready" && refs.some((ref) => ref.sourceKey === source.source_key));
+                const policyBlocked = refs.some(ref=>ref.provider==="youtube"&&!registered.some(source=>source.source_key===ref.sourceKey));
                 return <article className="ops-row" key={str(r, "id")}>
                   <label>
                     <input
@@ -1415,17 +1420,31 @@ export default function Operations() {
                     { id: r.id, excluded: !r.short_excluded },
                   )}
                   {refs.length > 0 && <details className="ops-editor">
-                    <summary>{registered.length === refs.length ? `실제 영상·음성 확보 완료 ${registered.length}/${refs.length}` : `링크 자동 확보 대기 ${registered.length}/${refs.length}`}</summary>
+                    <summary>{registered.length === refs.length ? `실제 영상·음성 확보 완료 ${registered.length}/${refs.length}` : `원본 미확보 · 제작 요청 전 ${registered.length}/${refs.length}`}</summary>
+                    <form onSubmit={(event) => {
+                      event.preventDefault();
+                      const fields = new FormData(event.currentTarget);
+                      void act("shortCreate", {postIds:[r.id],force,config:{...(shortConfig||{}),autoCombine:false,autoUpload:false,bgmEnabled:false,originalVolume:1,speechSubtitles:String(fields.get("subtitles")||"off"),externalAutoDownload:registered.length<refs.length,externalRightsBasis:String(fields.get("rightsBasis")||"")}});
+                    }}>
+                      <p>원본 소리 유지 · 추가 BGM 없음 · 완성 후 미리보기/다운로드 · 유튜브 자동 업로드 안 함</p>
+                      {registered.length<refs.length&&<><label>이 영상의 편집·재게시 허가 근거<input name="rightsBasis" required minLength={10} maxLength={1000} placeholder="허가자·허가 내용·증빙 보관 위치" /></label><label><input type="checkbox" required /> 원작자 허가와 플랫폼의 원본 확보 이용 조건을 별도로 확인했습니다.</label></>}
+                      <label>음성 자막<select name="subtitles" defaultValue="off"><option value="off">자막 끔</option><option value="original" disabled={!shortWorkerReady.subtitles}>원문 자막 (한국어 음성 → 한글)</option><option value="original-en" disabled={!shortWorkerReady.subtitles}>원문 + 영어 번역</option></select></label>
+                      {!shortWorkerReady.subtitles&&<p>자막 서버 연결 미확인 · 엔진 설치 후 활성화됩니다.</p>}
+                      <p>외국어 → 한국어 자동 번역은 아직 지원하지 않습니다. 자동 자막은 오인식 검수가 필요합니다.</p>
+                      <button type="submit" className="primary" disabled={busy||!!r.short_excluded||policyBlocked||!shortWorkerReady.render||(registered.length<refs.length&&!shortWorkerReady.acquire)}>이 글로 영상 제작 (파일 선택 없음)</button>
+                      {policyBlocked&&<p role="status">YouTube 자동 확보는 지원하지 않습니다. 사용 허가된 원본이 등록된 뒤 제작할 수 있습니다.</p>}
+                      {!shortWorkerReady.render&&<p role="status">제작 서버 연결 미확인</p>}
+                    </form>
                     {refs.map((ref) => {
                       const source = registered.find((item) => item.source_key === ref.sourceKey);
                       return <div className="ops-row" key={ref.sourceKey}>
                         <p><b>{ref.provider === "youtube" ? "YouTube" : "TikTok"}</b> · <a href={ref.sourceUrl} target="_blank" rel="noreferrer">원본 링크</a></p>
-                        {source ? <><p>실제 영상·음성 확보 완료 · 원작자 {str(source, "creator")} · 권한 근거 {str(source, "rights_basis")}</p><button type="button" className="secondary" disabled={busy} onClick={() => void removeExternalVideo(str(source, "id"))}>원본 등록 삭제</button></> : <><p>제작 시작 전 · 게시글을 선택하고 아래 제작 버튼을 누르면 자동 확보를 시도합니다.</p><details><summary>수동 원본 업로드 (선택사항)</summary><form onSubmit={(event) => void registerExternalVideo(event, str(r, "id"), ref.sourceUrl)}>
+                        {source ? <><p>실제 영상·음성 확보 완료 · 원작자 {str(source, "creator")} · 권한 근거 {str(source, "rights_basis")}</p><button type="button" className="secondary" disabled={busy} onClick={() => void removeExternalVideo(str(source, "id"))}>원본 등록 삭제</button></> : <><p>파일 선택 없이 위 ‘이 글로 영상 제작’을 이용하세요. {shortWorkerReady.acquire ? "확보 작업기 최근 연결 확인" : "확보 작업기 연결 미확인 — 파일 업로드 문제가 아닙니다."}</p><details><summary>자동 확보가 안 될 때만: 직접 파일 업로드</summary><form onSubmit={(event) => void registerExternalVideo(event, str(r, "id"), ref.sourceUrl)}>
                           <label>원작자·채널명<input name="creator" required maxLength={120} defaultValue={externalVideoCreator(ref.sourceUrl)} placeholder="틱톡 링크의 @계정명을 자동 입력합니다" /></label>
                           <label>재사용 권한 근거<input name="rightsBasis" required minLength={5} maxLength={1000} placeholder="본인 소유, 원작자 서면 허가, 라이선스 등" /></label>
                           <label>사용 허가된 원본 MP4/WebM<input name="file" type="file" required accept="video/mp4,video/webm" /></label>
                           <label><input name="rightsConfirmed" type="checkbox" required /> 이 영상을 편집·재게시할 권한이 있음을 확인합니다.</label>
-                          <button className="primary" disabled={busy}>권한 확인 후 원본 등록</button>
+                          <button className="primary" disabled={busy}>파일 업로드 (제작 버튼 아님)</button>
                         </form></details></>}
                       </div>;
                     })}
@@ -1573,6 +1592,7 @@ export default function Operations() {
                   [
                     "queued",
                     "analyzing",
+                    "transcribing",
                     "ready_to_render",
                     "rendering",
                     "qc",
