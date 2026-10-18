@@ -63,6 +63,14 @@ test('opening teaser preserves the complete still image and GIF instead of cropp
  assert.match(teaser,/fit="contain"/);
  assert.doesNotMatch(teaser,/objectPosition:'center 35%'/);
 });
+test('external vertical videos use the tall preserve-aspect layout without changing regular media scenes',()=>{
+ const source=readFileSync(new URL('../worker/remotion/site-flow.jsx',import.meta.url),'utf8');
+ const external=source.slice(source.indexOf('function ExternalVideoScene'),source.indexOf('function MediaScene'));
+ assert.match(external,/top:246/);
+ assert.match(external,/bottom:108/);
+ assert.match(external,/objectFit:'contain'/);
+ assert.match(source,/scene\.type==='video_play'&&scene\.payload\.sourceUrl/);
+});
 test('auto combine is limited to text-only non-economy posts',()=>{
  assert.equal(mayAutoCombine([{type:'text',text:'짧은 유머'}],'유머'),true);
  assert.equal(mayAutoCombine([{type:'image',id:'i'}],'유머'),false);
