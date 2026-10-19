@@ -1,4 +1,4 @@
-import {tiktokId,type Block} from './models';
+import {isTikTokLink,type Block} from './models';
 import {visibleText} from './content-text';
 
 export type FeedMedia={type:'image'|'video';src:string;videoThumbnail?:boolean};
@@ -8,7 +8,7 @@ export function feedPreview(body:string,linkImages:Map<string,string>=new Map())
  try{const value=JSON.parse(body);if(Array.isArray(value))blocks=value}catch{}
  const seen=new Set<string>(),media:FeedMedia[]=[];
  for(const block of blocks){
-  const item=block?.type==='image'?{type:'image' as const,src:'/api/media/'+block.id}:block?.type==='video'?{type:'video' as const,src:'/api/media/'+block.id}:block?.type==='youtube'?{type:'image' as const,src:'https://i.ytimg.com/vi/'+encodeURIComponent(block.videoId)+'/hqdefault.jpg',videoThumbnail:true}:block?.type==='link'&&tiktokId(block.url)&&linkImages.has(block.url)?{type:'image' as const,src:linkImages.get(block.url)!,videoThumbnail:true}:null;
+  const item=block?.type==='image'?{type:'image' as const,src:'/api/media/'+block.id}:block?.type==='video'?{type:'video' as const,src:'/api/media/'+block.id}:block?.type==='youtube'?{type:'image' as const,src:'https://i.ytimg.com/vi/'+encodeURIComponent(block.videoId)+'/hqdefault.jpg',videoThumbnail:true}:block?.type==='link'&&isTikTokLink(block.url)&&linkImages.has(block.url)?{type:'image' as const,src:linkImages.get(block.url)!,videoThumbnail:true}:null;
   if(item&&!seen.has(item.src)){seen.add(item.src);media.push(item)}
  }
  const images=media.filter(item=>item.type==='image').map(item=>item.src);
