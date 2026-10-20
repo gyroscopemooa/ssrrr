@@ -1719,7 +1719,9 @@ export default function Operations() {
                           disabled={busy}
                           onClick={() => void shortAction("shortRetry", r)}
                         >
-                          같은 구성으로 다시 제작
+                          {String(r.error || "").includes("SPLIT_REQUIRED")
+                            ? "자동 분할로 다시 제작"
+                            : "같은 구성으로 다시 제작"}
                         </button>
                       )}
                       {cancellable && (
