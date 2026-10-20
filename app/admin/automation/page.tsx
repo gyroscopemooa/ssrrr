@@ -88,6 +88,7 @@ const labels: Record<string, string> = {
 Object.assign(labels, {
   bgmRandom: "배경음악 랜덤 선택",
   speechSubtitles: "음성 자막 (원문 / 원문+한글 / 원문+한글+영어)",
+  speechSubtitlePosition: "번역 자막 위치",
   captionTone: "영상 분위기",
   humorBgmIds: "유머 전용 BGM ID 목록",
   issueBgmIds: "이슈·심각 전용 BGM ID 목록",
@@ -116,6 +117,7 @@ Object.assign(labels, {
 });
 const choices: Record<string, string[]> = {
   speechSubtitles: ["off", "original", "original-ko", "original-en", "original-ko-en"],
+  speechSubtitlePosition: ["top", "middle", "bottom"],
   collectionMode: Object.keys(MODE_LABELS),
   adapter: ["generic", "dcinside"],
   board: [
@@ -242,6 +244,8 @@ function Fields({
                                   serious: "심각 (강조 자막 없음)",
                                 } as Record<string, string>
                               )[x]
+                            : k === "speechSubtitlePosition"
+                              ? ({ top: "위", middle: "중간", bottom: "아래" } as Record<string, string>)[x]
                             : x}
                     </option>
                   ))}
@@ -1424,11 +1428,12 @@ export default function Operations() {
                     <form onSubmit={(event) => {
                       event.preventDefault();
                       const fields = new FormData(event.currentTarget);
-                      void act("shortCreate", {postIds:[r.id],force,config:{...(shortConfig||{}),autoCombine:false,autoUpload:false,bgmEnabled:false,originalVolume:1,speechSubtitles:String(fields.get("subtitles")||"off"),externalAutoDownload:registered.length<refs.length,externalRightsBasis:String(fields.get("rightsBasis")||"")}});
+                      void act("shortCreate", {postIds:[r.id],force,config:{...(shortConfig||{}),autoCombine:false,autoUpload:false,bgmEnabled:false,originalVolume:1,speechSubtitles:String(fields.get("subtitles")||"off"),speechSubtitlePosition:String(fields.get("subtitlePosition")||"middle"),externalAutoDownload:registered.length<refs.length,externalRightsBasis:String(fields.get("rightsBasis")||"")}});
                     }}>
                       <p>원본 소리 유지 · 추가 BGM 없음 · 완성 후 미리보기/다운로드 · 유튜브 자동 업로드 안 함</p>
                       {registered.length<refs.length&&<><label>이 영상의 편집·재게시 허가 근거<input name="rightsBasis" required minLength={10} maxLength={1000} placeholder="허가자·허가 내용·증빙 보관 위치" /></label><label><input type="checkbox" required /> 원작자 허가와 플랫폼의 원본 확보 이용 조건을 별도로 확인했습니다.</label></>}
                       <label>음성 자막<select name="subtitles" defaultValue="off"><option value="off">자막 끔</option><option value="original" disabled={!shortWorkerReady.subtitles}>원문 자막</option><option value="original-ko" disabled={!shortWorkerReady.subtitles}>원문 + 한글 번역</option><option value="original-en" disabled={!shortWorkerReady.subtitles}>원문 + 영어 번역</option><option value="original-ko-en" disabled={!shortWorkerReady.subtitles}>원문 + 한글 + 영어</option></select></label>
+                      <label>번역 자막 위치<select name="subtitlePosition" defaultValue="middle"><option value="top">위</option><option value="middle">중간</option><option value="bottom">아래</option></select></label>
                       {!shortWorkerReady.subtitles&&<p>자막 서버 연결 미확인 · 엔진 설치 후 활성화됩니다.</p>}
                       <p>외국어는 원문을 유지하면서 한글·영어 번역을 함께 표시합니다. 자동 인식·번역은 검수가 필요합니다.</p>
                       <button type="submit" className="primary" disabled={busy||!!r.short_excluded||policyBlocked||!shortWorkerReady.render||(registered.length<refs.length&&!shortWorkerReady.acquire)}>이 글로 영상 제작 (파일 선택 없음)</button>

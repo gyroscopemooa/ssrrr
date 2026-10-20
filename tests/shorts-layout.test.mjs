@@ -70,7 +70,9 @@ test('external vertical videos use the tall preserve-aspect layout without chang
  assert.match(external,/bottom:98/);
  assert.match(external,/objectFit:'contain'/);
  assert.match(external,/objectPosition:'center bottom'/);
- assert.match(external,/position:'absolute'.*top:8.*SpeechSubtitle/s);
+ assert.match(external,/position:'absolute'.*inset:8.*SpeechSubtitle.*speechSubtitlePosition/s);
+ assert.match(source,/SUBTITLE_POSITION=\{top:.*middle:.*bottom:/s);
+ assert.doesNotMatch(source,/SourceCredit[\s\S]*payload\.sourceUrl\}<\/div>/);
  assert.match(source,/scene\.type==='video_play'&&scene\.payload\.sourceUrl/);
 });
 test('auto combine is limited to text-only non-economy posts',()=>{
