@@ -43,7 +43,7 @@ export type Post = {
   thumbnail?: string;
   images?: string[];
   imageCount?: number;
-  media?: { type: "image" | "video"; src: string; youtube?: boolean }[];
+  media?: { type: "image" | "video" | "embed"; src: string; youtube?: boolean; videoThumbnail?: boolean }[];
   mediaCount?: number;
   excerpt?: string;
   content?: string;
@@ -410,13 +410,15 @@ function FeedMedia({
   small = false,
   index,
 }: {
-  item: { type: "image" | "video"; src: string; youtube?: boolean };
+  item: { type: "image" | "video" | "embed"; src: string; youtube?: boolean; videoThumbnail?: boolean };
   small?: boolean;
   index: number;
 }) {
   return (
     <span className={small ? "post-gallery-small" : "post-gallery-main"}>
-      {item.type === "video" ? (
+      {item.type === "embed" ? (
+        <iframe src={item.src} title={"TikTok 영상 미리보기 " + (index + 1)} loading="lazy" tabIndex={-1} aria-hidden="true" />
+      ) : item.type === "video" ? (
         <video
           src={item.src}
           muted
@@ -433,7 +435,7 @@ function FeedMedia({
         />
       )}
       <span className="video-thumb-play" aria-hidden="true">
-        {item.type === "video" || item.youtube ? "▶" : ""}
+        {item.type === "video" || item.type === "embed" || item.youtube || item.videoThumbnail ? "▶" : ""}
       </span>
     </span>
   );

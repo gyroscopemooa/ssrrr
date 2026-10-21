@@ -1,5 +1,54 @@
-import {db,bucket,bounded,HttpError} from './server';import {validateRemote,remoteImage,imageType} from './media-security';import {safeLink} from './models';
-export type Preview={id:string;url:string;title:string;description:string;image_id:string|null;created_at:number};
-async function page(url:string){let current=url;for(let i=0;i<4;i++){const u=await validateRemote(current);const r=await fetch(u.href,{redirect:'manual',signal:AbortSignal.timeout(8000),headers:{Accept:'text/html'}});if([301,302,303,307,308].includes(r.status)){const next=r.headers.get('location');await r.body?.cancel();if(!next)throw new HttpError(422,'미리보기를 읽지 못했습니다.');current=new URL(next,u).href;continue}if(!r.ok||!r.headers.get('content-type')?.includes('text/html')){await r.body?.cancel();throw new HttpError(422,'이 주소는 링크로 표시됩니다.')}return {html:new TextDecoder().decode(await bounded(r.body,512*1024)),url:u.href}}throw new HttpError(422,'주소 이동이 너무 많습니다.')}
-export async function preview(value:string){const url=safeLink(value);if(!url)throw new HttpError(400,'올바른 주소를 입력해 주세요.');const cached=await db().prepare('SELECT * FROM previews WHERE url=?').bind(url).first<Preview>();if(cached)return cached;const id=crypto.randomUUID();let title=new URL(url).hostname,description='',imageId:string|null=null;try{const p=await page(url);const meta:Record<string,string>={};let docTitle='';await new HTMLRewriter().on('meta',{element(el){const key=el.getAttribute('property')||el.getAttribute('name');const value=el.getAttribute('content');if(key&&value&&['og:title','og:description','og:image','description','twitter:image'].includes(key.toLowerCase()))meta[key.toLowerCase()]=value.slice(0,2000)}}).on('title',{text(t){docTitle+=t.text}}).transform(new Response(p.html)).text();title=(meta['og:title']||docTitle||title).trim().slice(0,200);description=(meta['og:description']||meta.description||'').slice(0,500);const image=meta['og:image']||meta['twitter:image'];if(image){try{const bytes=await remoteImage(new URL(image,p.url).href);imageId='preview-'+id;await bucket().put(imageId,bytes,{httpMetadata:{contentType:imageType(bytes)}})}catch{}}}catch{}const result={id,url,title,description,image_id:imageId,created_at:Date.now()};await db().prepare('INSERT OR IGNORE INTO previews(id,url,title,description,image_id,created_at) VALUES(?,?,?,?,?,?)').bind(id,url,title,description,imageId,result.created_at).run();const actual=await db().prepare('SELECT * FROM previews WHERE url=?').bind(url).first<Preview>();if(actual?.id!==id&&imageId)await bucket().delete(imageId);return actual||result}
+import {db,bucket,bounded,HttpError} from './server';
+import {validateRemote,remoteImage,imageType} from './media-security';
+import {safeLink,isTikTokLink,tiktokId} from './models';
 
+export type Preview={id:string;url:string;title:string;description:string;image_id:string|null;embed_id:string|null;created_at:number};
+
+async function page(url:string){
+ let current=url;
+ for(let i=0;i<4;i++){
+  const u=await validateRemote(current);
+  const r=await fetch(u.href,{redirect:'manual',signal:AbortSignal.timeout(8000),headers:{Accept:'text/html'}});
+  if([301,302,303,307,308].includes(r.status)){
+   const next=r.headers.get('location');await r.body?.cancel();
+   if(!next)throw new HttpError(422,'미리보기를 읽지 못했습니다.');
+   current=new URL(next,u).href;continue;
+  }
+  if(!r.ok||!r.headers.get('content-type')?.includes('text/html')){
+   await r.body?.cancel();throw new HttpError(422,'이 주소는 링크로 표시됩니다.');
+  }
+  return {html:new TextDecoder().decode(await bounded(r.body,512*1024)),url:u.href};
+ }
+ throw new HttpError(422,'주소 이동이 너무 많습니다.');
+}
+
+function oEmbedId(data:{embed_product_id?:unknown;html?:unknown}){
+ const direct=typeof data.embed_product_id==='string'?data.embed_product_id:'';
+ if(/^\d{10,30}$/.test(direct))return direct;
+ const html=typeof data.html==='string'?data.html:'';
+ return html.match(/\/player\/v1\/(\d{10,30})/)?.[1]||null;
+}
+
+export async function preview(value:string){
+ const url=safeLink(value);if(!url)throw new HttpError(400,'올바른 주소를 입력해 주세요.');
+ const tikTok=isTikTokLink(url),cached=await db().prepare('SELECT * FROM previews WHERE url=?').bind(url).first<Preview>();
+ if(cached&&(!tikTok||cached.image_id||cached.embed_id))return cached;
+ const id=crypto.randomUUID();
+ let title=cached?.title||new URL(url).hostname,description=cached?.description||'',imageId:string|null=null,embedId=tiktokId(url),resolvedUrl=url;
+ try{
+  const p=await page(url);resolvedUrl=p.url;
+  const meta:Record<string,string>={};let docTitle='';
+  await new HTMLRewriter().on('meta',{element(el){const key=el.getAttribute('property')||el.getAttribute('name'),value=el.getAttribute('content');if(key&&value&&['og:title','og:description','og:image','description','twitter:image'].includes(key.toLowerCase()))meta[key.toLowerCase()]=value.slice(0,2000)}}).on('title',{text(t){docTitle+=t.text}}).transform(new Response(p.html)).text();
+  title=(meta['og:title']||docTitle||title).trim().slice(0,200);description=(meta['og:description']||meta.description||'').slice(0,500);
+  const image=meta['og:image']||meta['twitter:image'];if(image){try{const bytes=await remoteImage(new URL(image,p.url).href);imageId='preview-'+id;await bucket().put(imageId,bytes,{httpMetadata:{contentType:imageType(bytes)}})}catch{}}
+ }catch{}
+ if(tikTok){try{
+  const response=await fetch('https://www.tiktok.com/oembed?url='+encodeURIComponent(resolvedUrl),{signal:AbortSignal.timeout(8000),headers:{Accept:'application/json'}});
+  if(response.ok){const data=await response.json() as {title?:string;author_name?:string;thumbnail_url?:string;embed_product_id?:string;html?:string};title=(data.title||title).trim().slice(0,200);description=data.author_name?('@'+data.author_name).slice(0,500):description;embedId=oEmbedId(data)||embedId;if(data.thumbnail_url&&!imageId){const bytes=await remoteImage(data.thumbnail_url);imageId='preview-'+id;await bucket().put(imageId,bytes,{httpMetadata:{contentType:imageType(bytes)}})}}
+ }catch{}}
+ const createdAt=Date.now();
+ if(cached){await db().prepare('UPDATE previews SET title=?,description=?,image_id=?,embed_id=?,created_at=? WHERE id=?').bind(title,description,imageId,embedId,createdAt,cached.id).run();return {...cached,title,description,image_id:imageId,embed_id:embedId,created_at:createdAt}}
+ const result={id,url,title,description,image_id:imageId,embed_id:embedId,created_at:createdAt};
+ await db().prepare('INSERT OR IGNORE INTO previews(id,url,title,description,image_id,embed_id,created_at) VALUES(?,?,?,?,?,?,?)').bind(id,url,title,description,imageId,embedId,createdAt).run();
+ const actual=await db().prepare('SELECT * FROM previews WHERE url=?').bind(url).first<Preview>();if(actual?.id!==id&&imageId)await bucket().delete(imageId);return actual||result;
+}
