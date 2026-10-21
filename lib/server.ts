@@ -25,7 +25,7 @@ export async function content(value:unknown,ownerInput:string|string[]){const ow
  }
  if(chars>30000||!blocks.length||blocks.length>250)throw new HttpError(400,'본문은 30,000자 이내로 작성해 주세요.');
  const attachments=blocks.filter((b):b is Extract<Block,{type:'image'|'video'}>=>b.type==='image'||b.type==='video');const ids=[...new Set(attachments.map(b=>b.id))];
- if(ids.length>20||blocks.filter(b=>b.type==='link'||b.type==='youtube').length>10)throw new HttpError(400,'첨부는 20개, 링크는 10개까지 가능합니다.');
+ if(ids.length>50||blocks.filter(b=>b.type==='link'||b.type==='youtube').length>50)throw new HttpError(400,'첨부와 링크는 각각 50개까지 가능합니다.');
  if(ids.length){const r=await db().prepare('SELECT id,type FROM media WHERE owner IN ('+owners.map(()=>'?').join(',')+') AND id IN ('+ids.map(()=>'?').join(',')+')').bind(...owners,...ids).all<{id:string;type:string}>();
  if(r.results.length!==ids.length||attachments.some(b=>!r.results.some(m=>m.id===b.id&&m.type.startsWith(b.type+'/'))))throw new HttpError(400,'첨부파일 소유권과 종류를 확인해 주세요.');}
  return blocks;
