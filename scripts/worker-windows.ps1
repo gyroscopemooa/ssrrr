@@ -24,8 +24,8 @@ try {
  $env:WORKER_ROLE='studio'
  $env:SUBTITLE_PYTHON=Join-Path $workerRoot '.worker-tmp\subtitle-venv\Scripts\python.exe'
   $env:SUBTITLE_TRANSLATION_PYTHON=$env:SUBTITLE_PYTHON
-  $env:SUBTITLE_MODEL=Join-Path $workerRoot '.worker-tmp\whisper-models\large-v3-turbo'
-  $env:SUBTITLE_TRANSLATION_LOCAL_MODEL=Join-Path $workerRoot '.worker-tmp\translation-models\models--facebook--m2m100_418M'
+  $env:SUBTITLE_MODEL=Join-Path $workerRoot '.worker-tmp\whisper-large-v3'
+  $env:SUBTITLE_TRANSLATION_LOCAL_MODEL=Join-Path $workerRoot '.worker-tmp\translation-m2m100-418M'
   if (-not (Test-Path -LiteralPath $env:SUBTITLE_PYTHON)) { throw 'Subtitle Python environment is missing.' }
  }
  $workerProcess = Start-Process -FilePath (Get-Command node.exe).Source -ArgumentList @('"'+$workerScript+'"') -WorkingDirectory $workerRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $workerRuntime 'stdout.log') -RedirectStandardError (Join-Path $workerRuntime 'stderr.log') -PassThru
