@@ -1,9 +1,18 @@
 export type Block =
  | {type:'text';text:string}
+ | {type:'table';rows:string[][];header:boolean}
  | {type:'image';id:string}
  | {type:'video';id:string}
  | {type:'youtube';videoId:string}
  | {type:'link';url:string};
+export const TABLE_MAX_ROWS=100,TABLE_MAX_COLUMNS=30,TABLE_MAX_CELL_LENGTH=2000;
+export function safeTable(value:unknown):Extract<Block,{type:'table'}>|null{
+ if(!value||typeof value!=='object')return null;const table=value as {type?:unknown;rows?:unknown;header?:unknown};
+ if(table.type!=='table'||!Array.isArray(table.rows)||!table.rows.length||table.rows.length>TABLE_MAX_ROWS||typeof table.header!=='boolean')return null;
+ if(!table.rows.every(row=>Array.isArray(row)&&row.length>0&&row.length<=TABLE_MAX_COLUMNS&&row.every(cell=>typeof cell==='string'&&cell.length<=TABLE_MAX_CELL_LENGTH)))return null;
+ const width=Math.max(...table.rows.map(row=>row.length));
+ return {type:'table',header:table.header,rows:table.rows.map(row=>Array.from({length:width},(_,index)=>String(row[index]||'').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g,'')))};
+}
 export type PopularKind='site'|'today'|'srrr';
 export type Settings={autoplay:boolean;copyProtection:boolean;popularComments:number;popularLikes:number;popularViews:number;popularMode:'all'|'any';popularDays:number;popularLimit:number;todayPopularComments:number;todayPopularLikes:number;todayPopularViews:number;todayPopularMode:'all'|'any';todayPopularDays:number;todayPopularLimit:number;srrrPopularComments:number;srrrPopularLikes:number;srrrPopularViews:number;srrrPopularMode:'all'|'any';srrrPopularDays:number;srrrPopularLimit:number;srrrPromotionLikes:number;imageCost:number;videoCost:number;textCost:number;signupPoints:number};
 export const defaultSettings:Settings={autoplay:false,copyProtection:true,popularComments:5,popularLikes:10,popularViews:100,popularMode:'all',popularDays:7,popularLimit:20,todayPopularComments:5,todayPopularLikes:10,todayPopularViews:100,todayPopularMode:'all',todayPopularDays:7,todayPopularLimit:20,srrrPopularComments:5,srrrPopularLikes:10,srrrPopularViews:100,srrrPopularMode:'all',srrrPopularDays:7,srrrPopularLimit:20,srrrPromotionLikes:10,imageCost:10,videoCost:30,textCost:5,signupPoints:0};

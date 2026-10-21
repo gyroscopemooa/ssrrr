@@ -1,5 +1,5 @@
 import {ZodError} from 'zod';
-import {splitLinks,safeLink,youtubeId,type Block} from './models';
+import {splitLinks,safeLink,safeTable,youtubeId,type Block} from './models';
 import {env} from 'cloudflare:workers';
 import {getChatGPTUser} from '@/app/chatgpt-auth';
 export class HttpError extends Error{constructor(public status:number,message:string){super(message)}}
@@ -17,6 +17,7 @@ export async function content(value:unknown,ownerInput:string|string[]){const ow
  const blocks:Block[]=[];let chars=0;
  for(const b of value){if(!b||typeof b!=='object')throw new HttpError(400,'본문 형식을 확인해 주세요.');
  if(b.type==='text'&&typeof b.text==='string'){chars+=b.text.length;blocks.push(...splitLinks(b.text))}
+ else if(b.type==='table'){const table=safeTable(b);if(!table)throw new HttpError(400,'표 형식을 확인해 주세요.');chars+=table.rows.flat().reduce((sum,cell)=>sum+cell.length,0);blocks.push(table)}
  else if((b.type==='image'||b.type==='video')&&typeof b.id==='string'&&/^[a-f0-9-]{36}$/.test(b.id))blocks.push({type:b.type,id:b.id});
  else if(b.type==='youtube'&&typeof b.videoId==='string'&&/^[\w-]{11}$/.test(b.videoId))blocks.push({type:'youtube',videoId:b.videoId});
  else if(b.type==='link'&&typeof b.url==='string'&&safeLink(b.url)){const videoId=youtubeId(b.url);blocks.push(videoId?{type:'youtube',videoId}:{type:'link',url:safeLink(b.url)!})}

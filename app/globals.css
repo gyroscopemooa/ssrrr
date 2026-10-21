@@ -605,6 +605,23 @@ header {
   color: #8e90a2;
   font-size: 12px;
 }
+.editor-toolbar { flex-wrap: wrap; }
+.editor-table-block { margin: 18px 0; border: 1px solid #dddfea; border-radius: 8px; padding: 10px; background: #fff; }
+.editor-table-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.editor-table-tools button { border: 1px solid #d7d8e4; border-radius: 6px; background: #f7f7fb; padding: 6px 9px; cursor: pointer; }
+.content-table-scroll { width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; margin: 18px 0; }
+.content-table { width: max-content; min-width: 100%; border-collapse: collapse; background: #fff; color: #242535; }
+.content-table th, .content-table td { min-width: 110px; max-width: 480px; border: 1px solid #cfd1dd; padding: 9px 12px; text-align: left; vertical-align: top; white-space: pre-wrap; overflow-wrap: anywhere; }
+.content-table th { background: #f0efff; color: #34306d; font-weight: 750; }
+.editor .content-table td[contenteditable="true"], .editor .content-table th[contenteditable="true"] { outline: none; }
+.editor .content-table td[contenteditable="true"]:focus, .editor .content-table th[contenteditable="true"]:focus { box-shadow: inset 0 0 0 2px #625be2; }
+@media (prefers-color-scheme: dark) {
+  .editor-table-block, .content-table { background: #20212a; color: #f1f1f5; }
+  .editor-table-block { border-color: #444654; }
+  .editor-table-tools button { background: #2a2b36; color: #f1f1f5; border-color: #515362; }
+  .content-table th, .content-table td { border-color: #555766; }
+  .content-table th { background: #34304f; color: #f1efff; }
+}
 .form-actions {
   display: flex;
   justify-content: space-between;

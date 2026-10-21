@@ -15,7 +15,7 @@ export function feedPreview(body:string,linkMedia:Map<string,LinkPreviewMedia>=n
  }
  const images=media.filter(item=>item.type==='image').map(item=>item.src);
  return {
-  excerpt:blocks.filter((b):b is Extract<Block,{type:'text'}>=>b?.type==='text'&&typeof b.text==='string').map(b=>visibleText(b.text).split('\n').filter(line=>!/^\s*(?:https?:\/\/\S+|(?:출처|ㅊㅊ)\s*[:：·].*)\s*$/u.test(line)).join(' ')).join(' ').replace(/\s+/g,' ').trim().slice(0,400),
+  excerpt:blocks.flatMap(b=>b?.type==='text'&&typeof b.text==='string'?[visibleText(b.text).split('\n').filter(line=>!/^\s*(?:https?:\/\/\S+|(?:출처|ㅊㅊ)\s*[:：·].*)\s*$/u.test(line)).join(' ')]:b?.type==='table'&&Array.isArray(b.rows)?[b.rows.flat().join(' ')]:[]).join(' ').replace(/\s+/g,' ').trim().slice(0,400),
   images:images.slice(0,6),imageCount:images.length,media:media.slice(0,6),mediaCount:media.length
  }
 }
