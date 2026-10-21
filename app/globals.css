@@ -1722,11 +1722,17 @@ footer {
   overflow: hidden;
 }
 .post-gallery-main img,
-.post-gallery-main video {
+.post-gallery-main video,
+.post-gallery-main iframe {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.post-gallery-main iframe,
+.post-gallery-small iframe {
+  border: 0;
+  pointer-events: none;
 }
 .post-gallery-small-wrap {
   position: relative;
@@ -1749,6 +1755,11 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.post-gallery-small iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .video-thumb-play {
   position: absolute;

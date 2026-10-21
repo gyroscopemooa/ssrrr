@@ -16,7 +16,7 @@ export const ledger=sqliteTable('ledger',{id:text('id').primaryKey(),owner:text(
 export const grants=sqliteTable('grants',{id:text('id').primaryKey(),owner:text('owner').notNull().references(()=>members.owner),amount:integer('amount').notNull(),reason:text('reason').notNull(),actor:text('actor').notNull(),createdAt:integer('created_at').notNull()});
 export const audit=sqliteTable('audit',{id:text('id').primaryKey(),actor:text('actor').notNull(),action:text('action').notNull(),createdAt:integer('created_at').notNull()});
 export const postViews=sqliteTable('post_views',{postId:text('post_id').notNull().references(()=>posts.id),viewer:text('viewer').notNull(),day:text('day').notNull()},t=>[primaryKey({columns:[t.postId,t.viewer,t.day]})]);
-export const previews=sqliteTable('previews',{id:text('id').primaryKey(),url:text('url').notNull().unique(),title:text('title').notNull(),description:text('description').notNull(),imageId:text('image_id'),createdAt:integer('created_at').notNull()});
+export const previews=sqliteTable('previews',{id:text('id').primaryKey(),url:text('url').notNull().unique(),title:text('title').notNull(),description:text('description').notNull(),imageId:text('image_id'),embedId:text('embed_id'),createdAt:integer('created_at').notNull()});
 
 
 // V3 integration tables. JSON configurations preserve per-source and per-job overrides.
