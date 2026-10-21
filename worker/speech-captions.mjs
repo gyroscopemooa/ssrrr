@@ -54,7 +54,7 @@ export async function translateCuesLocally(cues,language,{execute=run,python=pro
 export async function speechCaptions(file,mode,{execute=run,python=process.env.SUBTITLE_PYTHON,signal,translate}={}){
  if(!python)throw Error('SUBTITLE_SERVER_UNAVAILABLE: 작업 서버에 음성인식 엔진이 설정되지 않았습니다.');
  const args=[path.resolve('scripts/transcribe-local.py'),file,'--model',process.env.SUBTITLE_MODEL||'small'];
- const wantsKorean=mode==='original-ko'||mode==='original-ko-en',wantsEnglish=mode==='original-en'||mode==='original-ko-en';
+ const wantsKorean=mode==='ko'||mode==='original-ko'||mode==='original-ko-en',wantsEnglish=mode==='original-en'||mode==='original-ko-en';
  if(wantsEnglish)args.push('--english');
  const {stdout}=await execute(python,args,{signal,timeout:900000,maxBuffer:4000000,windowsHide:true,encoding:'utf8'});
  const data=JSON.parse(stdout),cues=transcriptCues(data);

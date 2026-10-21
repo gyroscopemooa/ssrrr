@@ -87,7 +87,7 @@ const labels: Record<string, string> = {
 };
 Object.assign(labels, {
   bgmRandom: "배경음악 랜덤 선택",
-  speechSubtitles: "음성 자막 (원문 / 원문+한글 / 원문+한글+영어)",
+  speechSubtitles: "음성 자막 (원문 / 한글 번역만 / 원문+번역)",
   speechSubtitlePosition: "번역 자막 위치",
   captionTone: "영상 분위기",
   humorBgmIds: "유머 전용 BGM ID 목록",
@@ -116,7 +116,7 @@ Object.assign(labels, {
   mediaFailure: "사진·영상 수집 실패 시 처리",
 });
 const choices: Record<string, string[]> = {
-  speechSubtitles: ["off", "original", "original-ko", "original-en", "original-ko-en"],
+  speechSubtitles: ["off", "original", "ko", "original-ko", "original-en", "original-ko-en"],
   speechSubtitlePosition: ["top", "middle", "bottom"],
   collectionMode: Object.keys(MODE_LABELS),
   adapter: ["generic", "dcinside"],
@@ -244,6 +244,8 @@ function Fields({
                                   serious: "심각 (강조 자막 없음)",
                                 } as Record<string, string>
                               )[x]
+                            : k === "speechSubtitles"
+                              ? ({off:"자막 끔",original:"원문만",ko:"한글 번역만",'original-ko':"원문 + 한글",'original-en':"원문 + 영어",'original-ko-en':"원문 + 한글 + 영어"} as Record<string,string>)[x]
                             : k === "speechSubtitlePosition"
                               ? ({ top: "위", middle: "중간", bottom: "아래" } as Record<string, string>)[x]
                             : x}
@@ -1432,10 +1434,10 @@ export default function Operations() {
                     }}>
                       <p>원본 소리 유지 · 추가 BGM 없음 · 완성 후 미리보기/다운로드 · 유튜브 자동 업로드 안 함</p>
                       {registered.length<refs.length&&<><label>이 영상의 편집·재게시 허가 근거<input name="rightsBasis" required minLength={10} maxLength={1000} placeholder="허가자·허가 내용·증빙 보관 위치" /></label><label><input type="checkbox" required /> 원작자 허가와 플랫폼의 원본 확보 이용 조건을 별도로 확인했습니다.</label></>}
-                      <label>음성 자막<select name="subtitles" defaultValue="off"><option value="off">자막 끔</option><option value="original" disabled={!shortWorkerReady.subtitles}>원문 자막</option><option value="original-ko" disabled={!shortWorkerReady.subtitles}>원문 + 한글 번역</option><option value="original-en" disabled={!shortWorkerReady.subtitles}>원문 + 영어 번역</option><option value="original-ko-en" disabled={!shortWorkerReady.subtitles}>원문 + 한글 + 영어</option></select></label>
+                      <label>음성 자막<select name="subtitles" defaultValue="off"><option value="off">자막 끔</option><option value="original" disabled={!shortWorkerReady.subtitles}>원문 자막</option><option value="ko" disabled={!shortWorkerReady.subtitles}>한글 번역만</option><option value="original-ko" disabled={!shortWorkerReady.subtitles}>원문 + 한글 번역</option><option value="original-en" disabled={!shortWorkerReady.subtitles}>원문 + 영어 번역</option><option value="original-ko-en" disabled={!shortWorkerReady.subtitles}>원문 + 한글 + 영어</option></select></label>
                       <label>번역 자막 위치<select name="subtitlePosition" defaultValue="middle"><option value="top">위</option><option value="middle">중간</option><option value="bottom">아래</option></select></label>
                       {!shortWorkerReady.subtitles&&<p>자막 서버 연결 미확인 · 엔진 설치 후 활성화됩니다.</p>}
-                      <p>외국어는 원문을 유지하면서 한글·영어 번역을 함께 표시합니다. 자동 인식·번역은 검수가 필요합니다.</p>
+                      <p>한글 번역만은 인식된 원문을 영상에 표시하지 않고 한국어 번역만 보여줍니다. 자동 인식·번역은 검수가 필요합니다.</p>
                       <button type="submit" className="primary" disabled={busy||!!r.short_excluded||policyBlocked||!shortWorkerReady.render||(registered.length<refs.length&&!shortWorkerReady.acquire)}>이 글로 영상 제작 (파일 선택 없음)</button>
                       {policyBlocked&&<p role="status">YouTube 자동 확보는 지원하지 않습니다. 사용 허가된 원본이 등록된 뒤 제작할 수 있습니다.</p>}
                       {!shortWorkerReady.render&&<p role="status">제작 서버 연결 미확인</p>}

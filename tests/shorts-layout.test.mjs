@@ -72,6 +72,7 @@ test('external vertical videos use the tall preserve-aspect layout without chang
  assert.match(external,/objectPosition:'center bottom'/);
  assert.match(external,/position:'absolute'.*inset:8.*SpeechSubtitle.*speechSubtitlePosition/s);
  assert.match(source,/SUBTITLE_POSITION=\{top:.*middle:.*bottom:/s);
+ assert.match(source,/payload\.subtitleMode==='ko'/);
  assert.doesNotMatch(source,/SourceCredit[\s\S]*payload\.sourceUrl\}<\/div>/);
  assert.match(source,/scene\.type==='video_play'&&scene\.payload\.sourceUrl/);
 });

@@ -19,6 +19,12 @@ test('foreign speech can retain original and add Korean plus English',async()=>{
  const cues=await speechCaptions('unused','original-ko-en',{python:'python',execute:async(_python,args)=>{assert(args.includes('--english'));return {stdout}},translate:async items=>{items[0].ko='안녕하세요';return items}});
  assert.deepEqual(cues,[{start:0,end:1,original:'こんにちは',ko:'안녕하세요',en:'Hello'}]);
 });
+test('Korean-only mode translates cues without requesting English output',async()=>{
+ let args;
+ const cues=await speechCaptions('unused','ko',{python:'python',execute:async(_python,next)=>{args=next;return {stdout:JSON.stringify({language:'es',segments:[{start:0,end:1,text:'Hola'}]})}},translate:async items=>{items[0].ko='안녕하세요';return items}});
+ assert.equal(args.includes('--english'),false);
+ assert.deepEqual(cues,[{start:0,end:1,original:'Hola',ko:'안녕하세요',en:''}]);
+});
 test('Korean translation API rejects missing configuration explicitly',async()=>{
  await assert.rejects(translateCuesToKorean([{original:'Hola'}],'es',{url:'',key:''}),/SUBTITLE_TRANSLATION_UNAVAILABLE/);
 });
