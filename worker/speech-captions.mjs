@@ -4,7 +4,7 @@ import path from 'node:path';
 const run=promisify(execFile);
 export async function speechEngineReady(){
  if(!process.env.SUBTITLE_PYTHON)return false;
- try{await run(process.env.SUBTITLE_PYTHON,['-c',"import sys; from faster_whisper import WhisperModel; WhisperModel(sys.argv[1],device='cpu',compute_type='int8',download_root='.worker-tmp/whisper-models',local_files_only=True)",process.env.SUBTITLE_MODEL||'small'],{timeout:30000,windowsHide:true,maxBuffer:100000});return true}catch{return false}
+ try{await run(process.env.SUBTITLE_PYTHON,['-c',"import sys; from faster_whisper import WhisperModel; WhisperModel(sys.argv[1],device='cpu',compute_type='int8',download_root='.worker-tmp/whisper-models',local_files_only=True)",process.env.SUBTITLE_MODEL||'small'],{timeout:180000,windowsHide:true,maxBuffer:100000});return true}catch{return false}
 }
 export function transcriptCues(data){
  if(!Array.isArray(data?.segments))throw Error('SUBTITLE_INVALID: 음성 인식 결과 형식 오류');
