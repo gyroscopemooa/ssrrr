@@ -28,6 +28,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RotatingLogo } from "@/components/rotating-logo";
 import { EconomyContent } from './economy-content';
+import EzoicAd from './ezoic-ad';
 import { boards, boardLabel, boardDescription } from "@/lib/board-label";
 export type Post = {
   adminSourceName?: string;
@@ -709,6 +710,7 @@ export default function Community({ initial }: { initial: InitialFeed }) {
           <p>유머부터 소소한 일상까지, 첫 이야기를 기다리고 있어요.</p>
         </div>
       </div>
+      <EzoicAd />
       <PopularSidebar mobile kind="site" />
       <section className="feed">
         <div className="feed-tabs">
@@ -784,6 +786,7 @@ export default function Community({ initial }: { initial: InitialFeed }) {
             더 보기
           </button>
         )}
+        <EzoicAd />
       </section>
     </Shell>
   );
