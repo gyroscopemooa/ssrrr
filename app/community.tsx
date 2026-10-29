@@ -276,20 +276,16 @@ export function Shell({
           <p className="nav-label">COMMUNITY</p>
           <nav className="board-nav">
             {boards.map((b, i) => {
-              const Icon = icons[i];
+              const Icon = icons[i] || MessagesSquare;
               return (
-                <button
+                <a
+                  href={b === "질문·이용팁" ? "/community" : "/?board=" + encodeURIComponent(b)}
                   key={b}
                   className={active === b ? "active" : ""}
-                  onClick={() =>
-                    onBoard
-                      ? onBoard(b)
-                      : location.assign("/?board=" + encodeURIComponent(b))
-                  }
                 >
                   <Icon />
                   {boardLabel(b)}
-                </button>
+                </a>
               );
             })}
             <div className="divider" />
@@ -696,7 +692,7 @@ export default function Community({ initial }: { initial: InitialFeed }) {
             {q ? "“" + q + "”에 대한 이야기" : boardDescription(board)}
           </p>
         </div>
-        <a className="primary" href="/write">
+        <a className="primary" href={"/write?board="+encodeURIComponent(board)}>
           <PenLine />
           글쓰기
         </a>
@@ -711,8 +707,8 @@ export default function Community({ initial }: { initial: InitialFeed }) {
           draggable={false}
         />
         <div>
-          <strong>새로 모이는 우리들의 아지트</strong>
-          <p>유머부터 소소한 일상까지, 첫 이야기를 기다리고 있어요.</p>
+          <strong>{board === "질문·이용팁" ? "하나의 질문에, 따라 할 수 있는 답" : "새로 모이는 우리들의 아지트"}</strong>
+          <p>{board === "질문·이용팁" ? "해결 방법을 먼저 알려 주고, 안 되는 경우와 관련 글도 함께 남겨 주세요." : "유머부터 소소한 일상까지, 첫 이야기를 기다리고 있어요."}</p>
         </div>
       </div>
       <EzoicAd />
@@ -771,9 +767,9 @@ export default function Community({ initial }: { initial: InitialFeed }) {
             <p>
               {q
                 ? "다른 검색어로 찾아보세요."
-                : "첫 번째 웃음을 남겨 주세요.\n글도, 사진도, 짤도 좋아요."}
+                : board === "질문·이용팁" ? "궁금한 질문이나 직접 해결한 방법을 첫 글로 남겨 주세요." : "첫 번째 웃음을 남겨 주세요.\n글도, 사진도, 짤도 좋아요."}
             </p>
-            <a className="primary" href="/write">
+            <a className="primary" href={"/write?board="+encodeURIComponent(board)}>
               <PenLine />첫 이야기 쓰기
             </a>
           </div>
