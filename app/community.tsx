@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { BannerAd } from "@/components/banner-ad";
 import {
   Search,
   PenLine,
@@ -269,6 +270,7 @@ export function Shell({
           </nav>
         </div>
       </header>
+      <BannerAd position="top" />
       <div className="layout">
         <aside className="left-nav">
           <p className="nav-label">COMMUNITY</p>
@@ -307,6 +309,7 @@ export function Shell({
               </button>
             )}
           </nav>
+          <BannerAd position="left" />
           <div className="nav-footer">
             우리끼리 웃는 작은 아지트.
             <br />
@@ -320,6 +323,7 @@ export function Shell({
           <PopularSidebar kind="site" />
           <PopularSidebar kind="humor" />
           <EconomySidebar />
+          <BannerAd position="sidebar" />
           <div className="tiny-footer">
             {brand.name} · 커뮤니티
             <br />
@@ -327,6 +331,7 @@ export function Shell({
           </div>
         </aside>
       </div>
+      <BannerAd position="bottom" />
       <footer>
         <span>{brand.name} &nbsp; · &nbsp; 오늘의 웃음을 모으는 곳</span>
         <nav aria-label="사이트 정보">
