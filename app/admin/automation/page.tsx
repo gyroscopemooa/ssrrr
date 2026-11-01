@@ -65,7 +65,7 @@ const labels: Record<string, string> = {
   mediaHosts: "허용 미디어 도메인",
   minDuration: "최소 길이 (초)",
   targetDuration: "목표 길이 (초)",
-  maxDuration: "최대 길이 (초)",
+  maxDuration: "권장 길이 기준 (초 · 초과해도 한 편 제작)",
   maxPosts: "최대 글 수",
   maxComments: "쇼츠 댓글 수",
   includeComments: "댓글 포함",
@@ -156,7 +156,7 @@ function Fields({
       {Object.entries(scope === "source" ? sourceEditorFields(value) : value)
         .filter(
           ([k]) =>
-            !["id", "partIndex", "resolvedMode", "issueBgmId", "externalAutoDownload"].includes(k),
+            !["id", "partIndex", "autoSplit", "resolvedMode", "issueBgmId", "externalAutoDownload"].includes(k),
         )
         .map(([k, v], index) => {
           const number = numberPrefix + (index + 1),
@@ -1319,6 +1319,7 @@ export default function Operations() {
             <>
               <section className="ops-row ops-tone-picker">
                 <h2>영상 분위기</h2>
+                <p>60초·3분을 넘어도 자르거나 분할하지 않고 한 편으로 제작합니다.</p>
                 <div
                   className="ops-actions"
                   role="radiogroup"
