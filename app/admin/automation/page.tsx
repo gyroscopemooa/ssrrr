@@ -338,6 +338,8 @@ export default function Operations() {
     [draft, setDraft] = useState<Row | null>(null),
     [source, setSource] = useState<Row | null>(null),
     [q, setQ] = useState(""),
+    [postQuery, setPostQuery] = useState(""),
+    [postSearch, setPostSearch] = useState(""),
     [offset, setOffset] = useState(0),
     [postOffset, setPostOffset] = useState(0),
     [shortOffset, setShortOffset] = useState(0),
@@ -394,24 +396,26 @@ export default function Operations() {
       sourceEditor.current?.scrollIntoView({ block: "nearest" });
     }
   }, [source?.id]);
+  const refreshSequence = useRef(0);
   const refresh = useCallback(async () => {
+    const sequence = ++refreshSequence.current;
     try {
-      setData(
-        await api<Data>(
+      const next = await api<Data>(
           "/api/ops?" +
             new URLSearchParams({
               q,
+              postSearch,
               offset: String(offset),
               postOffset: String(postOffset),
               shortOffset: String(shortOffset),
               postFilter,
             }),
-        ),
-      );
+        );
+      if (sequence === refreshSequence.current) setData(next);
     } catch (e) {
-      setMessage((e as Error).message);
+      if (sequence === refreshSequence.current) setMessage((e as Error).message);
     }
-  }, [q, offset, postOffset, shortOffset, postFilter]);
+  }, [q, postSearch, offset, postOffset, shortOffset, postFilter]);
   useEffect(() => {
     void refresh();
     const timer = setInterval(() => {
@@ -1313,15 +1317,6 @@ export default function Operations() {
           )}
           {tab === "쇼츠 만들기" && (
             <>
-              <input
-                aria-label="쇼츠 글 검색"
-                placeholder="글 검색"
-                value={q}
-                onChange={(e) => {
-                  setQ(e.target.value);
-                  setPostOffset(0);
-                }}
-              />
               <section className="ops-row ops-tone-picker">
                 <h2>영상 분위기</h2>
                 <div
@@ -1371,6 +1366,22 @@ export default function Operations() {
                 )}
               </section>
               <h2>제작할 글 선택 (최대 2개)</h2>
+              <form className="ops-actions" role="search" onSubmit={(event) => {
+                event.preventDefault();
+                setPostSearch(postQuery.trim());
+                setPostOffset(0);
+              }}>
+                <input type="search" aria-label="쇼츠 게시글 검색" placeholder="제목, 게시글 링크 또는 ID 검색" maxLength={500} value={postQuery} onChange={(event) => setPostQuery(event.target.value)} />
+                <button type="submit" className="primary">검색</button>
+                <button type="button" onClick={() => { setPostQuery(""); setPostSearch(""); setPostOffset(0); }}>검색 초기화</button>
+              </form>
+              <p className="subtext" role="status">
+                {data.postSearch !== postSearch || data.postFilter !== postFilter || data.postOffset !== postOffset
+                  ? "게시글 검색 중…"
+                  : rows("posts").length
+                    ? `${postSearch ? `‘${postSearch}’ 검색 결과` : "게시글 목록"} · 이 페이지 ${rows("posts").length}개 · 선택 ${selected.length}개`
+                    : "검색 결과가 없습니다. 검색어나 글 분류를 변경해 주세요."}
+              </p>
               <div
                 className="ops-actions"
                 role="group"
@@ -1397,7 +1408,7 @@ export default function Operations() {
                   </label>
                 ))}
               </div>
-              {rows("posts").map((r) => {
+              {data.postSearch === postSearch && data.postFilter === postFilter && data.postOffset === postOffset && rows("posts").map((r) => {
                 const refs = externalVideoRefs(Array.isArray(parsed(r.body)) ? parsed(r.body) : []), registered = rows("externalVideos").filter((source) => source.post_id === r.id && source.status === "ready" && refs.some((ref) => ref.sourceKey === source.source_key));
                 const policyBlocked = refs.some(ref=>ref.provider==="youtube"&&!registered.some(source=>source.source_key===ref.sourceKey));
                 return <article className="ops-row" key={str(r, "id")}>
@@ -1420,6 +1431,10 @@ export default function Operations() {
                       {str(r, "comments")} · 제작 {str(r, "history")}회
                     </small>
                   </label>
+                  <div className="ops-actions">
+                    <a href={"/post/" + encodeURIComponent(str(r, "id"))} target="_blank" rel="noreferrer">게시글 보기</a>
+                    <button type="button" className="primary" disabled={busy || !!r.short_excluded || !shortWorkerReady.render} onClick={() => void act("shortCreate", { postIds: [r.id], force, config: { ...(shortConfig || {}), captionTone: shortTone, autoCombine: false } })}>이 글로 쇼츠 제작</button>
+                  </div>
                   {button(
                     r.short_excluded ? "제외 해제" : "제작 제외",
                     "postExclude",
